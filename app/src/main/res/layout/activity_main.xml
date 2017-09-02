@@ -10,14 +10,29 @@
     android:paddingLeft="0dp"
     android:paddingRight="0dp"
     android:paddingTop="0dp"
-    tools:context="com.carboncopystudios.pilgrimscrossing.MainActivity"
-    android:weightSum="100"
-    android:background="@mipmap/game_background_normal">
+    android:weightSum="1"
+    tools:context="com.pixarninja.pilgrims_crossing.MainActivity">
 
-    <com.carboncopystudios.pilgrimscrossing.SpriteView
-        android:layout_height="match_parent"
-        android:layout_width="match_parent"
-        android:id="@+id/centerSpriteView" >
-    </com.carboncopystudios.pilgrimscrossing.SpriteView>
+    <LinearLayout
+        android:id="@+id/topLayout"
+        android:orientation="horizontal"
+        android:layout_height="0dp"
+        android:layout_width="fill_parent"
+        android:layout_weight="0.1" />
+
+    <LinearLayout
+        android:id="@+id/middleLayout"
+        android:orientation="horizontal"
+        android:layout_height="0dp"
+        android:layout_width="fill_parent"
+        android:layout_weight="0.9" >
+
+        <com.pixarninja.pilgrims_crossing.SpriteView
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:id="@+id/spriteView" >
+        </com.pixarninja.pilgrims_crossing.SpriteView>
+
+    </LinearLayout>
 
 </LinearLayout>
