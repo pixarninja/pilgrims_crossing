@@ -5,8 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.view.View;
-
 import java.util.LinkedHashMap;
 
 abstract class SpriteEntity {
@@ -109,6 +107,9 @@ abstract class SpriteEntity {
 
         /* centerOfBoundingBox = centerOfSprite - centerOfScreen */
         RectF position = render.getWhereToDraw();
+        if(position == null) {
+            return;
+        }
         render.setBoundingBox(new RectF(
                 position.centerX() - (position.width() * left),
                 position.centerY() - (position.height() * top),
@@ -152,32 +153,10 @@ abstract class SpriteEntity {
         if(expression.length == 2) {
             /* inherit from a certain sprite */
             if(expression[0].equals("inherit")) {
-                render = new Sprite();
-                render.setXCurrentFrame(controller.getEntity().getSprite().getXCurrentFrame());
-                render.setYCurrentFrame(controller.getEntity().getSprite().getYCurrentFrame());
-                render.setCurrentFrame(controller.getEntity().getSprite().getCurrentFrame());
-                render.setFrameToDraw(controller.getEntity().getSprite().getFrameToDraw());
-                return(expression[1]);
-            }
-            /* initialize a certain sprite */
-            else if(expression[0].equals("init")) {
-                render = new Sprite();
-                render.setXCurrentFrame(0);
-                render.setYCurrentFrame(0);
-                render.setCurrentFrame(0);
-                refreshCharacter(expression[1]);
-                render.setFrameToDraw(new Rect(0, 0, render.getFrameWidth(), render.getFrameHeight()));
-                controller.setXPos(controller.getXInit() - render.getSpriteWidth() / 2);
-                controller.setYPos(controller.getYInit() - render.getSpriteHeight() / 2);
-                return(expression[1]);
+                render = controller.getEntity().getSprite();
+                return (expression[1]);
             }
             else {
-                render = new Sprite();
-                render.setXCurrentFrame(0);
-                render.setYCurrentFrame(0);
-                render.setCurrentFrame(0);
-                controller.setXPos(controller.getXInit() - render.getSpriteWidth() / 2);
-                controller.setYPos(controller.getYInit() - render.getSpriteHeight() / 2);
                 return("init");
             }
         }

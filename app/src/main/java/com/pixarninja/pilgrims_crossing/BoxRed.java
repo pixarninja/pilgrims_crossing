@@ -16,6 +16,8 @@ public class BoxRed extends SpriteCharacter {
         else {
             this.controller = controller;
         }
+        this.controller.setXInit(width / 2);
+        this.controller.setYInit(height / 2);
         this.spriteView = spriteView;
         this.res = res;
         this.percentOfScreen = percentOfScreen;
@@ -26,6 +28,7 @@ public class BoxRed extends SpriteCharacter {
         count = 0;
 
         refreshCharacter(ID);
+        //refreshCharacter("idle");
 
     }
 
@@ -184,20 +187,21 @@ public class BoxRed extends SpriteCharacter {
                 render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale()));
                 render.setWhereToDraw(new RectF((float)controller.getXPos(), (float)controller.getYPos(), (float)controller.getXPos() + render.getSpriteWidth(), (float)controller.getYPos() + render.getSpriteHeight()));
                 break;
+            case "skip":
+                break;
             case "init":
             default:
                 render = new Sprite();
-                controller = new SpriteController();
                 controller.setXDelta(0);
                 controller.setYDelta(0);
                 refreshCharacter("idle");
-                controller.setXPos(width / 2 - render.getSpriteWidth() / 2);
-                controller.setYPos(height / 2 - render.getSpriteHeight() / 2 - height / 15);
+                ID = "idle";
+                controller.setXPos(controller.getXInit() - render.getSpriteWidth() / 2);
+                controller.setYPos(controller.getYInit() - render.getSpriteHeight() / 2 - height / 15);
                 render.setXCurrentFrame(0);
                 render.setYCurrentFrame(0);
                 render.setCurrentFrame(0);
                 render.setFrameToDraw(new Rect(0, 0, render.getFrameWidth(), render.getFrameHeight()));
-                render.setWhereToDraw(new RectF((float)controller.getXPos(), (float)controller.getYPos(), (float)controller.getXPos() + render.getSpriteWidth(), (float)controller.getYPos() + render.getSpriteHeight()));
         }
         controller.setEntity(this);
         controller.setTransition(ID);

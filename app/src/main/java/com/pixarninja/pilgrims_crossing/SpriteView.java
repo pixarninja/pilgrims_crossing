@@ -202,6 +202,7 @@ public class SpriteView extends SurfaceView {
                 break;
             case MotionEvent.ACTION_POINTER_DOWN:
                 jump = true;
+                System.out.println("JUMP!!!");
                 break;
             case MotionEvent.ACTION_MOVE:
                 //System.out.println("MOVED -- X: " + xTouchedPos + ", Y: " + yTouchedPos);
@@ -225,9 +226,6 @@ public class SpriteView extends SurfaceView {
         if (controllerMap != null) {
             for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
                 if(entry.getValue().getEntity() != null) {
-                    if(jump) {
-                        System.out.println("JUMP!!!");
-                    }
                     entry.getValue().getEntity().onTouchEvent(this, entry, controllerMap, move, jump, xTouchedPos, yTouchedPos);
                 }
             }

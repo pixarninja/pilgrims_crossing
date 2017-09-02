@@ -61,9 +61,9 @@ public class SpriteProp extends SpriteEntity {
         int xSpriteRes;
         int ySpriteRes;
 
-        controller.setTransition(ID);
-
         switch (ID) {
+            case "skip":
+                break;
             case "init":
             default:
                 render = new Sprite();
@@ -93,6 +93,7 @@ public class SpriteProp extends SpriteEntity {
                 render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
         }
         controller.setEntity(this);
+        controller.setTransition(ID);
         updateBoundingBox();
     }
 

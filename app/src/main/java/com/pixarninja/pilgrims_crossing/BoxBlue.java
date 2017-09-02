@@ -38,8 +38,6 @@ public class BoxBlue extends SpriteCharacter {
         /* setup sprite via parsing */
         ID = parseID(ID);
 
-        controller.setTransition(ID);
-
         switch (ID) {
             case "center":
                 render.setID(ID);
@@ -186,14 +184,17 @@ public class BoxBlue extends SpriteCharacter {
                 render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale()));
                 render.setWhereToDraw(new RectF((float)controller.getXPos(), (float)controller.getYPos(), (float)controller.getXPos() + render.getSpriteWidth(), (float)controller.getYPos() + render.getSpriteHeight()));
                 break;
+            case "skip":
+                break;
             case "init":
             default:
                 render = new Sprite();
                 controller.setXDelta(0);
                 controller.setYDelta(0);
                 refreshCharacter("idle");
+                ID = "idle";
                 controller.setXPos(width / 2 - render.getSpriteWidth() / 2);
-                controller.setYPos(height / 2 - render.getSpriteHeight() / 2);
+                controller.setYPos(height / 2 - render.getSpriteHeight() / 2 - height / 15);
                 render.setXCurrentFrame(0);
                 render.setYCurrentFrame(0);
                 render.setCurrentFrame(0);
@@ -201,6 +202,7 @@ public class BoxBlue extends SpriteCharacter {
                 render.setWhereToDraw(new RectF((float)controller.getXPos(), (float)controller.getYPos(), (float)controller.getXPos() + render.getSpriteWidth(), (float)controller.getYPos() + render.getSpriteHeight()));
         }
         controller.setEntity(this);
+        controller.setTransition(ID);
         updateBoundingBox();
     }
 
