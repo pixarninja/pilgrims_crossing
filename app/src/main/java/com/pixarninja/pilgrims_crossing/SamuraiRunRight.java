@@ -161,22 +161,68 @@ public class SamuraiRunRight extends SpriteCharacter {
                 render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale()));
                 render.setWhereToDraw(new RectF((float)controller.getXPos(), (float)controller.getYPos(), (float)controller.getXPos() + render.getSpriteWidth(), (float)controller.getYPos() + render.getSpriteHeight()));
                 break;
-            case "idle":
+            case "begin":
                 render.setID(ID);
-                render.setXDimension(25.537);
-                render.setYDimension(14.208);
+                render.setXDimension(4.764);
+                render.setYDimension(5);
                 render.setLeft(0);
                 render.setTop(0);
-                render.setRight(25.537);
-                render.setBottom(14.208);
+                render.setRight(4.764);
+                render.setBottom(5);
+                render.setXFrameCount(6);
+                render.setYFrameCount(1);
+                render.setFrameCount(6);
+                render.setMethod("once");
+                xSpriteRes = xRes * render.getFrameCount() / 2;
+                ySpriteRes = yRes * render.getFrameCount() / 2;
+                spriteScale = 1;
+                render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_run_right_begin_norm, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
+                render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
+                render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
+                render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
+                render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale()));
+                render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale()));
+                render.setWhereToDraw(new RectF((float)controller.getXPos(), (float)controller.getYPos(), (float)controller.getXPos() + render.getSpriteWidth(), (float)controller.getYPos() + render.getSpriteHeight()));
+                break;
+            case "idle":
+                render.setID(ID);
+                render.setXDimension(4.778);
+                render.setYDimension(5);
+                render.setLeft(0);
+                render.setTop(0);
+                render.setRight(4.778);
+                render.setBottom(5);
                 render.setXFrameCount(4);
-                render.setYFrameCount(5);
-                render.setFrameCount(17);
+                render.setYFrameCount(4);
+                render.setFrameCount(16);
                 render.setMethod("idle");
-                xSpriteRes = 10 * xRes / render.getXFrameCount();
-                ySpriteRes = 10 * yRes / render.getYFrameCount();
-                spriteScale = 0.15;
-                render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_run_right_norm, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
+                xSpriteRes = xRes * render.getFrameCount() / 2;
+                ySpriteRes = yRes * render.getFrameCount() / 2;
+                spriteScale = 1;
+                render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_run_right_loop_norm, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
+                render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
+                render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
+                render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
+                render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale()));
+                render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale()));
+                render.setWhereToDraw(new RectF((float)controller.getXPos(), (float)controller.getYPos(), (float)controller.getXPos() + render.getSpriteWidth(), (float)controller.getYPos() + render.getSpriteHeight()));
+                break;
+            case "end":
+                render.setID(ID);
+                render.setXDimension(4.764);
+                render.setYDimension(5);
+                render.setLeft(0);
+                render.setTop(0);
+                render.setRight(4.764);
+                render.setBottom(5);
+                render.setXFrameCount(6);
+                render.setYFrameCount(1);
+                render.setFrameCount(6);
+                render.setMethod("once");
+                xSpriteRes = xRes * render.getFrameCount() / 2;
+                ySpriteRes = yRes * render.getFrameCount() / 2;
+                spriteScale = 1;
+                render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_run_right_end_norm, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
                 render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                 render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
                 render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
@@ -203,6 +249,18 @@ public class SamuraiRunRight extends SpriteCharacter {
         }
         controller.setEntity(this);
         controller.setTransition(ID);
+        if(ID.equals("begin")) {
+            controller.setBegin(true);
+            controller.setEnd(false);
+        }
+        else if(ID.equals("end")) {
+            controller.setBegin(false);
+            controller.setEnd(true);
+        }
+        else {
+            controller.setBegin(false);
+            controller.setEnd(false);
+        }
         updateBoundingBox();
     }
 
@@ -215,16 +273,6 @@ public class SamuraiRunRight extends SpriteCharacter {
             controller.setLastFrameChangeTime(time);
             if(count == 0) {
                 delta = 1;
-            }
-            else if(count <= 1) {
-                if(render.getMethod().equals("poked")) {
-                    delta = 0;
-                }
-            }
-            else if(count <= 3) {
-                if(render.getMethod().equals("mirror")) {
-                    delta = 0;
-                }
             }
             else {
                 delta = -1;
@@ -239,6 +287,8 @@ public class SamuraiRunRight extends SpriteCharacter {
                         if(render.getMethod().equals("once")) {
                             refreshCharacter("idle");
                             controller.setReacting(false);
+                            controller.setBegin(false);
+                            controller.setEnd(false);
                             count = 0;
                         }
                         else if(render.getMethod().equals("mirror") || render.getMethod().equals("poked")) {
@@ -274,6 +324,8 @@ public class SamuraiRunRight extends SpriteCharacter {
                     if ((render.getYCurrentFrame() < 0) || (render.getCurrentFrame() < 0)) {
                         refreshCharacter("idle");
                         controller.setReacting(false);
+                        controller.setBegin(false);
+                        controller.setEnd(false);
                         count = 0;
                     }
                     if (count > 0) {

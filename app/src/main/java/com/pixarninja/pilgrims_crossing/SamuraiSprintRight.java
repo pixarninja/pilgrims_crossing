@@ -163,20 +163,20 @@ public class SamuraiSprintRight extends SpriteCharacter {
                 break;
             case "idle":
                 render.setID(ID);
-                render.setXDimension(25.537);
-                render.setYDimension(14.208);
+                render.setXDimension(5.222);
+                render.setYDimension(5);
                 render.setLeft(0);
                 render.setTop(0);
-                render.setRight(25.537);
-                render.setBottom(14.208);
+                render.setRight(5.222);
+                render.setBottom(5);
                 render.setXFrameCount(4);
-                render.setYFrameCount(5);
-                render.setFrameCount(15);
+                render.setYFrameCount(4);
+                render.setFrameCount(16);
                 render.setMethod("idle");
-                xSpriteRes = 10 * xRes / render.getXFrameCount();
-                ySpriteRes = 10 * yRes / render.getYFrameCount();
-                spriteScale = 0.15;
-                render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_sprint_right_norm, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
+                xSpriteRes = xRes * render.getFrameCount() / 2;
+                ySpriteRes = yRes * render.getFrameCount() / 2;
+                spriteScale = 1;
+                render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_sprint_right_loop_norm, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
                 render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                 render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
                 render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
@@ -202,6 +202,18 @@ public class SamuraiSprintRight extends SpriteCharacter {
         }
         controller.setEntity(this);
         controller.setTransition(ID);
+        if(ID.equals("begin")) {
+            controller.setBegin(true);
+            controller.setEnd(false);
+        }
+        else if(ID.equals("end")) {
+            controller.setBegin(false);
+            controller.setEnd(true);
+        }
+        else {
+            controller.setBegin(false);
+            controller.setEnd(false);
+        }
         updateBoundingBox();
     }
 
@@ -214,16 +226,6 @@ public class SamuraiSprintRight extends SpriteCharacter {
             controller.setLastFrameChangeTime(time);
             if(count == 0) {
                 delta = 1;
-            }
-            else if(count <= 1) {
-                if(render.getMethod().equals("poked")) {
-                    delta = 0;
-                }
-            }
-            else if(count <= 3) {
-                if(render.getMethod().equals("mirror")) {
-                    delta = 0;
-                }
             }
             else {
                 delta = -1;

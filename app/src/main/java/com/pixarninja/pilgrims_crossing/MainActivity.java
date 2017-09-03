@@ -73,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
         /* initialize box controller */
         entity = new SamuraiIdle(spriteView, getResources(), 0.65, maxRes / 2, maxRes / 2, width, height, null, "init");
-        controllerMap.put("BoxController", entity.getController());
+        controllerMap.put("SamuraiController", entity.getController());
 
         /* set frame rate for all controllers */
         for(LinkedHashMap.Entry<String,SpriteController> controller : controllerMap.entrySet()) {

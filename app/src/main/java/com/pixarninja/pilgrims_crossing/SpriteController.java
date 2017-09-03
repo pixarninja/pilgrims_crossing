@@ -13,6 +13,8 @@ public class SpriteController {
     private int frameLengthInMilliseconds = 35;
     private long lastFrameChangeTime;
     private boolean reacting;
+    private boolean begin;
+    private boolean end;
 
 
     public SpriteEntity getEntity() { return this.entity; }
@@ -55,6 +57,12 @@ public class SpriteController {
 
     public boolean getReacting() { return this.reacting; }
     public void setReacting(boolean reacting) { this.reacting = reacting; }
+
+    public boolean getBegin() { return this.begin; }
+    public void setBegin(boolean begin) { this.begin = begin; }
+
+    public boolean getEnd() { return this.end; }
+    public void setEnd(boolean end) { this.end = end; }
 
     public void makeTransition(String ID) {
         this.entity.refreshCharacter(ID);

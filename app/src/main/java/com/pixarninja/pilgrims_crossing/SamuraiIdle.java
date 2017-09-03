@@ -165,20 +165,20 @@ public class SamuraiIdle extends SpriteCharacter {
                 break;
             case "idle":
                 render.setID(ID);
-                render.setXDimension(25.537);
-                render.setYDimension(14.208);
+                render.setXDimension(3.028);
+                render.setYDimension(5);
                 render.setLeft(0);
                 render.setTop(0);
-                render.setRight(25.537);
-                render.setBottom(14.208);
+                render.setRight(3.028);
+                render.setBottom(5);
                 render.setXFrameCount(4);
-                render.setYFrameCount(2);
-                render.setFrameCount(8);
-                render.setMethod("idle");
-                xSpriteRes = 2 * xRes / render.getXFrameCount();
-                ySpriteRes = 2 * yRes / render.getYFrameCount();
-                spriteScale = 0.15;
-                render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_idle_norm, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
+                render.setYFrameCount(1);
+                render.setFrameCount(4);
+                render.setMethod("mirror loop");
+                xSpriteRes = xRes * render.getFrameCount() / 2;
+                ySpriteRes = yRes * render.getFrameCount() / 2;
+                spriteScale = 1;
+                render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_idle_mirror_norm, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
                 render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                 render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
                 render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
@@ -204,6 +204,18 @@ public class SamuraiIdle extends SpriteCharacter {
         }
         controller.setEntity(this);
         controller.setTransition(ID);
+        if(ID.equals("begin")) {
+            controller.setBegin(true);
+            controller.setEnd(false);
+        }
+        else if(ID.equals("end")) {
+            controller.setBegin(false);
+            controller.setEnd(true);
+        }
+        else {
+            controller.setBegin(false);
+            controller.setEnd(false);
+        }
         updateBoundingBox();
     }
 
@@ -216,16 +228,6 @@ public class SamuraiIdle extends SpriteCharacter {
             controller.setLastFrameChangeTime(time);
             if(count == 0) {
                 delta = 1;
-            }
-            else if(count <= 1) {
-                if(render.getMethod().equals("poked")) {
-                    delta = 0;
-                }
-            }
-            else if(count <= 3) {
-                if(render.getMethod().equals("mirror")) {
-                    delta = 0;
-                }
             }
             else {
                 delta = -1;
@@ -242,7 +244,7 @@ public class SamuraiIdle extends SpriteCharacter {
                             controller.setReacting(false);
                             count = 0;
                         }
-                        else if(render.getMethod().equals("mirror") || render.getMethod().equals("poked")) {
+                        else if(render.getMethod().equals("mirror") || render.getMethod().equals("mirror loop") || render.getMethod().equals("poked")) {
                             render.setCurrentFrame(render.getFrameCount());
                             render.setXCurrentFrame(render.getXFrameCount() - 1);
                             render.setYCurrentFrame(render.getYFrameCount() - 1);
@@ -270,10 +272,16 @@ public class SamuraiIdle extends SpriteCharacter {
             else {
                 render.setCurrentFrame(render.getCurrentFrame() + delta);
                 render.setXCurrentFrame(render.getXCurrentFrame() + delta);
-                if ((render.getXCurrentFrame() < 0) || (render.getCurrentFrame() < 0)) {
+                if ((render.getXCurrentFrame() <= 0) || (render.getCurrentFrame() <= 0)) {
                     render.setYCurrentFrame(render.getYCurrentFrame() + delta);
-                    if ((render.getYCurrentFrame() < 0) || (render.getCurrentFrame() < 0)) {
-                        refreshCharacter("idle");
+                    if ((render.getYCurrentFrame() <= 0) || (render.getCurrentFrame() <= 0)) {
+                        if(render.getMethod().equals("mirror loop")) {
+                            render.setYCurrentFrame(0);
+                            render.setCurrentFrame(0);
+                        }
+                        else {
+                            refreshCharacter("idle");
+                        }
                         controller.setReacting(false);
                         count = 0;
                     }
