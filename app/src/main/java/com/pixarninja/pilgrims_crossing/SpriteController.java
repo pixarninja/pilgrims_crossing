@@ -8,8 +8,8 @@ public class SpriteController {
     private double yInit;
     private double xPos;
     private double yPos;
-    private double xDelta;
-    private double yDelta;
+    private volatile double xDelta;
+    private volatile double yDelta;
     private int frameLengthInMilliseconds = 35;
     private long lastFrameChangeTime;
     private boolean reacting;

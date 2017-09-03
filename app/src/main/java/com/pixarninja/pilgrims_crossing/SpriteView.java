@@ -91,33 +91,44 @@ public class SpriteView extends SurfaceView {
 
     }
 
-    /*public void onResume(){
-        isRunning = true;
-        spriteThread = new SpriteThread(render[0], this);
+    public void onResume(){
+        spriteThread = new SpriteThread(this);
+        spriteThread.setRunning(true);
         spriteThread.start();
     }
 
     public void onPause(){
+        spriteThread.setRunning(false);
         boolean retry = true;
-        isRunning = false;
         while(retry){
             try {
                 spriteThread.join();
+                spriteThread.setRunning(true);
                 retry = false;
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-    }*/
+    }
 
     protected void drawSprite() {
 
-        Canvas canvas = getHolder().lockCanvas();
+        Canvas canvas;
+
+        try {
+            canvas = getHolder().lockCanvas();
+        } catch(IllegalStateException e) {
+            return;
+        } catch(IllegalArgumentException e) {
+            return;
+        }
 
         if(canvas != null && spriteThread.getRunning()){
             synchronized (getHolder()) {
                 /* refresh scene */
                 canvas.drawColor(0, android.graphics.PorterDuff.Mode.CLEAR);
+
+                spriteThread.setRunning(false);
 
                 /* render scene */
                 if(controllerMap != null) {
@@ -164,6 +175,7 @@ public class SpriteView extends SurfaceView {
 
                         SpriteEntity entity = controller.getEntity();
                         entity.updateView();
+
                         if (entity.getMessage() != null) {
                             canvas.drawText(entity.getMessage(), (float) controller.getXPos(), (float) controller.getYPos(), null);
                         } else {
@@ -176,13 +188,17 @@ public class SpriteView extends SurfaceView {
                                 canvas.drawBitmap(sprite.getSpriteSheet(), sprite.getFrameToDraw(), sprite.getWhereToDraw(), null);
                             }
                         }
+
                     }
                 }
+                spriteThread.setRunning(true);
             }
         }
         try {
             getHolder().unlockCanvasAndPost(canvas);
         } catch(IllegalStateException e) {
+            return;
+        } catch(IllegalArgumentException e) {
             return;
         }
 

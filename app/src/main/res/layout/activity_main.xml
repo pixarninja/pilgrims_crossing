@@ -18,14 +18,14 @@
         android:orientation="horizontal"
         android:layout_height="0dp"
         android:layout_width="fill_parent"
-        android:layout_weight="0.1" />
+        android:layout_weight="0" />
 
     <LinearLayout
         android:id="@+id/middleLayout"
         android:orientation="horizontal"
         android:layout_height="0dp"
         android:layout_width="fill_parent"
-        android:layout_weight="0.9" >
+        android:layout_weight="1" >
 
         <com.pixarninja.pilgrims_crossing.SpriteView
             android:layout_height="match_parent"

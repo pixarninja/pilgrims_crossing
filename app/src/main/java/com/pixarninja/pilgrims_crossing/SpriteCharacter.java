@@ -32,34 +32,34 @@ public class SpriteCharacter extends SpriteEntity {
                 /* center of the sprite */
                 if (yTouchedPos >= boundingBox.top && yTouchedPos <= boundingBox.bottom) {
                     refreshCharacter("center");
-                    controller.setReacting(true);
+                    //controller.setReacting(true);
                 }
                 /* top of the sprite */
                 else if (yTouchedPos < boundingBox.top) {
                     refreshCharacter("top");
-                    controller.setReacting(true);
+                    //controller.setReacting(true);
                 }
                 /* bottom of the sprite */
                 else if (yTouchedPos > boundingBox.bottom) {
                     refreshCharacter("bottom");
-                    controller.setReacting(true);
+                    //controller.setReacting(true);
                 }
             }
             else if (xTouchedPos < boundingBox.left) {
                 /* left side of the sprite */
                 if (yTouchedPos >= boundingBox.top && yTouchedPos <= boundingBox.bottom) {
                     refreshCharacter("left");
-                    controller.setReacting(true);
+                    //controller.setReacting(true);
                 }
                     /* top left side of the sprite */
                 else if (yTouchedPos < boundingBox.top) {
                     refreshCharacter("topLeft");
-                    controller.setReacting(true);
+                    //controller.setReacting(true);
                 }
                     /* bottom right side of the sprite */
                 else if (yTouchedPos > boundingBox.bottom) {
                     refreshCharacter("bottomLeft");
-                    controller.setReacting(true);
+                    //controller.setReacting(true);
                 }
             }
             /* right side of the sprite */
@@ -67,17 +67,17 @@ public class SpriteCharacter extends SpriteEntity {
                 /* right side of the screen */
                 if (yTouchedPos >= boundingBox.top && yTouchedPos <= boundingBox.bottom) {
                     refreshCharacter("right");
-                    controller.setReacting(true);
+                    //controller.setReacting(true);
                 }
                     /* top right side of the sprite */
                 else if (yTouchedPos < boundingBox.top) {
                     refreshCharacter("topRight");
-                    controller.setReacting(true);
+                    //controller.setReacting(true);
                 }
                     /* bottom right side of the sprite */
                 else if (yTouchedPos > boundingBox.bottom) {
                     refreshCharacter("bottomRight");
-                    controller.setReacting(true);
+                    //controller.setReacting(true);
                 }
             }
         }
