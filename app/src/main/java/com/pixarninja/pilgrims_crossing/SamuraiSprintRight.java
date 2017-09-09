@@ -16,6 +16,9 @@ public class SamuraiSprintRight extends SpriteCharacter {
         else {
             this.controller = controller;
         }
+        this.controller.setXInit(width / 2);
+        this.controller.setYInit(height / 2);
+        this.controller.setID("sprint right");
         this.spriteView = spriteView;
         this.res = res;
         this.percentOfScreen = percentOfScreen;
@@ -175,7 +178,7 @@ public class SamuraiSprintRight extends SpriteCharacter {
                 render.setMethod("idle");
                 xSpriteRes = xRes * render.getFrameCount() / 2;
                 ySpriteRes = yRes * render.getFrameCount() / 2;
-                spriteScale = 1;
+                spriteScale = 0.15;
                 render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_sprint_right_loop_norm, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
                 render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                 render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
@@ -193,8 +196,8 @@ public class SamuraiSprintRight extends SpriteCharacter {
                 controller.setYDelta(0);
                 refreshCharacter("idle");
                 ID = "idle";
-                controller.setXPos(width / 2 - render.getSpriteWidth() / 2);
-                controller.setYPos(height / 2 - render.getSpriteHeight() / 2 - height / 15);
+                controller.setXPos(controller.getXInit() - render.getSpriteWidth() / 2);
+                controller.setYPos(controller.getYInit() - render.getSpriteHeight() / 2 - height / 15);
                 render.setXCurrentFrame(0);
                 render.setYCurrentFrame(0);
                 render.setCurrentFrame(0);
@@ -202,18 +205,6 @@ public class SamuraiSprintRight extends SpriteCharacter {
         }
         controller.setEntity(this);
         controller.setTransition(ID);
-        if(ID.equals("begin")) {
-            controller.setBegin(true);
-            controller.setEnd(false);
-        }
-        else if(ID.equals("end")) {
-            controller.setBegin(false);
-            controller.setEnd(true);
-        }
-        else {
-            controller.setBegin(false);
-            controller.setEnd(false);
-        }
         updateBoundingBox();
     }
 

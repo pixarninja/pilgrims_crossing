@@ -28,6 +28,7 @@ public class Sprite {
     double right;
     double bottom;
     private RectF boundingBox;
+    private String direction;
     private String method;
 
 
@@ -165,6 +166,13 @@ public class Sprite {
     }
     public void setBoundingBox(RectF boundingBox) {
         this.boundingBox = boundingBox;
+    }
+
+    public String getDirection() {
+        return this.direction;
+    }
+    public void setDirection(String direction) {
+        this.direction = direction;
     }
 
     public String getMethod() {

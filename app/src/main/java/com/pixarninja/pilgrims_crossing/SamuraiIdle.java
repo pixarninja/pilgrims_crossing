@@ -18,6 +18,7 @@ public class SamuraiIdle extends SpriteCharacter {
         }
         this.controller.setXInit(width / 2);
         this.controller.setYInit(height / 2);
+        this.controller.setID("idle");
         this.spriteView = spriteView;
         this.res = res;
         this.percentOfScreen = percentOfScreen;
@@ -177,7 +178,7 @@ public class SamuraiIdle extends SpriteCharacter {
                 render.setMethod("mirror loop");
                 xSpriteRes = xRes * render.getFrameCount() / 2;
                 ySpriteRes = yRes * render.getFrameCount() / 2;
-                spriteScale = 1;
+                spriteScale = 0.15;
                 render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_idle_mirror_norm, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
                 render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                 render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
@@ -204,18 +205,6 @@ public class SamuraiIdle extends SpriteCharacter {
         }
         controller.setEntity(this);
         controller.setTransition(ID);
-        if(ID.equals("begin")) {
-            controller.setBegin(true);
-            controller.setEnd(false);
-        }
-        else if(ID.equals("end")) {
-            controller.setBegin(false);
-            controller.setEnd(true);
-        }
-        else {
-            controller.setBegin(false);
-            controller.setEnd(false);
-        }
         updateBoundingBox();
     }
 

@@ -154,7 +154,7 @@ abstract class SpriteEntity {
             /* inherit from a certain sprite */
             if(expression[0].equals("inherit")) {
                 render = controller.getEntity().getSprite();
-                return (expression[1]);
+                return(expression[1]);
             }
             else {
                 return("init");

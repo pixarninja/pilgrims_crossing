@@ -16,6 +16,9 @@ public class SamuraiRunRight extends SpriteCharacter {
         else {
             this.controller = controller;
         }
+        this.controller.setXInit(width / 2);
+        this.controller.setYInit(height / 2);
+        this.controller.setID("run right");
         this.spriteView = spriteView;
         this.res = res;
         this.percentOfScreen = percentOfScreen;
@@ -50,6 +53,7 @@ public class SamuraiRunRight extends SpriteCharacter {
                 render.setXFrameCount(1);
                 render.setYFrameCount(1);
                 render.setFrameCount(1);
+                render.setDirection("forwards");
                 render.setMethod("poked");
                 xSpriteRes = 2 * xRes / render.getXFrameCount();
                 ySpriteRes = 2 * yRes / render.getYFrameCount();
@@ -78,6 +82,7 @@ public class SamuraiRunRight extends SpriteCharacter {
                 render.setXFrameCount(4);
                 render.setYFrameCount(2);
                 render.setFrameCount(8);
+                render.setDirection("forwards");
                 render.setMethod("loop");
                 xSpriteRes = 2 * xRes / render.getXFrameCount();
                 ySpriteRes = 2 * yRes / render.getYFrameCount();
@@ -101,6 +106,7 @@ public class SamuraiRunRight extends SpriteCharacter {
                 render.setXFrameCount(4);
                 render.setYFrameCount(2);
                 render.setFrameCount(8);
+                render.setDirection("forwards");
                 render.setMethod("loop");
                 xSpriteRes = 2 * xRes / render.getXFrameCount();
                 ySpriteRes = 2 * yRes / render.getYFrameCount();
@@ -126,6 +132,7 @@ public class SamuraiRunRight extends SpriteCharacter {
                 render.setXFrameCount(4);
                 render.setYFrameCount(2);
                 render.setFrameCount(8);
+                render.setDirection("forwards");
                 render.setMethod("loop");
                 xSpriteRes = 2 * xRes / render.getXFrameCount();
                 ySpriteRes = 2 * yRes / render.getYFrameCount();
@@ -149,6 +156,7 @@ public class SamuraiRunRight extends SpriteCharacter {
                 render.setXFrameCount(4);
                 render.setYFrameCount(2);
                 render.setFrameCount(8);
+                render.setDirection("forwards");
                 render.setMethod("loop");
                 xSpriteRes = 2 * xRes / render.getXFrameCount();
                 ySpriteRes = 2 * yRes / render.getYFrameCount();
@@ -161,30 +169,7 @@ public class SamuraiRunRight extends SpriteCharacter {
                 render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale()));
                 render.setWhereToDraw(new RectF((float)controller.getXPos(), (float)controller.getYPos(), (float)controller.getXPos() + render.getSpriteWidth(), (float)controller.getYPos() + render.getSpriteHeight()));
                 break;
-            case "begin":
-                render.setID(ID);
-                render.setXDimension(4.764);
-                render.setYDimension(5);
-                render.setLeft(0);
-                render.setTop(0);
-                render.setRight(4.764);
-                render.setBottom(5);
-                render.setXFrameCount(6);
-                render.setYFrameCount(1);
-                render.setFrameCount(6);
-                render.setMethod("once");
-                xSpriteRes = xRes * render.getFrameCount() / 2;
-                ySpriteRes = yRes * render.getFrameCount() / 2;
-                spriteScale = 1;
-                render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_run_right_begin_norm, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
-                render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
-                render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale()));
-                render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale()));
-                render.setWhereToDraw(new RectF((float)controller.getXPos(), (float)controller.getYPos(), (float)controller.getXPos() + render.getSpriteWidth(), (float)controller.getYPos() + render.getSpriteHeight()));
-                break;
-            case "idle":
+            case "idleRight":
                 render.setID(ID);
                 render.setXDimension(4.778);
                 render.setYDimension(5);
@@ -195,10 +180,11 @@ public class SamuraiRunRight extends SpriteCharacter {
                 render.setXFrameCount(4);
                 render.setYFrameCount(4);
                 render.setFrameCount(16);
-                render.setMethod("idle");
+                render.setDirection("forwards");
+                render.setMethod("idleRight");
                 xSpriteRes = xRes * render.getFrameCount() / 2;
                 ySpriteRes = yRes * render.getFrameCount() / 2;
-                spriteScale = 1;
+                spriteScale = 0.15;
                 render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_run_right_loop_norm, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
                 render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                 render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
@@ -207,22 +193,23 @@ public class SamuraiRunRight extends SpriteCharacter {
                 render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale()));
                 render.setWhereToDraw(new RectF((float)controller.getXPos(), (float)controller.getYPos(), (float)controller.getXPos() + render.getSpriteWidth(), (float)controller.getYPos() + render.getSpriteHeight()));
                 break;
-            case "end":
+            case "idleLeft":
                 render.setID(ID);
-                render.setXDimension(4.764);
+                render.setXDimension(4.778);
                 render.setYDimension(5);
                 render.setLeft(0);
                 render.setTop(0);
-                render.setRight(4.764);
+                render.setRight(4.778);
                 render.setBottom(5);
-                render.setXFrameCount(6);
-                render.setYFrameCount(1);
-                render.setFrameCount(6);
-                render.setMethod("once");
+                render.setXFrameCount(4);
+                render.setYFrameCount(4);
+                render.setFrameCount(16);
+                render.setDirection("flipped");
+                render.setMethod("idleLeft");
                 xSpriteRes = xRes * render.getFrameCount() / 2;
                 ySpriteRes = yRes * render.getFrameCount() / 2;
-                spriteScale = 1;
-                render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_run_right_end_norm, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
+                spriteScale = 0.15;
+                render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_run_right_loop_norm, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
                 render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                 render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
                 render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
@@ -237,10 +224,10 @@ public class SamuraiRunRight extends SpriteCharacter {
                 render = new Sprite();
                 controller.setXDelta(0);
                 controller.setYDelta(0);
-                refreshCharacter("idle");
-                ID = "idle";
-                controller.setXPos(width / 2 - render.getSpriteWidth() / 2);
-                controller.setYPos(height / 2 - render.getSpriteHeight() / 2 - height / 15);
+                refreshCharacter("idleRight");
+                ID = "idleRight";
+                controller.setXPos(controller.getXInit() - render.getSpriteWidth() / 2);
+                controller.setYPos(controller.getYInit() - render.getSpriteHeight() / 2 - height / 15);
                 render.setXCurrentFrame(0);
                 render.setYCurrentFrame(0);
                 render.setCurrentFrame(0);
@@ -249,18 +236,6 @@ public class SamuraiRunRight extends SpriteCharacter {
         }
         controller.setEntity(this);
         controller.setTransition(ID);
-        if(ID.equals("begin")) {
-            controller.setBegin(true);
-            controller.setEnd(false);
-        }
-        else if(ID.equals("end")) {
-            controller.setBegin(false);
-            controller.setEnd(true);
-        }
-        else {
-            controller.setBegin(false);
-            controller.setEnd(false);
-        }
         updateBoundingBox();
     }
 
@@ -271,65 +246,186 @@ public class SamuraiRunRight extends SpriteCharacter {
         if ( time > controller.getLastFrameChangeTime() + controller.getFrameRate()) {
 
             controller.setLastFrameChangeTime(time);
-            if(count == 0) {
-                delta = 1;
-            }
-            else {
-                delta = -1;
-            }
 
-            if(delta > 0) {
-                render.setCurrentFrame(render.getCurrentFrame() + delta);
-                render.setXCurrentFrame(render.getXCurrentFrame() + delta);
-                if ((render.getXCurrentFrame() >= render.getXFrameCount()) || (render.getCurrentFrame() >= render.getFrameCount())) {
-                    render.setYCurrentFrame(render.getYCurrentFrame() + delta);
-                    if ((render.getYCurrentFrame() >= render.getYFrameCount()) || (render.getCurrentFrame() >= render.getFrameCount())) {
-                        if(render.getMethod().equals("once")) {
-                            refreshCharacter("idle");
-                            controller.setReacting(false);
-                            controller.setBegin(false);
-                            controller.setEnd(false);
-                            count = 0;
+            if(render.getDirection().equals("forwards")) {
+                if(count == 0) {
+                    delta = 1;
+                }
+                else {
+                    delta = -1;
+                }
+
+                if(delta > 0) {
+                    render.setCurrentFrame(render.getCurrentFrame() + delta);
+                    render.setXCurrentFrame(render.getXCurrentFrame() + delta);
+                    if ((render.getXCurrentFrame() >= render.getXFrameCount()) || (render.getCurrentFrame() >= render.getFrameCount())) {
+                        render.setYCurrentFrame(render.getYCurrentFrame() + delta);
+                        if ((render.getYCurrentFrame() >= render.getYFrameCount()) || (render.getCurrentFrame() >= render.getFrameCount())) {
+                            if(render.getMethod().equals("once")) {
+                                refreshCharacter("idleRight");
+                                controller.setReacting(false);
+                                count = 0;
+                            }
+                            else if(render.getMethod().equals("mirror") || render.getMethod().equals("poked")) {
+                                render.setCurrentFrame(render.getFrameCount());
+                                render.setXCurrentFrame(render.getXFrameCount() - 1);
+                                render.setYCurrentFrame(render.getYFrameCount() - 1);
+                                count++;
+                            }
+                            /* loop or idle */
+                            else {
+                                controller.setReacting(false);
+                                render.setYCurrentFrame(0);
+                                render.setCurrentFrame(0);
+                                count = 0;
+                            }
                         }
-                        else if(render.getMethod().equals("mirror") || render.getMethod().equals("poked")) {
-                            render.setCurrentFrame(render.getFrameCount());
-                            render.setXCurrentFrame(render.getXFrameCount() - 1);
-                            render.setYCurrentFrame(render.getYFrameCount() - 1);
-                            count++;
-                        }
-                        /* loop or idle */
-                        else {
-                            controller.setReacting(false);
-                            render.setYCurrentFrame(0);
-                            render.setCurrentFrame(0);
-                            count = 0;
+                        if (count <= 0) {
+                            render.setXCurrentFrame(0);
                         }
                     }
-                    if (count <= 0) {
-                        render.setXCurrentFrame(0);
+                }
+                else if (delta == 0) {
+                    render.setCurrentFrame(render.getFrameCount());
+                    render.setXCurrentFrame(render.getXFrameCount() - 1);
+                    render.setYCurrentFrame(render.getYFrameCount() - 1);
+                    count++;
+                }
+                else {
+                    render.setCurrentFrame(render.getCurrentFrame() + delta);
+                    render.setXCurrentFrame(render.getXCurrentFrame() + delta);
+                    if ((render.getXCurrentFrame() < 0) || (render.getCurrentFrame() < 0)) {
+                        render.setYCurrentFrame(render.getYCurrentFrame() + delta);
+                        if ((render.getYCurrentFrame() < 0) || (render.getCurrentFrame() < 0)) {
+                            refreshCharacter("idleRight");
+                            controller.setReacting(false);
+                            count = 0;
+                        }
+                        if (count > 0) {
+                            render.setXCurrentFrame(render.getXFrameCount() - 1);
+                        }
                     }
                 }
             }
-            else if (delta == 0) {
-                render.setCurrentFrame(render.getFrameCount());
-                render.setXCurrentFrame(render.getXFrameCount() - 1);
-                render.setYCurrentFrame(render.getYFrameCount() - 1);
-                count++;
-            }
-            else {
-                render.setCurrentFrame(render.getCurrentFrame() + delta);
-                render.setXCurrentFrame(render.getXCurrentFrame() + delta);
-                if ((render.getXCurrentFrame() < 0) || (render.getCurrentFrame() < 0)) {
-                    render.setYCurrentFrame(render.getYCurrentFrame() + delta);
-                    if ((render.getYCurrentFrame() < 0) || (render.getCurrentFrame() < 0)) {
-                        refreshCharacter("idle");
-                        controller.setReacting(false);
-                        controller.setBegin(false);
-                        controller.setEnd(false);
-                        count = 0;
+
+            else if(render.getDirection().equals("flipped")) {
+                if(count == 0) {
+                    delta = -1;
+                }
+                else {
+                    delta = 1;
+                }
+
+                if(delta < 0) {
+                    render.setCurrentFrame(render.getCurrentFrame() + delta);
+                    render.setXCurrentFrame(render.getXCurrentFrame() + delta);
+                    if ((render.getXCurrentFrame() < 0) || (render.getCurrentFrame() < 0)) {
+                        render.setYCurrentFrame(render.getYCurrentFrame() + delta);
+                        if ((render.getYCurrentFrame() < 0) || (render.getCurrentFrame() < 0)) {
+                            if(render.getMethod().equals("once")) {
+                                refreshCharacter("idleLeft");
+                                controller.setReacting(false);
+                                count = 0;
+                            }
+                            else if(render.getMethod().equals("mirror") || render.getMethod().equals("poked")) {
+                                render.setCurrentFrame(render.getFrameCount() - 1);
+                                render.setXCurrentFrame(render.getXFrameCount() - 1);
+                                render.setYCurrentFrame(render.getYFrameCount() - 1);
+                                count++;
+                            }
+                            /* loop or idle */
+                            else {
+                                controller.setReacting(false);
+                                render.setYCurrentFrame(render.getXFrameCount() - 1);
+                                render.setCurrentFrame(render.getFrameCount() - 1);
+                                count = 0;
+                            }
+                        }
+                        if (count <= 0) {
+                            render.setXCurrentFrame(render.getXFrameCount() - 1);
+                        }
                     }
-                    if (count > 0) {
-                        render.setXCurrentFrame(render.getXFrameCount() - 1);
+                }
+                else if (delta == 0) {
+                    render.setCurrentFrame(0);
+                    render.setXCurrentFrame(0);
+                    render.setYCurrentFrame(0);
+                    count++;
+                }
+                else {
+                    render.setCurrentFrame(render.getCurrentFrame() + delta);
+                    render.setXCurrentFrame(render.getXCurrentFrame() + delta);
+                    if ((render.getXCurrentFrame() >= render.getXFrameCount()) || (render.getCurrentFrame() >= render.getFrameCount())) {
+                        render.setYCurrentFrame(render.getYCurrentFrame() + delta);
+                        if ((render.getYCurrentFrame() >= render.getYFrameCount()) || (render.getCurrentFrame() >= render.getFrameCount())) {
+                            refreshCharacter("idleLeft");
+                            controller.setReacting(false);
+                            count = 0;
+                        }
+                        if (count > 0) {
+                            render.setXCurrentFrame(0);
+                        }
+                    }
+                }
+            }
+
+            else if(render.getDirection().equals("backwards")) {
+                if(count == 0) {
+                    delta = -1;
+                }
+                else {
+                    delta = 1;
+                }
+
+                if(delta < 0) {
+                    render.setCurrentFrame(render.getCurrentFrame() + delta);
+                    render.setXCurrentFrame(render.getXCurrentFrame() + delta);
+                    if ((render.getXCurrentFrame() < 0) || (render.getCurrentFrame() < 0)) {
+                        render.setYCurrentFrame(render.getYCurrentFrame() + delta);
+                        if ((render.getYCurrentFrame() < 0) || (render.getCurrentFrame() < 0)) {
+                            if(render.getMethod().equals("once")) {
+                                refreshCharacter("idleLeft");
+                                controller.setReacting(false);
+                                count = 0;
+                            }
+                            else if(render.getMethod().equals("mirror") || render.getMethod().equals("poked")) {
+                                render.setCurrentFrame(render.getFrameCount() - 1);
+                                render.setXCurrentFrame(render.getXFrameCount() - 1);
+                                render.setYCurrentFrame(render.getYFrameCount() - 1);
+                                count++;
+                            }
+                            /* loop or idle */
+                            else {
+                                controller.setReacting(false);
+                                render.setYCurrentFrame(render.getXFrameCount() - 1);
+                                render.setCurrentFrame(render.getFrameCount() - 1);
+                                count = 0;
+                            }
+                        }
+                        if (count <= 0) {
+                            render.setXCurrentFrame(render.getXFrameCount() - 1);
+                        }
+                    }
+                }
+                else if (delta == 0) {
+                    render.setCurrentFrame(0);
+                    render.setXCurrentFrame(0);
+                    render.setYCurrentFrame(0);
+                    count++;
+                }
+                else {
+                    render.setCurrentFrame(render.getCurrentFrame() + delta);
+                    render.setXCurrentFrame(render.getXCurrentFrame() + delta);
+                    if ((render.getXCurrentFrame() >= render.getXFrameCount()) || (render.getCurrentFrame() >= render.getFrameCount())) {
+                        render.setYCurrentFrame(render.getYCurrentFrame() + delta);
+                        if ((render.getYCurrentFrame() >= render.getYFrameCount()) || (render.getCurrentFrame() >= render.getFrameCount())) {
+                            refreshCharacter("idleLeft");
+                            controller.setReacting(false);
+                            count = 0;
+                        }
+                        if (count > 0) {
+                            render.setXCurrentFrame(0);
+                        }
                     }
                 }
             }
