@@ -2,12 +2,15 @@ package com.pixarninja.pilgrims_crossing;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import java.util.ConcurrentModificationException;
 import java.util.LinkedHashMap;
 
 public class SpriteView extends SurfaceView {
@@ -132,63 +135,68 @@ public class SpriteView extends SurfaceView {
 
                 /* render scene */
                 if(controllerMap != null) {
-                    for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
-                        SpriteController controller = entry.getValue();
+                    try {
+                        for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
+                            SpriteController controller = entry.getValue();
 
-                        /* implement jumping */
-                        if(entry.getKey().equals("BoxController")) {
-                            if (entry.getValue().getYDelta() > 0) {
-                                if (entry.getValue().getYDelta() < 30) {
-                                    if (entry.getValue().getYDelta() < 20) {
-                                        if (entry.getValue().getYDelta() < 10) {
-                                            if (entry.getValue().getYDelta() >= 0) {
-                                                entry.getValue().setYDelta(entry.getValue().getYDelta() - 3);
+                            /* implement jumping */
+                            if (entry.getKey().equals("SamuraiController")) {
+                                if (entry.getValue().getYDelta() > 0) {
+                                    if (entry.getValue().getYDelta() < 30) {
+                                        if (entry.getValue().getYDelta() < 20) {
+                                            if (entry.getValue().getYDelta() < 10) {
+                                                if (entry.getValue().getYDelta() >= 0) {
+                                                    entry.getValue().setYDelta(entry.getValue().getYDelta() - 3);
+                                                }
+                                            } else {
+                                                entry.getValue().setYDelta(entry.getValue().getYDelta() - 4);
                                             }
                                         } else {
-                                            entry.getValue().setYDelta(entry.getValue().getYDelta() - 4);
+                                            entry.getValue().setYDelta(entry.getValue().getYDelta() - 6);
                                         }
                                     } else {
-                                        entry.getValue().setYDelta(entry.getValue().getYDelta() - 6);
+                                        entry.getValue().setYDelta(entry.getValue().getYDelta() - 10);
                                     }
-                                } else {
-                                    entry.getValue().setYDelta(entry.getValue().getYDelta() - 10);
-                                }
-                            } else if (entry.getValue().getYDelta() < 0) {
-                                if (entry.getValue().getYDelta() > -30) {
-                                    if (entry.getValue().getYDelta() > -20) {
-                                        if (entry.getValue().getYDelta() > -10) {
-                                            if (entry.getValue().getYDelta() <= 0) {
-                                                entry.getValue().setYDelta(entry.getValue().getYDelta() + 3);
+                                } else if (entry.getValue().getYDelta() < 0) {
+                                    if (entry.getValue().getYDelta() > -30) {
+                                        if (entry.getValue().getYDelta() > -20) {
+                                            if (entry.getValue().getYDelta() > -10) {
+                                                if (entry.getValue().getYDelta() <= 0) {
+                                                    entry.getValue().setYDelta(entry.getValue().getYDelta() + 3);
+                                                }
+                                            } else {
+                                                entry.getValue().setYDelta(entry.getValue().getYDelta() + 4);
                                             }
                                         } else {
-                                            entry.getValue().setYDelta(entry.getValue().getYDelta() + 4);
+                                            entry.getValue().setYDelta(entry.getValue().getYDelta() + 6);
                                         }
                                     } else {
-                                        entry.getValue().setYDelta(entry.getValue().getYDelta() + 6);
+                                        entry.getValue().setYDelta(entry.getValue().getYDelta() + 10);
                                     }
-                                } else {
-                                    entry.getValue().setYDelta(entry.getValue().getYDelta() + 10);
                                 }
+                                controllerMap.put("SamuraiController", entry.getValue());
                             }
-                            controllerMap.put("BoxController", entry.getValue());
-                        }
 
-                        SpriteEntity entity = controller.getEntity();
-                        entity.updateView();
+                            SpriteEntity entity = controller.getEntity();
+                            entity.updateView();
 
-                        if (entity.getMessage() != null) {
-                            canvas.drawText(entity.getMessage(), (float) controller.getXPos(), (float) controller.getYPos(), null);
-                        } else {
                             Sprite sprite = entity.getSprite();
-                            if(sprite.getSpriteSheet() == null || sprite.getFrameToDraw() == null || sprite.getWhereToDraw() == null) {
-                                //sprite.printSprite();
-                                //System.exit(1);
-                            }
-                            else {
+                            if (sprite.getSpriteSheet() == null || sprite.getFrameToDraw() == null || sprite.getWhereToDraw() == null) {
+                            //sprite.printSprite();
+                            //System.exit(1);
+                            } else {
+                                /* for debug of bounding boxes
+                                Paint paint = new Paint();
+                                paint.setStyle(Paint.Style.STROKE);
+                                paint.setColor(Color.rgb(255, 255, 255));
+                                paint.setStrokeWidth(3);
+                                canvas.drawRect(sprite.getBoundingBox(), paint);*/
                                 canvas.drawBitmap(sprite.getSpriteSheet(), sprite.getFrameToDraw(), sprite.getWhereToDraw(), null);
                             }
-                        }
 
+                        }
+                    } catch (ConcurrentModificationException e) {
+                        ;
                     }
                 }
                 spriteThread.setRunning(true);
@@ -240,17 +248,34 @@ public class SpriteView extends SurfaceView {
             default:
         }
         if (controllerMap != null) {
-            for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
-                if(entry.getValue().getEntity() != null) {
-                    entry.getValue().getEntity().onTouchEvent(this, entry, controllerMap, move, jump, xTouchedPos, yTouchedPos);
+            try {
+                /* remove any dead controllers */
+                for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
+                    if (!entry.getValue().getAlive()) {
+                        controllerMap.remove(entry.getKey());
+                    }
                 }
+                /* call the on touch events for all entities */
+                for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
+                    if (entry.getValue().getEntity() != null) {
+                        entry.getValue().getEntity().onTouchEvent(this, entry, controllerMap, move, jump, xTouchedPos, yTouchedPos);
+                    }
+                }
+                /* check for collisions and refresh the entity if necessary */
+                for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
+                    if (entry.getValue().getEntity() != null) {
+                        entry.getValue().getEntity().onCollisionEvent(entry, controllerMap);
+                    }
+                }
+                /* for debugging purposes
+                for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
+                    if(entry.getValue().getEntity() != null) {
+                        entry.getValue().printController();
+                    }
+                }*/
+            } catch (ConcurrentModificationException e) {
+                ;
             }
-            /* for debugging purposes
-            for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
-                if(entry.getValue().getEntity() != null) {
-                    entry.getValue().printController();
-                }
-            }*/
         }
 
         return true;

@@ -34,17 +34,7 @@ public class MainActivity extends AppCompatActivity {
         int width = (int)(displayMetrics.widthPixels);
 
         /* background */
-        spriteView.setBackgroundResource(R.drawable.background_red);
-
-        /* dark pattern */
-        entity = new DarkPattern(spriteView, getResources(), 3, width, height, (int)(maxRes * 0.4), (int)(maxRes * 0.4),
-                -1, 1, 0, -550, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
-        controllerMap.put("DarkPatternController", entity.getController());
-
-        /* light pattern */
-        entity = new LightPattern(spriteView, getResources(), 3, width, height, (int)(maxRes * 0.4), (int)(maxRes * 0.4),
-                1, -1, -550, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
-        controllerMap.put("LightPatternController", entity.getController());
+        spriteView.setBackgroundResource(R.drawable.background);
 
         /* sprint left button */
         entity = new SpriteButton(spriteView, getResources(), 0.1, width, height, (int)(maxRes * 0.025), (int)(maxRes * 0.025), R.mipmap.button_sprint_left, R.mipmap.button_sprint_left, R.mipmap.button_sprint_left,
@@ -71,9 +61,16 @@ public class MainActivity extends AppCompatActivity {
                 0, 0, (5.5 * width / 6), (8 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
         controllerMap.put("JumpButtonController", entity.getController());
 
-        /* initialize box controller */
+        /* initialize samurai controller */
         entity = new SamuraiIdle(spriteView, getResources(), 0.65, maxRes / 2, maxRes / 2, width, height, null, "init");
         controllerMap.put("SamuraiController", entity.getController());
+
+        /* initialize arrow controllers */
+        for(int i = 0; i < 100; i++) {
+            entity = new Arrow(spriteView, getResources(), 0.10, width, height, (int) (maxRes * 0.4), (int) (maxRes * 0.4),
+                    0, 0, -width, -height, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
+            controllerMap.put("Arrow" + i + "Controller", entity.getController());
+        }
 
         /* set frame rate for all controllers */
         for(LinkedHashMap.Entry<String,SpriteController> controller : controllerMap.entrySet()) {

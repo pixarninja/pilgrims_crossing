@@ -13,7 +13,8 @@ public class SpriteController {
     private volatile double yDelta;
     private int frameLengthInMilliseconds = 35;
     private long lastFrameChangeTime;
-    private boolean reacting;
+    private boolean reacting = false;
+    private boolean alive = true;
 
 
     public String getID() { return this.ID; }
@@ -60,8 +61,11 @@ public class SpriteController {
     public boolean getReacting() { return this.reacting; }
     public void setReacting(boolean reacting) { this.reacting = reacting; }
 
+    public boolean getAlive() { return this.alive; }
+    public void setAlive(boolean alive) { this.alive = alive; }
+
     public void makeTransition(String ID) {
-        this.entity.refreshCharacter(ID);
+        this.entity.refreshEntity(ID);
     }
 
     public void printController() {

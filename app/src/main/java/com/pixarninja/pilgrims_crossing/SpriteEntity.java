@@ -81,7 +81,7 @@ abstract class SpriteEntity {
 
     }
 
-    public void refreshCharacter(String ID) {
+    public void refreshEntity(String ID) {
         render = new Sprite();
     }
 
@@ -170,5 +170,7 @@ abstract class SpriteEntity {
     }
 
     public void onTouchEvent(SpriteView spriteView, LinkedHashMap.Entry<String, SpriteController> entry, LinkedHashMap<String, SpriteController> controllerMap, boolean move, boolean jump, float xTouchedPos, float yTouchedPos) {}
+
+    public void onCollisionEvent(LinkedHashMap.Entry<String, SpriteController> entry, LinkedHashMap<String, SpriteController> controllerMap) {}
 
 }

@@ -50,12 +50,12 @@ public class SpriteButton extends SpriteEntity {
         this.bottom = bottom;
         this.method = method;
 
-        refreshCharacter(ID);
+        refreshEntity(ID);
 
     }
 
     @Override
-    public void refreshCharacter(String ID) {
+    public void refreshEntity(String ID) {
 
         int xSpriteRes;
         int ySpriteRes;
@@ -135,7 +135,7 @@ public class SpriteButton extends SpriteEntity {
             case "init":
             default:
                 render = new Sprite();
-                refreshCharacter("off");
+                refreshEntity("off");
                 ID = "off";
                 controller.setXPos(controller.getXInit() - render.getSpriteWidth() / 2);
                 controller.setYPos(controller.getYInit() - render.getSpriteHeight() / 2);

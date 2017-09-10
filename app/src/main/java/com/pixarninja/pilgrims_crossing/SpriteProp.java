@@ -51,12 +51,12 @@ public class SpriteProp extends SpriteEntity {
         this.bottom = bottom;
         this.method = method;
 
-        refreshCharacter(ID);
+        refreshEntity(ID);
 
     }
 
     @Override
-    public void refreshCharacter(String ID) {
+    public void refreshEntity(String ID) {
 
         int xSpriteRes;
         int ySpriteRes;

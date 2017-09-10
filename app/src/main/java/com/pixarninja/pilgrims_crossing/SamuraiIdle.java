@@ -19,6 +19,7 @@ public class SamuraiIdle extends SpriteCharacter {
         this.controller.setXInit(width / 2);
         this.controller.setYInit(height / 2);
         this.controller.setID("idle");
+        this.controller.setReacting(false);
         this.spriteView = spriteView;
         this.res = res;
         this.percentOfScreen = percentOfScreen;
@@ -28,12 +29,12 @@ public class SamuraiIdle extends SpriteCharacter {
         this.height = height;
         count = 0;
 
-        refreshCharacter(ID);
+        refreshEntity(ID);
 
     }
 
     @Override
-    public void refreshCharacter(String ID) {
+    public void refreshEntity(String ID) {
 
         int xSpriteRes;
         int ySpriteRes;
@@ -41,171 +42,153 @@ public class SamuraiIdle extends SpriteCharacter {
         /* setup sprite via parsing */
         ID = parseID(ID);
 
-        switch (ID) {
-            case "center":
-                render.setID(ID);
-                render.setXDimension(1.611);
-                render.setYDimension(1.611);
-                render.setLeft(0);
-                render.setTop(0);
-                render.setRight(1.611);
-                render.setBottom(1.611);
-                render.setXFrameCount(1);
-                render.setYFrameCount(1);
-                render.setFrameCount(1);
-                render.setMethod("poked");
-                xSpriteRes = 2 * xRes / render.getXFrameCount();
-                ySpriteRes = 2 * yRes / render.getYFrameCount();
-                spriteScale = 0.275;
-                render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_box_idle_red, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
-                render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
-                render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                render.setSpriteWidth((int) (render.getFrameWidth() * render.getFrameScale()));
-                render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
-                Random random = new Random();
-                controller.setXPos(random.nextDouble() * width * 0.5);
-                controller.setYPos(random.nextDouble() * height * 0.5);
-                render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
-                break;
-            case "bottomLeft":
-            case "left":
-            case "topLeft":
-                render.setID(ID);
-                render.setXDimension(6.944);
-                render.setYDimension(2.917);
-                render.setLeft(0);
-                render.setTop(0);
-                render.setRight(6.944);
-                render.setBottom(2.917);
-                render.setXFrameCount(4);
-                render.setYFrameCount(2);
-                render.setFrameCount(8);
-                render.setMethod("loop");
-                xSpriteRes = 2 * xRes / render.getXFrameCount();
-                ySpriteRes = 2 * yRes / render.getYFrameCount();
-                spriteScale = 0.25;
-                render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_box_rotate_right_red_mirror, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
-                render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
-                render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale()));
-                render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale()));
-                render.setWhereToDraw(new RectF((float)controller.getXPos(), (float)controller.getYPos(), (float)controller.getXPos() + render.getSpriteWidth(), (float)controller.getYPos() + render.getSpriteHeight()));
-                break;
-            case "top":
-                render.setID(ID);
-                render.setXDimension(5.944);
-                render.setYDimension(3.444);
-                render.setLeft(0);
-                render.setTop(0);
-                render.setRight(5.944);
-                render.setBottom(3.444);
-                render.setXFrameCount(4);
-                render.setYFrameCount(2);
-                render.setFrameCount(8);
-                render.setMethod("loop");
-                xSpriteRes = 2 * xRes / render.getXFrameCount();
-                ySpriteRes = 2 * yRes / render.getYFrameCount();
-                spriteScale = 0.3;
-                render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_box_rotate_up_red_mirror, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
-                render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
-                render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale()));
-                render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale()));
-                render.setWhereToDraw(new RectF((float)controller.getXPos(), (float)controller.getYPos(), (float)controller.getXPos() + render.getSpriteWidth(), (float)controller.getYPos() + render.getSpriteHeight()));
-                break;
-            case "bottomRight":
-            case "right":
-            case "topRight":
-                render.setID(ID);
-                render.setXDimension(6.889);
-                render.setYDimension(3);
-                render.setLeft(0);
-                render.setTop(0);
-                render.setRight(6.889);
-                render.setBottom(3);
-                render.setXFrameCount(4);
-                render.setYFrameCount(2);
-                render.setFrameCount(8);
-                render.setMethod("loop");
-                xSpriteRes = 2 * xRes / render.getXFrameCount();
-                ySpriteRes = 2 * yRes / render.getYFrameCount();
-                spriteScale = 0.25;
-                render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_box_rotate_left_red_mirror, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
-                render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
-                render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale()));
-                render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale()));
-                render.setWhereToDraw(new RectF((float)controller.getXPos(), (float)controller.getYPos(), (float)controller.getXPos() + render.getSpriteWidth(), (float)controller.getYPos() + render.getSpriteHeight()));
-                break;
-            case "bottom":
-                render.setID(ID);
-                render.setXDimension(6.056);
-                render.setYDimension(3.389);
-                render.setLeft(0);
-                render.setTop(0);
-                render.setRight(6.056);
-                render.setBottom(3.389);
-                render.setXFrameCount(4);
-                render.setYFrameCount(2);
-                render.setFrameCount(8);
-                render.setMethod("loop");
-                xSpriteRes = 2 * xRes / render.getXFrameCount();
-                ySpriteRes = 2 * yRes / render.getYFrameCount();
-                spriteScale = 0.29;
-                render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_box_rotate_down_red_mirror, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
-                render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
-                render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale()));
-                render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale()));
-                render.setWhereToDraw(new RectF((float)controller.getXPos(), (float)controller.getYPos(), (float)controller.getXPos() + render.getSpriteWidth(), (float)controller.getYPos() + render.getSpriteHeight()));
-                break;
-            case "idle":
-                render.setID(ID);
-                render.setXDimension(3.028);
-                render.setYDimension(5);
-                render.setLeft(0);
-                render.setTop(0);
-                render.setRight(3.028);
-                render.setBottom(5);
-                render.setXFrameCount(4);
-                render.setYFrameCount(1);
-                render.setFrameCount(4);
-                render.setMethod("mirror loop");
-                xSpriteRes = xRes * render.getFrameCount() / 2;
-                ySpriteRes = yRes * render.getFrameCount() / 2;
-                spriteScale = 0.15;
-                render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_idle_mirror_norm, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
-                render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
-                render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale()));
-                render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale()));
-                render.setWhereToDraw(new RectF((float)controller.getXPos(), (float)controller.getYPos(), (float)controller.getXPos() + render.getSpriteWidth(), (float)controller.getYPos() + render.getSpriteHeight()));
-                break;
-            case "skip":
-                break;
-            case "init":
-            default:
-                render = new Sprite();
-                controller.setXDelta(0);
-                controller.setYDelta(0);
-                refreshCharacter("idle");
-                ID = "idle";
-                controller.setXPos(controller.getXInit() - render.getSpriteWidth() / 2);
-                controller.setYPos(controller.getYInit() - render.getSpriteHeight() / 2 - height / 15);
-                render.setXCurrentFrame(0);
-                render.setYCurrentFrame(0);
-                render.setCurrentFrame(0);
-                render.setFrameToDraw(new Rect(0, 0, render.getFrameWidth(), render.getFrameHeight()));
+        try {
+            switch (ID) {
+                case "bottomLeft":
+                case "left":
+                case "topLeft":
+                    controller.setReacting(true);
+                    render.setID(ID);
+                    render.setXDimension(6.944);
+                    render.setYDimension(2.917);
+                    render.setLeft(0);
+                    render.setTop(0);
+                    render.setRight(6.944);
+                    render.setBottom(2.917);
+                    render.setXFrameCount(4);
+                    render.setYFrameCount(2);
+                    render.setFrameCount(8);
+                    render.setMethod("once");
+                    xSpriteRes = 2 * xRes / render.getXFrameCount();
+                    ySpriteRes = 2 * yRes / render.getYFrameCount();
+                    spriteScale = 0.07;
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_box_rotate_right_red_mirror, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
+                    render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
+                    render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
+                    render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
+                    render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale()));
+                    render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale()));
+                    render.setWhereToDraw(new RectF((float)controller.getXPos(), (float)controller.getYPos(), (float)controller.getXPos() + render.getSpriteWidth(), (float)controller.getYPos() + render.getSpriteHeight()));
+                    break;
+                case "top":
+                    controller.setReacting(true);
+                    render.setID(ID);
+                    render.setXDimension(5.944);
+                    render.setYDimension(3.444);
+                    render.setLeft(0);
+                    render.setTop(0);
+                    render.setRight(5.944);
+                    render.setBottom(3.444);
+                    render.setXFrameCount(4);
+                    render.setYFrameCount(2);
+                    render.setFrameCount(8);
+                    render.setMethod("once");
+                    xSpriteRes = 2 * xRes / render.getXFrameCount();
+                    ySpriteRes = 2 * yRes / render.getYFrameCount();
+                    spriteScale = 0.07;
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_box_rotate_up_red_mirror, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
+                    render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
+                    render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
+                    render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
+                    render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale()));
+                    render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale()));
+                    render.setWhereToDraw(new RectF((float)controller.getXPos(), (float)controller.getYPos(), (float)controller.getXPos() + render.getSpriteWidth(), (float)controller.getYPos() + render.getSpriteHeight()));
+                    break;
+                case "bottomRight":
+                case "right":
+                case "topRight":
+                    controller.setReacting(true);
+                    render.setID(ID);
+                    render.setXDimension(6.889);
+                    render.setYDimension(3);
+                    render.setLeft(0);
+                    render.setTop(0);
+                    render.setRight(6.889);
+                    render.setBottom(3);
+                    render.setXFrameCount(4);
+                    render.setYFrameCount(2);
+                    render.setFrameCount(8);
+                    render.setMethod("once");
+                    xSpriteRes = 2 * xRes / render.getXFrameCount();
+                    ySpriteRes = 2 * yRes / render.getYFrameCount();
+                    spriteScale = 0.07;
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_box_rotate_left_red_mirror, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
+                    render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
+                    render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
+                    render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
+                    render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale()));
+                    render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale()));
+                    render.setWhereToDraw(new RectF((float)controller.getXPos(), (float)controller.getYPos(), (float)controller.getXPos() + render.getSpriteWidth(), (float)controller.getYPos() + render.getSpriteHeight()));
+                    break;
+                case "bottom":
+                    controller.setReacting(true);
+                    render.setID(ID);
+                    render.setXDimension(6.056);
+                    render.setYDimension(3.389);
+                    render.setLeft(0);
+                    render.setTop(0);
+                    render.setRight(6.056);
+                    render.setBottom(3.389);
+                    render.setXFrameCount(4);
+                    render.setYFrameCount(2);
+                    render.setFrameCount(8);
+                    render.setMethod("once");
+                    xSpriteRes = 2 * xRes / render.getXFrameCount();
+                    ySpriteRes = 2 * yRes / render.getYFrameCount();
+                    spriteScale = 0.07;
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_box_rotate_down_red_mirror, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
+                    render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
+                    render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
+                    render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
+                    render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale()));
+                    render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale()));
+                    render.setWhereToDraw(new RectF((float)controller.getXPos(), (float)controller.getYPos(), (float)controller.getXPos() + render.getSpriteWidth(), (float)controller.getYPos() + render.getSpriteHeight()));
+                    break;
+                case "idle":
+                    controller.setReacting(false);
+                    render.setID(ID);
+                    render.setXDimension(3.028);
+                    render.setYDimension(5);
+                    render.setLeft(0);
+                    render.setTop(0);
+                    render.setRight(3.028);
+                    render.setBottom(5);
+                    render.setXFrameCount(4);
+                    render.setYFrameCount(1);
+                    render.setFrameCount(4);
+                    render.setMethod("mirror loop");
+                    xSpriteRes = xRes * render.getFrameCount() / 2;
+                    ySpriteRes = yRes * render.getFrameCount() / 2;
+                    spriteScale = 0.20;
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_idle_mirror_norm, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
+                    render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
+                    render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
+                    render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
+                    render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale()));
+                    render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale()));
+                    render.setWhereToDraw(new RectF((float)controller.getXPos(), (float)controller.getYPos(), (float)controller.getXPos() + render.getSpriteWidth(), (float)controller.getYPos() + render.getSpriteHeight()));
+                    break;
+                case "skip":
+                    break;
+                case "init":
+                default:
+                    render = new Sprite();
+                    controller.setXDelta(0);
+                    controller.setYDelta(0);
+                    refreshEntity("idle");
+                    ID = "idle";
+                    controller.setXPos(controller.getXInit() - render.getSpriteWidth() / 2);
+                    controller.setYPos(controller.getYInit() - render.getSpriteHeight() / 2 - height / 15);
+                    render.setXCurrentFrame(0);
+                    render.setYCurrentFrame(0);
+                    render.setCurrentFrame(0);
+                    render.setFrameToDraw(new Rect(0, 0, render.getFrameWidth(), render.getFrameHeight()));
+            }
+            controller.setEntity(this);
+            controller.setTransition(ID);
+        } catch(NullPointerException e) {
+            refreshEntity(ID);
         }
-        controller.setEntity(this);
-        controller.setTransition(ID);
-        updateBoundingBox();
     }
 
     @Override
@@ -229,8 +212,7 @@ public class SamuraiIdle extends SpriteCharacter {
                     render.setYCurrentFrame(render.getYCurrentFrame() + delta);
                     if ((render.getYCurrentFrame() >= render.getYFrameCount()) || (render.getCurrentFrame() >= render.getFrameCount())) {
                         if(render.getMethod().equals("once")) {
-                            refreshCharacter("idle");
-                            controller.setReacting(false);
+                            refreshEntity("idle");
                             count = 0;
                         }
                         else if(render.getMethod().equals("mirror") || render.getMethod().equals("mirror loop") || render.getMethod().equals("poked")) {
@@ -269,9 +251,8 @@ public class SamuraiIdle extends SpriteCharacter {
                             render.setCurrentFrame(0);
                         }
                         else {
-                            refreshCharacter("idle");
+                            refreshEntity("idle");
                         }
-                        controller.setReacting(false);
                         count = 0;
                     }
                     if (count > 0) {
@@ -293,13 +274,6 @@ public class SamuraiIdle extends SpriteCharacter {
     }
 
     @Override
-    public void onTouchEvent(SpriteView spriteView, LinkedHashMap.Entry<String, SpriteController> entry, LinkedHashMap<String, SpriteController> controllerMap, boolean move, boolean jump, float xTouchedPos, float yTouchedPos) {
-        if(move && !controller.getReacting()) {
-            if(yTouchedPos >= (7.5 * height / 10)) {
-                return;
-            }
-            super.onTouchEvent(spriteView, entry, controllerMap, move, jump, xTouchedPos, yTouchedPos);
-        }
-    }
+    public void onTouchEvent(SpriteView spriteView, LinkedHashMap.Entry<String, SpriteController> entry, LinkedHashMap<String, SpriteController> controllerMap, boolean move, boolean jump, float xTouchedPos, float yTouchedPos) {}
 
 }
