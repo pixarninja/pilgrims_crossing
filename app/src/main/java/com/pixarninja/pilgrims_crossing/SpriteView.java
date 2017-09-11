@@ -2,8 +2,6 @@ package com.pixarninja.pilgrims_crossing;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -195,6 +193,21 @@ public class SpriteView extends SurfaceView {
                                 paint.setStrokeWidth(3);
                                 canvas.drawRect(sprite.getBoundingBox(), paint);*/
                                 canvas.drawBitmap(sprite.getSpriteSheet(), sprite.getFrameToDraw(), sprite.getWhereToDraw(), null);
+                                try {
+                                    switch (controller.getID()) {
+                                        case "run left":
+                                        case "sprint left":
+                                        case "idle left":
+                                            break;
+                                        case "run right":
+                                        case "sprint right":
+                                        case "idle right":
+                                        default:
+                                    }
+                                }
+                                catch (NullPointerException e) {
+                                    ;
+                                }
                             }
 
                         }

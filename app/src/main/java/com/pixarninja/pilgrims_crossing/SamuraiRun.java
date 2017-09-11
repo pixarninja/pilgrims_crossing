@@ -4,11 +4,10 @@ import android.content.res.Resources;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import java.util.LinkedHashMap;
-import java.util.Random;
 
-public class SamuraiRunRight extends SpriteCharacter {
+public class SamuraiRun extends SpriteCharacter {
 
-    public SamuraiRunRight(SpriteView spriteView, Resources res, double percentOfScreen, int xRes, int yRes, int width, int height, SpriteController controller, String ID) {
+    public SamuraiRun(SpriteView spriteView, Resources res, double percentOfScreen, int xRes, int yRes, int width, int height, SpriteController controller, String ID, String transition) {
 
         if(controller == null) {
             this.controller = new SpriteController();
@@ -18,7 +17,7 @@ public class SamuraiRunRight extends SpriteCharacter {
         }
         this.controller.setXInit(width / 2);
         this.controller.setYInit(height / 2);
-        this.controller.setID("run right");
+        this.controller.setID(ID);
         this.controller.setReacting(false);
         this.spriteView = spriteView;
         this.res = res;
@@ -29,21 +28,21 @@ public class SamuraiRunRight extends SpriteCharacter {
         this.height = height;
         count = 0;
 
-        refreshEntity(ID);
+        refreshEntity(transition);
 
     }
 
     @Override
-    public void refreshEntity(String ID) {
+    public void refreshEntity(String transition) {
 
         int xSpriteRes;
         int ySpriteRes;
 
         /* setup sprite via parsing */
-        ID = parseID(ID);
+        transition = parseID(transition);
 
         try {
-            switch (ID) {
+            switch (transition) {
                 case "bottomLeft":
                 case "left":
                 case "topLeft":
@@ -54,7 +53,7 @@ public class SamuraiRunRight extends SpriteCharacter {
                 case "bottom":
                 case "idleRight":
                     controller.setReacting(false);
-                    render.setID(ID);
+                    render.setID(transition);
                     render.setXDimension(4.778);
                     render.setYDimension(5);
                     render.setLeft(0);
@@ -79,7 +78,7 @@ public class SamuraiRunRight extends SpriteCharacter {
                     break;
                 case "idleLeft":
                     controller.setReacting(false);
-                    render.setID(ID);
+                    render.setID(transition);
                     render.setXDimension(4.778);
                     render.setYDimension(5);
                     render.setLeft(0);
@@ -110,7 +109,7 @@ public class SamuraiRunRight extends SpriteCharacter {
                     controller.setXDelta(0);
                     controller.setYDelta(0);
                     refreshEntity("idleRight");
-                    ID = "idleRight";
+                    transition = "idleRight";
                     controller.setXPos(controller.getXInit() - render.getSpriteWidth() / 2);
                     controller.setYPos(controller.getYInit() - render.getSpriteHeight() / 2 - height / 15);
                     render.setXCurrentFrame(0);
@@ -120,9 +119,9 @@ public class SamuraiRunRight extends SpriteCharacter {
                     render.setWhereToDraw(new RectF((float)controller.getXPos(), (float)controller.getYPos(), (float)controller.getXPos() + render.getSpriteWidth(), (float)controller.getYPos() + render.getSpriteHeight()));
             }
             controller.setEntity(this);
-            controller.setTransition(ID);
+            controller.setTransition(transition);
         } catch(NullPointerException e) {
-            refreshEntity(ID);
+            refreshEntity(transition);
         }
     }
 

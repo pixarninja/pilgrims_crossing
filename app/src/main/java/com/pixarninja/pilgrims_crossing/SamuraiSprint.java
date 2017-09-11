@@ -6,9 +6,9 @@ import android.graphics.RectF;
 import java.util.LinkedHashMap;
 import java.util.Random;
 
-public class SamuraiSprintRight extends SpriteCharacter {
+public class SamuraiSprint extends SpriteCharacter {
 
-    public SamuraiSprintRight(SpriteView spriteView, Resources res, double percentOfScreen, int xRes, int yRes, int width, int height, SpriteController controller, String ID) {
+    public SamuraiSprint(SpriteView spriteView, Resources res, double percentOfScreen, int xRes, int yRes, int width, int height, SpriteController controller, String ID, String transition) {
 
         if(controller == null) {
             this.controller = new SpriteController();
@@ -18,7 +18,7 @@ public class SamuraiSprintRight extends SpriteCharacter {
         }
         this.controller.setXInit(width / 2);
         this.controller.setYInit(height / 2);
-        this.controller.setID("sprint right");
+        this.controller.setID(ID);
         this.controller.setReacting(false);
         this.spriteView = spriteView;
         this.res = res;
@@ -29,21 +29,21 @@ public class SamuraiSprintRight extends SpriteCharacter {
         this.height = height;
         count = 0;
 
-        refreshEntity(ID);
+        refreshEntity(transition);
 
     }
 
     @Override
-    public void refreshEntity(String ID) {
+    public void refreshEntity(String transition) {
 
         int xSpriteRes;
         int ySpriteRes;
 
         /* setup sprite via parsing */
-        ID = parseID(ID);
+        transition = parseID(transition);
 
         try {
-            switch (ID) {
+            switch (transition) {
                 case "bottomLeft":
                 case "left":
                 case "topLeft":
@@ -54,7 +54,7 @@ public class SamuraiSprintRight extends SpriteCharacter {
                 case "bottom":
                 case "idle":
                     controller.setReacting(false);
-                    render.setID(ID);
+                    render.setID(transition);
                     render.setXDimension(5.222);
                     render.setYDimension(5);
                     render.setLeft(0);
@@ -84,7 +84,7 @@ public class SamuraiSprintRight extends SpriteCharacter {
                     controller.setXDelta(0);
                     controller.setYDelta(0);
                     refreshEntity("idle");
-                    ID = "idle";
+                    transition = "idle";
                     controller.setXPos(controller.getXInit() - render.getSpriteWidth() / 2);
                     controller.setYPos(controller.getYInit() - render.getSpriteHeight() / 2 - height / 15);
                     render.setXCurrentFrame(0);
@@ -93,9 +93,9 @@ public class SamuraiSprintRight extends SpriteCharacter {
                     render.setFrameToDraw(new Rect(0, 0, render.getFrameWidth(), render.getFrameHeight()));
             }
             controller.setEntity(this);
-            controller.setTransition(ID);
+            controller.setTransition(transition);
         } catch(NullPointerException e) {
-            refreshEntity(ID);
+            refreshEntity(transition);
         }
     }
 

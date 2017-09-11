@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         controllerMap.put("JumpButtonController", entity.getController());
 
         /* initialize samurai controller */
-        entity = new SamuraiIdle(spriteView, getResources(), 0.65, maxRes / 2, maxRes / 2, width, height, null, "init");
+        entity = new SamuraiIdle(spriteView, getResources(), 0.65, maxRes / 2, maxRes / 2, width, height, null, "idle right", "init");
         controllerMap.put("SamuraiController", entity.getController());
 
         /* initialize arrow controllers */
