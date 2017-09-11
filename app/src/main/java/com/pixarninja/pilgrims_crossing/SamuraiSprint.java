@@ -64,6 +64,7 @@ public class SamuraiSprint extends SpriteCharacter {
                     render.setXFrameCount(4);
                     render.setYFrameCount(4);
                     render.setFrameCount(16);
+                    render.setDirection("forwards");
                     render.setMethod("idle");
                     xSpriteRes = xRes * render.getFrameCount() / 2;
                     ySpriteRes = yRes * render.getFrameCount() / 2;
@@ -97,82 +98,6 @@ public class SamuraiSprint extends SpriteCharacter {
         } catch(NullPointerException e) {
             refreshEntity(transition);
         }
-    }
-
-    @Override
-    public void getCurrentFrame(){
-
-        long time  = System.currentTimeMillis();
-        if ( time > controller.getLastFrameChangeTime() + controller.getFrameRate()) {
-
-            controller.setLastFrameChangeTime(time);
-            if(count == 0) {
-                delta = 1;
-            }
-            else {
-                delta = -1;
-            }
-
-            if(delta > 0) {
-                render.setCurrentFrame(render.getCurrentFrame() + delta);
-                render.setXCurrentFrame(render.getXCurrentFrame() + delta);
-                if ((render.getXCurrentFrame() >= render.getXFrameCount()) || (render.getCurrentFrame() >= render.getFrameCount())) {
-                    render.setYCurrentFrame(render.getYCurrentFrame() + delta);
-                    if ((render.getYCurrentFrame() >= render.getYFrameCount()) || (render.getCurrentFrame() >= render.getFrameCount())) {
-                        if(render.getMethod().equals("once")) {
-                            refreshEntity("idle");
-                            count = 0;
-                        }
-                        else if(render.getMethod().equals("mirror") || render.getMethod().equals("poked")) {
-                            render.setCurrentFrame(render.getFrameCount());
-                            render.setXCurrentFrame(render.getXFrameCount() - 1);
-                            render.setYCurrentFrame(render.getYFrameCount() - 1);
-                            count++;
-                        }
-                        /* loop or idle */
-                        else {
-                            controller.setReacting(false);
-                            render.setYCurrentFrame(0);
-                            render.setCurrentFrame(0);
-                            count = 0;
-                        }
-                    }
-                    if (count <= 0) {
-                        render.setXCurrentFrame(0);
-                    }
-                }
-            }
-            else if (delta == 0) {
-                render.setCurrentFrame(render.getFrameCount());
-                render.setXCurrentFrame(render.getXFrameCount() - 1);
-                render.setYCurrentFrame(render.getYFrameCount() - 1);
-                count++;
-            }
-            else {
-                render.setCurrentFrame(render.getCurrentFrame() + delta);
-                render.setXCurrentFrame(render.getXCurrentFrame() + delta);
-                if ((render.getXCurrentFrame() < 0) || (render.getCurrentFrame() < 0)) {
-                    render.setYCurrentFrame(render.getYCurrentFrame() + delta);
-                    if ((render.getYCurrentFrame() < 0) || (render.getCurrentFrame() < 0)) {
-                        refreshEntity("idle");
-                        count = 0;
-                    }
-                    if (count > 0) {
-                        render.setXCurrentFrame(render.getXFrameCount() - 1);
-                    }
-                }
-            }
-
-        }
-
-        /* update the next frame from the spritesheet that will be drawn */
-        Rect rect = new Rect();
-        rect.left = render.getXCurrentFrame() * render.getFrameWidth();
-        rect.right = rect.left + render.getFrameWidth();
-        rect.top = render.getYCurrentFrame() * render.getFrameHeight();
-        rect.bottom = rect.top + render.getFrameHeight();
-        render.setFrameToDraw(rect);
-
     }
 
     @Override

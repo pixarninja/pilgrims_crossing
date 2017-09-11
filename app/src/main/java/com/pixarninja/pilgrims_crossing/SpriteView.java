@@ -1,8 +1,13 @@
 package com.pixarninja.pilgrims_crossing;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Matrix;
+import android.graphics.Paint;
 import android.graphics.PixelFormat;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -186,18 +191,44 @@ public class SpriteView extends SurfaceView {
                                 //sprite.printSprite();
                                 //System.exit(1);
                             } else {
-                                /* for debug of bounding boxes
-                                Paint paint = new Paint();
-                                paint.setStyle(Paint.Style.STROKE);
-                                paint.setColor(Color.rgb(255, 255, 255));
-                                paint.setStrokeWidth(3);
-                                canvas.drawRect(sprite.getBoundingBox(), paint);*/
-                                canvas.drawBitmap(sprite.getSpriteSheet(), sprite.getFrameToDraw(), sprite.getWhereToDraw(), null);
-                                try {
+                                /* for debugging bounding boxes
+                                if(entry.getKey().equals("SamuraiController")) {
+                                    Paint paint;
+                                    paint = new Paint();
+                                    paint.setStyle(Paint.Style.STROKE);
+                                    paint.setColor(Color.rgb(255, 255, 255));
+                                    paint.setStrokeWidth(3);
+                                    canvas.drawRect(sprite.getBoundingBox(), paint);
+                                    float left = sprite.getWhereToDraw().left;
+                                    float top = sprite.getWhereToDraw().top;
+                                    float right = sprite.getWhereToDraw().right;
+                                    float bottom = sprite.getWhereToDraw().bottom;
+                                    float width = right - left;
+                                    float height = bottom - top;
+                                    RectF entryLeft = new RectF(left, top + height / 3f, left + width / 3f, top + 2 * height / 3f);
+                                    canvas.drawRect(entryLeft, paint);
+                                    RectF entryTopLeft = new RectF(left, top, left + width / 3f, top + height / 3f);
+                                    canvas.drawRect(entryTopLeft, paint);
+                                    RectF entryTop = new RectF(left + width / 3f, top, left + 2 * width / 3f, top + height / 3f);
+                                    canvas.drawRect(entryTop, paint);
+                                    RectF entryTopRight = new RectF(left + 2 * width / 3f, top, right, top + height / 3f);
+                                    canvas.drawRect(entryTopRight, paint);
+                                    RectF entryRight = new RectF(left + 2 * width / 3f, top + height / 3f, right, top + 2 * height / 3f);
+                                    canvas.drawRect(entryRight, paint);
+                                    RectF entryBottomRight = new RectF(left + 2 * width / 3f, top + 2 * height / 3f, right, bottom);
+                                    canvas.drawRect(entryBottomRight, paint);
+                                    RectF entryBottom = new RectF(left + width / 3f, top + 2 * height / 3f, left + 2 * width / 3f, bottom);
+                                    canvas.drawRect(entryBottom, paint);
+                                }*/
+                                Bitmap bitmap = sprite.getSpriteSheet();
+                                /*try {
                                     switch (controller.getID()) {
                                         case "run left":
                                         case "sprint left":
                                         case "idle left":
+                                            Matrix matrix = new Matrix();
+                                            matrix.postScale(-1, 1);
+                                            bitmap.createBitmap(sprite.getSpriteSheet(), 0, 0, sprite.getSpriteWidth(), sprite.getSpriteHeight(), matrix, true);
                                             break;
                                         case "run right":
                                         case "sprint right":
@@ -207,7 +238,8 @@ public class SpriteView extends SurfaceView {
                                 }
                                 catch (NullPointerException e) {
                                     ;
-                                }
+                                }*/
+                                canvas.drawBitmap(bitmap, sprite.getFrameToDraw(), sprite.getWhereToDraw(), null);
                             }
 
                         }
@@ -221,11 +253,9 @@ public class SpriteView extends SurfaceView {
                         /* check for collisions and refresh the entity if necessary */
                         LinkedHashMap<String, SpriteController> additionMap = new LinkedHashMap<>();
                         for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
-                            if (entry.getValue().getEntity() != null && !entry.getValue().getReacting()) {
-                                LinkedHashMap<String, SpriteController> map = entry.getValue().getEntity().onCollisionEvent(entry, controllerMap);
-                                for(LinkedHashMap.Entry<String, SpriteController> addition : map.entrySet()) {
-                                    additionMap.put(addition.getKey(), addition.getValue());
-                                }
+                            if (entry.getValue().getEntity() != null && entry.getKey().equals("SamuraiController")) {
+                                additionMap = entry.getValue().getEntity().onCollisionEvent(entry, controllerMap);
+                                break;
                             }
                         }
                         /* add any entities to the scene that need to be added */

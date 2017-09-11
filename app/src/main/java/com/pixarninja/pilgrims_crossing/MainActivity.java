@@ -36,6 +36,17 @@ public class MainActivity extends AppCompatActivity {
         /* background */
         spriteView.setBackgroundResource(R.drawable.background);
 
+        /* initialize samurai controller */
+        entity = new SamuraiIdle(spriteView, getResources(), 0.65, maxRes / 2, maxRes / 2, width, height, null, "idle right", "init");
+        controllerMap.put("SamuraiController", entity.getController());
+
+        /* initialize arrow controllers */
+        for(int i = 0; i < 100; i++) {
+            entity = new Arrow(spriteView, getResources(), 0.10, width, height, (int) (maxRes * 0.4), (int) (maxRes * 0.4),
+                    0, 0, -width, -height, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, null, "init");
+            controllerMap.put("Arrow" + i + "Controller", entity.getController());
+        }
+
         /* sprint left button */
         entity = new SpriteButton(spriteView, getResources(), 0.1, width, height, (int)(maxRes * 0.025), (int)(maxRes * 0.025), R.mipmap.button_sprint_left, R.mipmap.button_sprint_left, R.mipmap.button_sprint_left,
                 0, 0, (0.5 * width / 6), (8 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
@@ -65,17 +76,6 @@ public class MainActivity extends AppCompatActivity {
         entity = new SpriteButton(spriteView, getResources(), 0.1, width, height, (int)(maxRes * 0.025), (int)(maxRes * 0.025), R.mipmap.button_jump, R.mipmap.button_jump, R.mipmap.button_jump,
                 0, 0, (5.5 * width / 6), (8 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
         controllerMap.put("JumpButtonController", entity.getController());
-
-        /* initialize samurai controller */
-        entity = new SamuraiIdle(spriteView, getResources(), 0.65, maxRes / 2, maxRes / 2, width, height, null, "idle right", "init");
-        controllerMap.put("SamuraiController", entity.getController());
-
-        /* initialize arrow controllers */
-        for(int i = 0; i < 50; i++) {
-            entity = new Arrow(spriteView, getResources(), 0.10, width, height, (int) (maxRes * 0.4), (int) (maxRes * 0.4),
-                    0, 0, -width, -height, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, null, "init");
-            controllerMap.put("Arrow" + i + "Controller", entity.getController());
-        }
 
         /* set frame rate for all controllers */
         for(LinkedHashMap.Entry<String,SpriteController> controller : controllerMap.entrySet()) {

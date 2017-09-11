@@ -195,10 +195,10 @@ public class SpriteButton extends SpriteEntity {
                             SpriteCharacter oldSamurai = (SpriteCharacter) samuraiController.getEntity();
                             transition = samuraiController.getTransition();
 
-                            if (transition.equals("idleLeft")) {
-                                transition = "inherit idleLeft";
+                            if (transition.equals("idle")) {
+                                transition = "inherit idle";
                             } else {
-                                transition = "idleLeft";
+                                transition = "idle";
                             }
 
                             SpriteCharacter newSamurai = new SamuraiRun(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, samuraiController, "run left", transition);
@@ -251,10 +251,10 @@ public class SpriteButton extends SpriteEntity {
                             SpriteCharacter oldSamurai = (SpriteCharacter) samuraiController.getEntity();
                             transition = samuraiController.getTransition();
 
-                            if (transition.equals("idleRight")) {
-                                transition = "inherit idleRight";
+                            if (transition.equals("idle")) {
+                                transition = "inherit idle";
                             } else {
-                                transition = "idleRight";
+                                transition = "idle";
                             }
 
                             SpriteCharacter newSamurai = new SamuraiRun(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, samuraiController, "run right", transition);

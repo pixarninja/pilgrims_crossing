@@ -208,7 +208,6 @@ public class Arrow extends SpriteProp{
                         RectF compareBox = test.getValue().getEntity().getSprite().getBoundingBox();
                         /* if the objects intersect, find where they intersect for the entry bounding boxe*/
                         if (entryBox.intersect(compareBox)) {
-                            controller.setReacting(true);
                             entry.getValue().getEntity().refreshEntity("inherit destroyed");
                         }
                     }
