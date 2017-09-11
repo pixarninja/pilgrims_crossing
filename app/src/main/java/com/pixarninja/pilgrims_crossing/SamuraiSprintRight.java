@@ -52,29 +52,6 @@ public class SamuraiSprintRight extends SpriteCharacter {
                 case "right":
                 case "topRight":
                 case "bottom":
-                    controller.setReacting(true);
-                    render.setID(ID);
-                    render.setXDimension(6.778);
-                    render.setYDimension(5);
-                    render.setLeft(0);
-                    render.setTop(0);
-                    render.setRight(6.778);
-                    render.setBottom(3);
-                    render.setXFrameCount(4);
-                    render.setYFrameCount(1);
-                    render.setFrameCount(4);
-                    render.setMethod("once");
-                    xSpriteRes = 2 * xRes / render.getXFrameCount();
-                    ySpriteRes = 2 * yRes / render.getYFrameCount();
-                    spriteScale = 0.20;
-                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_sprint_punch_right_norm, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
-                    render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
-                    render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                    render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                    render.setSpriteWidth((int) (render.getFrameWidth() * render.getFrameScale()));
-                    render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
-                    render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
-                    break;
                 case "idle":
                     controller.setReacting(false);
                     render.setID(ID);
@@ -144,7 +121,6 @@ public class SamuraiSprintRight extends SpriteCharacter {
                     if ((render.getYCurrentFrame() >= render.getYFrameCount()) || (render.getCurrentFrame() >= render.getFrameCount())) {
                         if(render.getMethod().equals("once")) {
                             refreshEntity("idle");
-                            controller.setReacting(false);
                             count = 0;
                         }
                         else if(render.getMethod().equals("mirror") || render.getMethod().equals("poked")) {
@@ -179,7 +155,6 @@ public class SamuraiSprintRight extends SpriteCharacter {
                     render.setYCurrentFrame(render.getYCurrentFrame() + delta);
                     if ((render.getYCurrentFrame() < 0) || (render.getCurrentFrame() < 0)) {
                         refreshEntity("idle");
-                        controller.setReacting(false);
                         count = 0;
                     }
                     if (count > 0) {

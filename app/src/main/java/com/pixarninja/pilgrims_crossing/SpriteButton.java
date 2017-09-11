@@ -152,6 +152,7 @@ public class SpriteButton extends SpriteEntity {
 
         String transition;
         String ID;
+        SpriteController samuraiController = controllerMap.get("SamuraiController");
 
         if(move || jump) {
 
@@ -164,198 +165,186 @@ public class SpriteButton extends SpriteEntity {
                     /* change the sprite if needed */
                     if(entry.getKey().equals("SprintLeftButtonController")) {
 
-                        SpriteController controller;
-
                         /* set samurai */
-                        controller = controllerMap.get("SamuraiController");
-                        SpriteCharacter oldSamurai = (SpriteCharacter) controller.getEntity();
-                        transition = controller.getTransition();
+                        if(!samuraiController.getReacting()) {
+                            SpriteCharacter oldSamurai = (SpriteCharacter) samuraiController.getEntity();
+                            transition = samuraiController.getTransition();
 
-                        if(!transition.equals("idle")) {
-                            ID = "idle";
-                        }
-                        else {
-                            ID = "inherit " + transition;
-                        }
+                            if (transition.equals("idle")) {
+                                ID = "inherit idle";
+                            } else {
+                                ID = "idle";
+                            }
 
-                        SpriteCharacter newSamurai = new SamuraiSprintRight(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, controller, ID);
-                        newSamurai.setCount(oldSamurai.getCount());
-                        newSamurai.setDelta(oldSamurai.getDelta());
-                        controller.setEntity(newSamurai);
+                            SpriteCharacter newSamurai = new SamuraiSprintRight(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, samuraiController, ID);
+                            newSamurai.setCount(oldSamurai.getCount());
+                            newSamurai.setDelta(oldSamurai.getDelta());
+                            samuraiController.setEntity(newSamurai);
+                        }
 
                         /* move character */
-                        if(controller.getXPos() > 0) {
-                            controller.setXDelta(-30);
-                        }
-                        else {
-                            controller.setXDelta(0);
-                        }
+                        samuraiController.setXDelta(-25);
 
-                        controllerMap.put("SamuraiController", controller);
+                        controllerMap.put("SamuraiController", samuraiController);
 
                     }
                     else if(entry.getKey().equals("RunLeftButtonController")) {
 
-                        SpriteController controller;
-
                         /* set samurai */
-                        controller = controllerMap.get("SamuraiController");
-                        SpriteCharacter oldSamurai = (SpriteCharacter) controller.getEntity();
-                        transition = controller.getTransition();
+                        if(!samuraiController.getReacting()) {
+                            SpriteCharacter oldSamurai = (SpriteCharacter) samuraiController.getEntity();
+                            transition = samuraiController.getTransition();
 
-                        if(!transition.equals("idleLeft")) {
-                            ID = "idleLeft";
-                        }
-                        else {
-                            ID = "inherit " + transition;
-                        }
+                            if (transition.equals("idleLeft")) {
+                                ID = "inherit idleLeft";
+                            } else {
+                                ID = "idleLeft";
+                            }
 
-                        SpriteCharacter newSamurai = new SamuraiRunRight(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, controller, ID);
-                        newSamurai.setCount(oldSamurai.getCount());
-                        newSamurai.setDelta(oldSamurai.getDelta());
-                        controller.setEntity(newSamurai);
+                            SpriteCharacter newSamurai = new SamuraiRunRight(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, samuraiController, ID);
+                            newSamurai.setCount(oldSamurai.getCount());
+                            newSamurai.setDelta(oldSamurai.getDelta());
+                            samuraiController.setEntity(newSamurai);
+                        }
 
                         /* move character */
-                        if(controller.getXPos() > 0) {
-                            controller.setXDelta(-15);
-                        }
-                        else {
-                            controller.setXDelta(0);
+                        samuraiController.setXDelta(-10);
+
+                        controllerMap.put("SamuraiController", samuraiController);
+
+                    }
+                    else if(entry.getKey().equals("StopButtonController")) {
+
+                        /* set samurai */
+                        if(!samuraiController.getReacting()) {
+                            SpriteCharacter oldSamurai = (SpriteCharacter) samuraiController.getEntity();
+                            transition = samuraiController.getTransition();
+
+                            if (transition.equals("idle")) {
+                                ID = "inherit idle";
+                            } else {
+                                ID = "idle";
+                            }
+
+                            SpriteCharacter newSamurai = new SamuraiIdle(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, samuraiController, ID);
+                            newSamurai.setCount(oldSamurai.getCount());
+                            newSamurai.setDelta(oldSamurai.getDelta());
+                            samuraiController.setEntity(newSamurai);
                         }
 
-                        controllerMap.put("SamuraiController", controller);
+                        /* move character */
+                        samuraiController.setXDelta(0);
+
+                        controllerMap.put("SamuraiController", samuraiController);
 
                     }
                     else if(entry.getKey().equals("RunRightButtonController")) {
 
-                        SpriteController controller;
-
                         /* set samurai */
-                        controller = controllerMap.get("SamuraiController");
-                        controller.printController();
-                        SpriteCharacter oldSamurai = (SpriteCharacter) controller.getEntity();
-                        transition = controller.getTransition();
+                        if(!samuraiController.getReacting()) {
+                            SpriteCharacter oldSamurai = (SpriteCharacter) samuraiController.getEntity();
+                            transition = samuraiController.getTransition();
 
-                        if(!transition.equals("idleRight")) {
-                            ID = "idleRight";
-                        }
-                        else {
-                            ID = "inherit " + transition;
-                        }
+                            if (transition.equals("idleRight")) {
+                                ID = "inherit idleRight";
+                            } else {
+                                ID = "idleRight";
+                            }
 
-                        System.out.println(ID);
-                        SpriteCharacter newSamurai = new SamuraiRunRight(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, controller, ID);
-                        newSamurai.setCount(oldSamurai.getCount());
-                        newSamurai.setDelta(oldSamurai.getDelta());
-                        controller.setEntity(newSamurai);
+                            SpriteCharacter newSamurai = new SamuraiRunRight(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, samuraiController, ID);
+                            newSamurai.setCount(oldSamurai.getCount());
+                            newSamurai.setDelta(oldSamurai.getDelta());
+                            samuraiController.setEntity(newSamurai);
+                        }
 
                         /* move character */
-                        if(controller.getXPos() <  width - (newSamurai.getSprite().getSpriteWidth())) {
-                            controller.setXDelta(15);
-                        }
-                        else {
-                            controller.setXDelta(0);
-                        }
+                        samuraiController.setXDelta(10);
 
-                        controllerMap.put("SamuraiController", controller);
+                        controllerMap.put("SamuraiController", samuraiController);
 
                     }
                     else if(entry.getKey().equals("SprintRightButtonController")) {
 
-                        SpriteController controller;
-
                         /* set samurai */
-                        controller = controllerMap.get("SamuraiController");
-                        SpriteCharacter oldSamurai = (SpriteCharacter) controller.getEntity();
-                        transition = controller.getTransition();
+                        if(!samuraiController.getReacting()) {
+                            SpriteCharacter oldSamurai = (SpriteCharacter) samuraiController.getEntity();
+                            transition = samuraiController.getTransition();
 
-                        if(!transition.equals("idle")) {
-                            ID = "idle";
-                        }
-                        else {
-                            ID = "inherit " + transition;
-                        }
+                            if (transition.equals("idle")) {
+                                ID = "inherit idle";
+                            } else {
+                                ID = "idle";
+                            }
 
-                        SpriteCharacter newSamurai = new SamuraiSprintRight(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, controller, ID);
-                        newSamurai.setCount(oldSamurai.getCount());
-                        newSamurai.setDelta(oldSamurai.getDelta());
-                        controller.setEntity(newSamurai);
+                            SpriteCharacter newSamurai = new SamuraiSprintRight(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, samuraiController, ID);
+                            newSamurai.setCount(oldSamurai.getCount());
+                            newSamurai.setDelta(oldSamurai.getDelta());
+                            samuraiController.setEntity(newSamurai);
+                        }
 
                         /* move character */
-                        if(controller.getXPos() <  width - (newSamurai.getSprite().getSpriteWidth())) {
-                            controller.setXDelta(30);
-                        }
-                        else {
-                            controller.setXDelta(0);
-                        }
+                        samuraiController.setXDelta(25);
 
-                        controllerMap.put("SamuraiController", controller);
+                        controllerMap.put("SamuraiController", samuraiController);
 
                     }
                     else if(entry.getKey().equals("JumpButtonController")) {
+
                         if(jump) {
 
-                            SpriteController controller;
-
                             /* set samurai */
-                            controller = controllerMap.get("SamuraiController");
-                            SpriteCharacter oldSamurai = (SpriteCharacter) controller.getEntity();
-                            transition = controller.getTransition();
+                            SpriteCharacter oldSamurai = (SpriteCharacter) samuraiController.getEntity();
+                            transition = samuraiController.getTransition();
                             ID = "inherit " + transition;
-                            SpriteCharacter newSamurai = new SamuraiSprintRight(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, controller, ID);
+                            SpriteCharacter newSamurai = new SamuraiSprintRight(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, samuraiController, ID);
                             newSamurai.setCount(oldSamurai.getCount());
                             newSamurai.setDelta(oldSamurai.getDelta());
-                            controller.setEntity(newSamurai);
+                            samuraiController.setEntity(newSamurai);
 
                             /* start jump */
-                            if (controller.getYDelta() == 0) {
-                                controller.setYDelta(30);
+                            if (samuraiController.getYDelta() == 0) {
+                                samuraiController.setYDelta(30);
                             }
 
-                            controllerMap.put("SamuraiController", controller);
+                            controllerMap.put("SamuraiController", samuraiController);
 
                         }
+
                     }
                 }
             }
             /* outside the range of the slider */
             else if (xTouchedPos >= 3.75 * width / 6 || xTouchedPos <= 0.25 * width / 6 || yTouchedPos >= 8.5 * height / 10 || yTouchedPos <= 7.5 * height / 10) {
 
-                SpriteController controller;
-
                 /* set samurai */
-                controller = controllerMap.get("SamuraiController");
-                SpriteCharacter oldSamurai = (SpriteCharacter) controller.getEntity();
-                ID = "idle";
-                SpriteCharacter newSamurai = new SamuraiIdle(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, controller, ID);
+                SpriteCharacter oldSamurai = (SpriteCharacter) samuraiController.getEntity();
+                ID = "inherit idle";
+                SpriteCharacter newSamurai = new SamuraiIdle(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, samuraiController, ID);
                 newSamurai.setCount(oldSamurai.getCount());
                 newSamurai.setDelta(oldSamurai.getDelta());
-                controller.setEntity(newSamurai);
+                samuraiController.setEntity(newSamurai);
 
                 /* move character */
-                controller.setXDelta(0);
+                samuraiController.setXDelta(0);
 
-                controllerMap.put("SamuraiController", controller);
+                controllerMap.put("SamuraiController", samuraiController);
 
             }
         }
         else {
 
-            SpriteController controller;
-
-                /* set samurai */
-            controller = controllerMap.get("SamuraiController");
-            SpriteCharacter oldSamurai = (SpriteCharacter) controller.getEntity();
-            ID = "idle";
-            SpriteCharacter newSamurai = new SamuraiIdle(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, controller, ID);
+            /* set samurai */
+            SpriteCharacter oldSamurai = (SpriteCharacter) samuraiController.getEntity();
+            ID = "inherit idle";
+            SpriteCharacter newSamurai = new SamuraiIdle(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, samuraiController, ID);
             newSamurai.setCount(oldSamurai.getCount());
             newSamurai.setDelta(oldSamurai.getDelta());
-            controller.setEntity(newSamurai);
+            samuraiController.setEntity(newSamurai);
 
                 /* move character */
-            controller.setXDelta(0);
+            samuraiController.setXDelta(0);
 
-            controllerMap.put("SamuraiController", controller);
+            controllerMap.put("SamuraiController", samuraiController);
 
         }
     }

@@ -52,30 +52,6 @@ public class SamuraiRunRight extends SpriteCharacter {
                 case "right":
                 case "topRight":
                 case "bottom":
-                    controller.setReacting(true);
-                    render.setID(ID);
-                    render.setXDimension(6.778);
-                    render.setYDimension(5);
-                    render.setLeft(0);
-                    render.setTop(0);
-                    render.setRight(6.778);
-                    render.setBottom(3);
-                    render.setXFrameCount(4);
-                    render.setYFrameCount(1);
-                    render.setFrameCount(4);
-                    render.setDirection("forwards");
-                    render.setMethod("once");
-                    xSpriteRes = 2 * xRes / render.getXFrameCount();
-                    ySpriteRes = 2 * yRes / render.getYFrameCount();
-                    spriteScale = 0.20;
-                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_sprint_punch_right_norm, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
-                    render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
-                    render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                    render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                    render.setSpriteWidth((int) (render.getFrameWidth() * render.getFrameScale()));
-                    render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
-                    render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
-                    break;
                 case "idleRight":
                     controller.setReacting(false);
                     render.setID(ID);
@@ -302,6 +278,7 @@ public class SamuraiRunRight extends SpriteCharacter {
                             }
                             /* loop or idle */
                             else {
+                                controller.setReacting(false);
                                 render.setYCurrentFrame(render.getXFrameCount() - 1);
                                 render.setCurrentFrame(render.getFrameCount() - 1);
                                 count = 0;

@@ -96,12 +96,20 @@ public class SpriteCharacter extends SpriteEntity {
             int i = 1;
 
             for (LinkedHashMap.Entry<String, SpriteController> test : controllerMap.entrySet()) {
-                if(!test.getKey().equals(entry.getKey())) {
+
+                if(!test.getKey().equals(entry.getKey()) && !test.getValue().getReacting()) {
+
                     if (test.getValue().getEntity().getSprite().getBoundingBox() != null) {
+
                         RectF compareBox = test.getValue().getEntity().getSprite().getBoundingBox();
+
                         /* if the objects intersect, find where they intersect for the entry bounding box */
                         if (entryBox.intersect(compareBox)) {
+
+                            /* first call the comparison's collision handler, then set to reacting */
+                            test.getValue().getEntity().onCollisionEvent(test, controllerMap);
                             controller.setReacting(true);
+
                             if (entryLeft.intersect(compareBox)) {
                                 entry.getValue().getEntity().refreshEntity("inherit left");
                                 SpriteController samuraiController = controllerMap.get("SamuraiController");
@@ -175,10 +183,15 @@ public class SpriteCharacter extends SpriteEntity {
                                 map.put("Swipe" + i, entity.getController());
                             }
                             break;
+
                         }
+
                     }
+
                 }
+
             }
+
         }
 
         return map;

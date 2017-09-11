@@ -86,6 +86,7 @@ public class SpriteView extends SurfaceView {
                         spriteThread.join();
                         retry = false;
                     } catch (InterruptedException e) {
+                        ;
                     }
                 }
             }
@@ -131,11 +132,13 @@ public class SpriteView extends SurfaceView {
                 /* refresh scene */
                 canvas.drawColor(0, android.graphics.PorterDuff.Mode.CLEAR);
 
-                spriteThread.setRunning(false);
-
                 /* render scene */
                 if(controllerMap != null) {
                     try {
+
+                        spriteThread.setRunning(false);
+
+                        /* render all entities to the screen */
                         for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
                             SpriteController controller = entry.getValue();
 
@@ -182,8 +185,8 @@ public class SpriteView extends SurfaceView {
 
                             Sprite sprite = entity.getSprite();
                             if (sprite.getSpriteSheet() == null || sprite.getFrameToDraw() == null || sprite.getWhereToDraw() == null) {
-                            //sprite.printSprite();
-                            //System.exit(1);
+                                //sprite.printSprite();
+                                //System.exit(1);
                             } else {
                                 /* for debug of bounding boxes
                                 Paint paint = new Paint();
@@ -195,11 +198,38 @@ public class SpriteView extends SurfaceView {
                             }
 
                         }
+
+                        /* remove any dead controllers */
+                        for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
+                            if (!entry.getValue().getAlive()) {
+                                controllerMap.remove(entry.getKey());
+                            }
+                        }
+                        /* check for collisions and refresh the entity if necessary */
+                        LinkedHashMap<String, SpriteController> additionMap = new LinkedHashMap<>();
+                        for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
+                            if (entry.getValue().getEntity() != null && !entry.getValue().getReacting()) {
+                                LinkedHashMap<String, SpriteController> map = entry.getValue().getEntity().onCollisionEvent(entry, controllerMap);
+                                for(LinkedHashMap.Entry<String, SpriteController> addition : map.entrySet()) {
+                                    additionMap.put(addition.getKey(), addition.getValue());
+                                }
+                            }
+                        }
+                        /* add any entities to the scene that need to be added */
+                        for(LinkedHashMap.Entry<String, SpriteController> addition : additionMap.entrySet()) {
+                            controllerMap.put(addition.getKey(), addition.getValue());
+                        }
+
+                        spriteThread = new SpriteThread(this);
+                        spriteThread.setRunning(true);
+                        spriteThread.start();
+
                     } catch (ConcurrentModificationException e) {
-                        ;
+                        spriteThread = new SpriteThread(this);
+                        spriteThread.setRunning(true);
+                        spriteThread.start();
                     }
                 }
-                spriteThread.setRunning(true);
             }
         }
         try {
@@ -249,31 +279,11 @@ public class SpriteView extends SurfaceView {
         }
         if (controllerMap != null) {
             try {
-                /* remove any dead controllers */
-                for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
-                    if (!entry.getValue().getAlive()) {
-                        controllerMap.remove(entry.getKey());
-                    }
-                }
                 /* call the on touch events for all entities */
                 for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
                     if (entry.getValue().getEntity() != null  && !entry.getValue().getReacting()) {
                         entry.getValue().getEntity().onTouchEvent(this, entry, controllerMap, move, jump, xTouchedPos, yTouchedPos);
                     }
-                }
-                /* check for collisions and refresh the entity if necessary */
-                LinkedHashMap<String, SpriteController> additionMap = new LinkedHashMap<>();
-                for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
-                    if (entry.getValue().getEntity() != null && !entry.getValue().getReacting()) {
-                        LinkedHashMap<String, SpriteController> map = entry.getValue().getEntity().onCollisionEvent(entry, controllerMap);
-                        for(LinkedHashMap.Entry<String, SpriteController> addition : map.entrySet()) {
-                            additionMap.put(addition.getKey(), addition.getValue());
-                        }
-                    }
-                }
-                /* add any sprites to the scene that need to be added */
-                for(LinkedHashMap.Entry<String, SpriteController> addition : additionMap.entrySet()) {
-                    controllerMap.put(addition.getKey(), addition.getValue());
                 }
                 /* for debugging purposes
                 for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {

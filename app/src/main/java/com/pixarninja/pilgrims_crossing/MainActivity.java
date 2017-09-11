@@ -43,17 +43,22 @@ public class MainActivity extends AppCompatActivity {
 
         /* run left button */
         entity = new SpriteButton(spriteView, getResources(), 0.1, width, height, (int)(maxRes * 0.025), (int)(maxRes * 0.025), R.mipmap.button_run_left, R.mipmap.button_run_left, R.mipmap.button_run_left,
-                0, 0, (1.25 * width / 6), (8 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
+                0, 0, (1.2 * width / 6), (8 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
         controllerMap.put("RunLeftButtonController", entity.getController());
+
+        /* stop button */
+        entity = new SpriteButton(spriteView, getResources(), 0.1, width, height, (int)(maxRes * 0.025), (int)(maxRes * 0.025), R.mipmap.button_stop, R.mipmap.button_stop, R.mipmap.button_stop,
+                0, 0, (1.9 * width / 6), (8 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
+        controllerMap.put("StopButtonController", entity.getController());
 
         /* run right button */
         entity = new SpriteButton(spriteView, getResources(), 0.1, width, height, (int)(maxRes * 0.025), (int)(maxRes * 0.025), R.mipmap.button_run_right, R.mipmap.button_run_right, R.mipmap.button_run_right,
-                0, 0, (2 * width / 6), (8 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
+                0, 0, (2.6 * width / 6), (8 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
         controllerMap.put("RunRightButtonController", entity.getController());
 
         /* sprint right button */
         entity = new SpriteButton(spriteView, getResources(), 0.1, width, height, (int)(maxRes * 0.025), (int)(maxRes * 0.025), R.mipmap.button_sprint_right, R.mipmap.button_sprint_right, R.mipmap.button_sprint_right,
-                0, 0, (2.75 * width / 6), (8 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
+                0, 0, (3.3 * width / 6), (8 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
         controllerMap.put("SprintRightButtonController", entity.getController());
 
         /* jump button */
@@ -66,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         controllerMap.put("SamuraiController", entity.getController());
 
         /* initialize arrow controllers */
-        for(int i = 0; i < 25; i++) {
+        for(int i = 0; i < 50; i++) {
             entity = new Arrow(spriteView, getResources(), 0.10, width, height, (int) (maxRes * 0.4), (int) (maxRes * 0.4),
                     0, 0, -width, -height, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, null, "init");
             controllerMap.put("Arrow" + i + "Controller", entity.getController());
@@ -87,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
         final long availHeapSizeInMB = maxHeapSizeInMB - usedMemInMB;
         System.out.println("Memory Used: " + usedMemInMB + "MB");
         System.out.println("Max Heap Size: " + maxHeapSizeInMB + "MB");
-        System.out.println("Avaliable Heap Size: " + availHeapSizeInMB + "MB");
+        System.out.println("Available Heap Size: " + availHeapSizeInMB + "MB");
 
     }
 

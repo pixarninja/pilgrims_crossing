@@ -185,7 +185,7 @@ public class Arrow extends SpriteProp{
             Random random = new Random();
             if((random.nextInt(100) % 40) == 0) {
                 controller.setXDelta(0);
-                controller.setYDelta(20);
+                controller.setYDelta(15);
             }
         }
 
@@ -203,7 +203,7 @@ public class Arrow extends SpriteProp{
         if(!controller.getReacting() && entry.getValue().getEntity().getSprite().getBoundingBox() != null) {
             RectF entryBox = entry.getValue().getEntity().getSprite().getBoundingBox();
             for (LinkedHashMap.Entry<String, SpriteController> test : controllerMap.entrySet()) {
-                if (!test.getKey().equals(entry.getKey())) {
+                if (!test.getKey().equals(entry.getKey()) && !test.getValue().getReacting()) {
                     if ((test.getValue().getEntity().getSprite().getBoundingBox() != null) && test.getKey().equals("SamuraiController")) {
                         RectF compareBox = test.getValue().getEntity().getSprite().getBoundingBox();
                         /* if the objects intersect, find where they intersect for the entry bounding boxe*/

@@ -89,6 +89,12 @@ abstract class SpriteEntity {
 
         controller.setXPos(controller.getXPos() + controller.getXDelta());
         controller.setYPos(controller.getYPos() + controller.getYDelta());
+        if(controller.getXPos() < 0) {
+            controller.setXPos(0);
+        }
+        else if(controller.getXPos() > width - controller.getEntity().getSprite().getSpriteWidth()) {
+            controller.setXPos(width - controller.getEntity().getSprite().getSpriteWidth());
+        }
         getCurrentFrame();
         updateBoundingBox();
 
