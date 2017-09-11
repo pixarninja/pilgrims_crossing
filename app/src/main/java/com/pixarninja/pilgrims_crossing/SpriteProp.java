@@ -12,7 +12,7 @@ public class SpriteProp extends SpriteEntity {
     public SpriteProp(SpriteView spriteView, Resources res, double percentOfScreen, int width, int height, int xRes, int yRes,
                       double xDelta, double yDelta, double xInit, double yInit, int xFrameCount, int yFrameCount, int frameCount,
                       double xDimension, double yDimension, double spriteScale,
-                      double left, double top, double right, double bottom, String method, SpriteController controller, String ID) {}
+                      double left, double top, double right, double bottom, SpriteController controller, String ID) {}
 
     public SpriteProp(SpriteView spriteView, Resources res, double percentOfScreen, int width, int height, int xRes, int yRes, int propID,
                       double xDelta, double yDelta, double xInit, double yInit, int xFrameCount, int yFrameCount, int frameCount,

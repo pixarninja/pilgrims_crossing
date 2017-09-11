@@ -12,9 +12,9 @@ public class Arrow extends SpriteProp{
     public Arrow(SpriteView spriteView, Resources res, double percentOfScreen, int width, int height, int xRes, int yRes,
                  double xDelta, double yDelta, int xInit, int yInit, int xFrameCount, int yFrameCount, int frameCount,
                  double xDimension, double yDimension, double spriteScale,
-                 double left, double top, double right, double bottom, String method, SpriteController controller, String ID) {
+                 double left, double top, double right, double bottom, SpriteController controller, String ID) {
 
-        super(spriteView, res, percentOfScreen, width, height, xRes, yRes, xDelta, yDelta, xInit, yInit, xFrameCount, yFrameCount, frameCount, xDimension, yDimension, spriteScale, left, top, right, bottom, method, controller, ID);
+        super(spriteView, res, percentOfScreen, width, height, xRes, yRes, xDelta, yDelta, xInit, yInit, xFrameCount, yFrameCount, frameCount, xDimension, yDimension, spriteScale, left, top, right, bottom, controller, ID);
 
         if(controller == null) {
             this.controller = new SpriteController();
@@ -46,7 +46,6 @@ public class Arrow extends SpriteProp{
         this.top = top;
         this.right = right;
         this.bottom = bottom;
-        this.method = method;
 
         refreshEntity(ID);
 
@@ -197,7 +196,9 @@ public class Arrow extends SpriteProp{
     }
 
     @Override
-    public void onCollisionEvent(LinkedHashMap.Entry<String, SpriteController> entry, LinkedHashMap<String, SpriteController> controllerMap) {
+    public LinkedHashMap<String, SpriteController> onCollisionEvent(LinkedHashMap.Entry<String, SpriteController> entry, LinkedHashMap<String, SpriteController> controllerMap) {
+
+        LinkedHashMap<String, SpriteController> map = new LinkedHashMap<>();
 
         if(!controller.getReacting() && entry.getValue().getEntity().getSprite().getBoundingBox() != null) {
             RectF entryBox = entry.getValue().getEntity().getSprite().getBoundingBox();
@@ -207,12 +208,15 @@ public class Arrow extends SpriteProp{
                         RectF compareBox = test.getValue().getEntity().getSprite().getBoundingBox();
                         /* if the objects intersect, find where they intersect for the entry bounding boxe*/
                         if (entryBox.intersect(compareBox)) {
+                            controller.setReacting(true);
                             entry.getValue().getEntity().refreshEntity("inherit destroyed");
                         }
                     }
                 }
             }
         }
+
+        return map;
 
     }
 

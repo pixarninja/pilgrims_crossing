@@ -66,9 +66,9 @@ public class MainActivity extends AppCompatActivity {
         controllerMap.put("SamuraiController", entity.getController());
 
         /* initialize arrow controllers */
-        for(int i = 0; i < 100; i++) {
+        for(int i = 0; i < 25; i++) {
             entity = new Arrow(spriteView, getResources(), 0.10, width, height, (int) (maxRes * 0.4), (int) (maxRes * 0.4),
-                    0, 0, -width, -height, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
+                    0, 0, -width, -height, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, null, "init");
             controllerMap.put("Arrow" + i + "Controller", entity.getController());
         }
 

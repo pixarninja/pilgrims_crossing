@@ -257,15 +257,23 @@ public class SpriteView extends SurfaceView {
                 }
                 /* call the on touch events for all entities */
                 for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
-                    if (entry.getValue().getEntity() != null) {
+                    if (entry.getValue().getEntity() != null  && !entry.getValue().getReacting()) {
                         entry.getValue().getEntity().onTouchEvent(this, entry, controllerMap, move, jump, xTouchedPos, yTouchedPos);
                     }
                 }
                 /* check for collisions and refresh the entity if necessary */
+                LinkedHashMap<String, SpriteController> additionMap = new LinkedHashMap<>();
                 for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
-                    if (entry.getValue().getEntity() != null) {
-                        entry.getValue().getEntity().onCollisionEvent(entry, controllerMap);
+                    if (entry.getValue().getEntity() != null && !entry.getValue().getReacting()) {
+                        LinkedHashMap<String, SpriteController> map = entry.getValue().getEntity().onCollisionEvent(entry, controllerMap);
+                        for(LinkedHashMap.Entry<String, SpriteController> addition : map.entrySet()) {
+                            additionMap.put(addition.getKey(), addition.getValue());
+                        }
                     }
+                }
+                /* add any sprites to the scene that need to be added */
+                for(LinkedHashMap.Entry<String, SpriteController> addition : additionMap.entrySet()) {
+                    controllerMap.put(addition.getKey(), addition.getValue());
                 }
                 /* for debugging purposes
                 for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
