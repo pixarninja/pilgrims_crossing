@@ -10,7 +10,7 @@ import java.util.Random;
 public class Arrow extends SpriteProp{
 
     public Arrow(SpriteView spriteView, Resources res, double percentOfScreen, int width, int height, int xRes, int yRes,
-                 double xDelta, double yDelta, int xInit, int yInit, int xFrameCount, int yFrameCount, int frameCount,
+                 double xDelta, double yDelta, double xInit, double yInit, int xFrameCount, int yFrameCount, int frameCount,
                  double xDimension, double yDimension, double spriteScale,
                  double left, double top, double right, double bottom, SpriteController controller, String ID) {
 

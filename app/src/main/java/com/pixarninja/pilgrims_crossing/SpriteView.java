@@ -1,5 +1,6 @@
 package com.pixarninja.pilgrims_crossing;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -12,6 +13,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.TextView;
 
 import java.util.ConcurrentModificationException;
 import java.util.LinkedHashMap;
@@ -24,10 +26,12 @@ public class SpriteView extends SurfaceView {
     public volatile float xTouchedPos;
     public volatile float yTouchedPos;
     private SpriteThread spriteThread;
+    private Context context;
 
 
     public SpriteView(Context context) {
         super(context);
+        this.context = context;
 
         initView();
 
@@ -35,6 +39,7 @@ public class SpriteView extends SurfaceView {
 
     public SpriteView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
 
         initView();
 
@@ -42,6 +47,7 @@ public class SpriteView extends SurfaceView {
 
     public SpriteView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        this.context = context;
 
         initView();
 
@@ -143,46 +149,8 @@ public class SpriteView extends SurfaceView {
 
                         /* render all entities to the screen */
                         for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
+
                             SpriteController controller = entry.getValue();
-
-                            /* implement jumping */
-                            if (entry.getKey().equals("SamuraiController")) {
-                                if (entry.getValue().getYDelta() > 0) {
-                                    if (entry.getValue().getYDelta() < 30) {
-                                        if (entry.getValue().getYDelta() < 20) {
-                                            if (entry.getValue().getYDelta() < 10) {
-                                                if (entry.getValue().getYDelta() >= 0) {
-                                                    entry.getValue().setYDelta(entry.getValue().getYDelta() - 3);
-                                                }
-                                            } else {
-                                                entry.getValue().setYDelta(entry.getValue().getYDelta() - 4);
-                                            }
-                                        } else {
-                                            entry.getValue().setYDelta(entry.getValue().getYDelta() - 6);
-                                        }
-                                    } else {
-                                        entry.getValue().setYDelta(entry.getValue().getYDelta() - 10);
-                                    }
-                                } else if (entry.getValue().getYDelta() < 0) {
-                                    if (entry.getValue().getYDelta() > -30) {
-                                        if (entry.getValue().getYDelta() > -20) {
-                                            if (entry.getValue().getYDelta() > -10) {
-                                                if (entry.getValue().getYDelta() <= 0) {
-                                                    entry.getValue().setYDelta(entry.getValue().getYDelta() + 3);
-                                                }
-                                            } else {
-                                                entry.getValue().setYDelta(entry.getValue().getYDelta() + 4);
-                                            }
-                                        } else {
-                                            entry.getValue().setYDelta(entry.getValue().getYDelta() + 6);
-                                        }
-                                    } else {
-                                        entry.getValue().setYDelta(entry.getValue().getYDelta() + 10);
-                                    }
-                                }
-                                controllerMap.put("SamuraiController", entry.getValue());
-                            }
-
                             SpriteEntity entity = controller.getEntity();
                             entity.updateView();
 
@@ -247,6 +215,21 @@ public class SpriteView extends SurfaceView {
                         /* remove any dead controllers */
                         for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
                             if (!entry.getValue().getAlive()) {
+                                /* TODO: fix updating score */
+                                if(entry.getKey().contains("Arrow")) {
+                                    Activity activity = (Activity) context;
+                                    activity.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            TextView score = (TextView) ((Activity)context).findViewById(R.id.score);
+                                            String text = score.getText().toString();
+                                            text = text.replaceAll("\\D+", "");
+                                            int remaining = Integer.parseInt(text);
+                                            String newText = "Arrows Remaining: " + (remaining - 1);
+                                            score.setText(newText);
+                                        }
+                                    });
+                                }
                                 controllerMap.remove(entry.getKey());
                             }
                         }

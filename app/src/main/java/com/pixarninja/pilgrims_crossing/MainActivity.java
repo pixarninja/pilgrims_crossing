@@ -1,12 +1,19 @@
 package com.pixarninja.pilgrims_crossing;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.view.View;
+import android.widget.TextView;
+
 import java.util.LinkedHashMap;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
+    private Handler handler;
     SpriteView spriteView;
     LinkedHashMap<String, SpriteController> controllerMap;
     SpriteEntity entity;
@@ -29,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
         spriteThread.start();
         spriteView.setSpriteThread(spriteThread);
 
+        /* set score view */
+        TextView score = (TextView) findViewById(R.id.score);
+        score.setText("Arrows Remaining: " + 200);
+
         int height = (int)(displayMetrics.heightPixels);
         int maxRes = height * 2;
         int width = (int)(displayMetrics.widthPixels);
@@ -41,9 +52,10 @@ public class MainActivity extends AppCompatActivity {
         controllerMap.put("SamuraiController", entity.getController());
 
         /* initialize arrow controllers */
-        for(int i = 0; i < 100; i++) {
+        for(int i = 0; i < 200; i++) {
+            Random random = new Random();
             entity = new Arrow(spriteView, getResources(), 0.10, width, height, (int) (maxRes * 0.4), (int) (maxRes * 0.4),
-                    0, 0, -width, -height, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, null, "init");
+                    0, 0, random.nextDouble() * width, random.nextDouble() * -height, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, null, "init");
             controllerMap.put("Arrow" + i + "Controller", entity.getController());
         }
 
@@ -106,6 +118,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         spriteView.onPause();
+    }
+
+    public void restart(View view) {
+        ;
     }
 
 }
