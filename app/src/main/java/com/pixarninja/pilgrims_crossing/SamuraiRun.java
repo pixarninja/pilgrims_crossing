@@ -101,6 +101,35 @@ public class SamuraiRun extends SpriteCharacter {
     }
 
     @Override
-    public void onTouchEvent(SpriteView spriteView, LinkedHashMap.Entry<String, SpriteController> entry, LinkedHashMap<String, SpriteController> controllerMap, boolean move, boolean jump, float xTouchedPos, float yTouchedPos) {}
+    public void onTouchEvent(SpriteView spriteView, LinkedHashMap.Entry<String, SpriteController> entry, LinkedHashMap<String, SpriteController> controllerMap, boolean move, boolean jump, float xTouchedPos, float yTouchedPos) {
+
+        if(!move) {
+
+            String transition;
+            String ID;
+            SpriteController samuraiController = controllerMap.get("SamuraiController");
+
+            /* set samurai */
+            SpriteCharacter oldSamurai = (SpriteCharacter) samuraiController.getEntity();
+            if(oldSamurai.getController().getID().equals("idle right") || oldSamurai.getController().getID().equals("sprint right")) {
+                ID = "run right";
+            }
+            else {
+                ID = "run left";
+            }
+            transition = "idle";
+            SpriteCharacter newSamurai = new SamuraiIdle(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, samuraiController, ID, transition);
+            newSamurai.setCount(oldSamurai.getCount());
+            newSamurai.setDelta(oldSamurai.getDelta());
+            samuraiController.setEntity(newSamurai);
+
+                /* move character */
+            samuraiController.setXDelta(0);
+
+            controllerMap.put("SamuraiController", samuraiController);
+
+        }
+
+    }
 
 }
