@@ -291,7 +291,7 @@ public class SpriteCharacter extends SpriteEntity {
                                 SpriteController samuraiController = controllerMap.get("SamuraiController");
                                 SpriteEntity entity = new Swipe(spriteView, res, 0.10, width, height, xRes, yRes,
                                         0, 0, samuraiController.getXPos() - 2 * boxWidth / 3, samuraiController.getYPos(),
-                                        0, 0, 1, 1, null, "left");
+                                        0, 0, 1, 1, null, "swipe", "left");
                                 while(controllerMap.get("Swipe" + i) != null) {
                                     i++;                                 }
                                 map.put("Swipe" + i, entity.getController());
@@ -299,7 +299,7 @@ public class SpriteCharacter extends SpriteEntity {
                                 SpriteController samuraiController = controllerMap.get("SamuraiController");
                                 SpriteEntity entity = new Swipe(spriteView, res, 0.10, width, height, xRes, yRes,
                                         0, 0, samuraiController.getXPos() - boxWidth / 4, samuraiController.getYPos() - boxHeight / 3,
-                                        0, 0, 1, 1, null, "top");
+                                        0, 0, 1, 1, null, "swipe", "top");
                                 while(controllerMap.get("Swipe" + i) != null) {
                                     i++;
                                 }
@@ -308,7 +308,7 @@ public class SpriteCharacter extends SpriteEntity {
                                 SpriteController samuraiController = controllerMap.get("SamuraiController");
                                 SpriteEntity entity = new Swipe(spriteView, res, 0.10, width, height, xRes, yRes,
                                         0, 0, samuraiController.getXPos() + boxWidth / 3, samuraiController.getYPos(),
-                                        0, 0, 1, 1, null, "right");
+                                        0, 0, 1, 1, null, "swipe", "right");
                                 while(controllerMap.get("Swipe" + i) != null) {
                                     i++;
                                 }
@@ -317,7 +317,7 @@ public class SpriteCharacter extends SpriteEntity {
                                 SpriteController samuraiController = controllerMap.get("SamuraiController");
                                 SpriteEntity entity = new Swipe(spriteView, res, 0.10, width, height, xRes, yRes,
                                         0, 0, samuraiController.getXPos() - boxWidth / 3, samuraiController.getYPos(),
-                                        0, 0, 1, 1, null, "bottom");
+                                        0, 0, 1, 1, null, "swipe", "bottom");
                                 while(controllerMap.get("Swipe" + i) != null) {
                                     i++;
                                 }
@@ -326,7 +326,7 @@ public class SpriteCharacter extends SpriteEntity {
                                 SpriteController samuraiController = controllerMap.get("SamuraiController");
                                 SpriteEntity entity = new Swipe(spriteView, res, 0.10, width, height, xRes, yRes,
                                         0, 0, samuraiController.getXPos() - boxWidth / 3, samuraiController.getYPos() - boxHeight / 4,
-                                        0, 0, 1, 1, null, "topLeft");
+                                        0, 0, 1, 1, null, "swipe", "topLeft");
                                 while(controllerMap.get("Swipe" + i) != null) {
                                     i++;
                                 }
@@ -335,7 +335,7 @@ public class SpriteCharacter extends SpriteEntity {
                                 SpriteController samuraiController = controllerMap.get("SamuraiController");
                                 SpriteEntity entity = new Swipe(spriteView, res, 0.10, width, height, xRes, yRes,
                                         0, 0, samuraiController.getXPos() + boxWidth / 3, samuraiController.getYPos() - boxHeight / 4,
-                                        0, 0, 1, 1, null, "topRight");
+                                        0, 0, 1, 1, null, "swipe", "topRight");
                                 while(controllerMap.get("Swipe" + i) != null) {
                                     i++;
                                 }
@@ -344,7 +344,7 @@ public class SpriteCharacter extends SpriteEntity {
                                 SpriteController samuraiController = controllerMap.get("SamuraiController");
                                 SpriteEntity entity = new Swipe(spriteView, res, 0.10, width, height, xRes, yRes,
                                         0, 0, samuraiController.getXPos() + 2 * boxWidth / 3, samuraiController.getYPos() + boxHeight / 3,
-                                        0, 0, 1, 1, null, "bottomRight");
+                                        0, 0, 1, 1, null, "swipe", "bottomRight");
                                 while(controllerMap.get("Swipe" + i) != null) {
                                     i++;
                                 }
@@ -353,7 +353,7 @@ public class SpriteCharacter extends SpriteEntity {
                                 SpriteController samuraiController = controllerMap.get("SamuraiController");
                                 SpriteEntity entity = new Swipe(spriteView, res, 0.10, width, height, xRes, yRes,
                                         0, 0, samuraiController.getXPos() - 2 * boxWidth / 3, samuraiController.getYPos() + boxHeight / 3,
-                                        0, 0, 1, 1, null, "bottomLeft");
+                                        0, 0, 1, 1, null, "swipe", "bottomLeft");
                                 while(controllerMap.get("Swipe" + i) != null) {
                                     i++;
                                 }

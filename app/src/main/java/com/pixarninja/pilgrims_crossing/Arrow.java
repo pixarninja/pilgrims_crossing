@@ -12,17 +12,17 @@ public class Arrow extends SpriteProp{
     public Arrow(SpriteView spriteView, Resources res, double percentOfScreen, int width, int height, int xRes, int yRes,
                  double xDelta, double yDelta, double xInit, double yInit, int xFrameCount, int yFrameCount, int frameCount,
                  double xDimension, double yDimension, double spriteScale,
-                 double left, double top, double right, double bottom, SpriteController controller, String ID) {
+                 double left, double top, double right, double bottom, SpriteController controller, String ID, String transition) {
 
-        super(spriteView, res, percentOfScreen, width, height, xRes, yRes, xDelta, yDelta, xInit, yInit, xFrameCount, yFrameCount, frameCount, xDimension, yDimension, spriteScale, left, top, right, bottom, controller, ID);
+        super(spriteView, res, percentOfScreen, width, height, xRes, yRes, xDelta, yDelta, xInit, yInit, xFrameCount, yFrameCount, frameCount, xDimension, yDimension, spriteScale, left, top, right, bottom, controller, ID, transition);
 
         if(controller == null) {
             this.controller = new SpriteController();
-            this.controller.setID("untouched");
         }
         else {
             this.controller = controller;
         }
+        this.controller.setID(ID);
         this.spriteView = spriteView;
         this.res = res;
         this.percentOfScreen = percentOfScreen;
@@ -48,7 +48,7 @@ public class Arrow extends SpriteProp{
         this.right = right;
         this.bottom = bottom;
 
-        refreshEntity(ID);
+        refreshEntity(transition);
 
     }
 
@@ -84,9 +84,9 @@ public class Arrow extends SpriteProp{
                     render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_arrow_destroyed, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                    render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                    render.setSpriteWidth((int) (render.getFrameWidth() * render.getFrameScale()));
-                    render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
+                    render.setYFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
+                    render.setSpriteWidth((int) (render.getFrameWidth() * render.getYFrameScale()));
+                    render.setSpriteHeight((int) (render.getFrameHeight() * render.getYFrameScale()));
                     controller.setXPos(controller.getXPos() - render.getSpriteWidth() / 2);
                     render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                     break;
@@ -107,9 +107,9 @@ public class Arrow extends SpriteProp{
                     render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_arrow_falling_loop, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                    render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                    render.setSpriteWidth((int) (render.getFrameWidth() * render.getFrameScale()));
-                    render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
+                    render.setYFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
+                    render.setSpriteWidth((int) (render.getFrameWidth() * render.getYFrameScale()));
+                    render.setSpriteHeight((int) (render.getFrameHeight() * render.getYFrameScale()));
                     render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                     break;
                 case "skip":

@@ -72,9 +72,9 @@ public class SamuraiSprint extends SpriteCharacter {
                             render.setSpriteSheet(flipped);
                             render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                             render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                            render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                            render.setSpriteWidth((int) (render.getFrameWidth() * render.getFrameScale()));
-                            render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
+                            render.setYFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
+                            render.setSpriteWidth((int) (render.getFrameWidth() * render.getYFrameScale()));
+                            render.setSpriteHeight((int) (render.getFrameHeight() * render.getYFrameScale()));
                             render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                             break;
                         case "skip":
@@ -117,9 +117,9 @@ public class SamuraiSprint extends SpriteCharacter {
                             render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_sprint_right_loop_norm, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
                             render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                             render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                            render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                            render.setSpriteWidth((int) (render.getFrameWidth() * render.getFrameScale()));
-                            render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
+                            render.setYFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
+                            render.setSpriteWidth((int) (render.getFrameWidth() * render.getYFrameScale()));
+                            render.setSpriteHeight((int) (render.getFrameHeight() * render.getYFrameScale()));
                             render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                             break;
                         case "skip":

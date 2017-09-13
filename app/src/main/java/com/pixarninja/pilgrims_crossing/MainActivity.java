@@ -53,17 +53,15 @@ public class MainActivity extends AppCompatActivity {
         controllerMap.put("SamuraiController", entity.getController());
 
         /* initialize bridge controller */
-        entity = new SpriteProp(spriteView, getResources(), 0.578, width, height, maxRes / 2, maxRes / 2, R.mipmap.prop_bridge,
-                0, 0, 0, controllerMap.get("SamuraiController").getEntity().getSprite().getBoundingBox().bottom - 20, 1, 1, 1,
-                1, 1, 1,
-                0, 0, 1, 1, "loop", null, "bridge");
+        entity = new Bridge(spriteView, getResources(), 1, width, height, (int) (maxRes * 0.4), (int) (maxRes * 0.4),
+                0, 0, 0, controllerMap.get("SamuraiController").getEntity().getSprite().getBoundingBox().bottom - 15, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, null, "bridge", "init");
         controllerMap.put("BridgeController", entity.getController());
 
         /* initialize arrow controllers */
         for(int i = 0; i < 200; i++) {
             Random random = new Random();
             entity = new Arrow(spriteView, getResources(), 0.10, width, height, (int) (maxRes * 0.4), (int) (maxRes * 0.4),
-                    0, 0, random.nextDouble() * width, random.nextDouble() * -20 * height - (height * 0.1), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, null, "init");
+                    0, 0, random.nextDouble() * width, random.nextDouble() * -20 * height - (height * 0.1), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, null, "arrow" + i, "init");
             controllerMap.put("Arrow" + i + "Controller", entity.getController());
         }
 
@@ -139,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
 
         /* set score view */
         TextView score = (TextView) findViewById(R.id.score);
-        String newText = "Arrows Remaining: " + 200;
+        String newText = "Arrows Remaining: " + 200 + "\nHit Bridge: " + 0;
         score.setText(newText);
 
         int height = (int)(displayMetrics.heightPixels);
@@ -154,17 +152,15 @@ public class MainActivity extends AppCompatActivity {
         controllerMap.put("SamuraiController", entity.getController());
 
         /* initialize bridge controller */
-        entity = new SpriteProp(spriteView, getResources(), 0.578, width, height, maxRes / 2, maxRes / 2, R.mipmap.prop_bridge,
-                0, 0, 0, controllerMap.get("SamuraiController").getEntity().getSprite().getBoundingBox().bottom - 20, 1, 1, 1,
-                1, 1, 1,
-                0, 0, 1, 1, "loop", null, "bridge");
+        entity = new Bridge(spriteView, getResources(), 1, width, height, (int) (maxRes * 0.4), (int) (maxRes * 0.4),
+                0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, null, "bridge", "init");
         controllerMap.put("BridgeController", entity.getController());
 
         /* initialize arrow controllers */
         for(int i = 0; i < 200; i++) {
             Random random = new Random();
             entity = new Arrow(spriteView, getResources(), 0.10, width, height, (int) (maxRes * 0.4), (int) (maxRes * 0.4),
-                    0, 0, random.nextDouble() * width, random.nextDouble() * -20 * height - (height * 0.1), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, null, "init");
+                    0, 0, random.nextDouble() * width, random.nextDouble() * -20 * height - (height * 0.1), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, null, "arrow" + i, "init");
             controllerMap.put("Arrow" + i + "Controller", entity.getController());
         }
 

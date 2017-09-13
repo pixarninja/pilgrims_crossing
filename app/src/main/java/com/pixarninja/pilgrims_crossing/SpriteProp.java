@@ -14,12 +14,12 @@ public class SpriteProp extends SpriteEntity {
     public SpriteProp(SpriteView spriteView, Resources res, double percentOfScreen, int width, int height, int xRes, int yRes,
                       double xDelta, double yDelta, double xInit, double yInit, int xFrameCount, int yFrameCount, int frameCount,
                       double xDimension, double yDimension, double spriteScale,
-                      double left, double top, double right, double bottom, SpriteController controller, String ID) {}
+                      double left, double top, double right, double bottom, SpriteController controller, String ID, String transition) {}
 
     public SpriteProp(SpriteView spriteView, Resources res, double percentOfScreen, int width, int height, int xRes, int yRes, int propID,
                       double xDelta, double yDelta, double xInit, double yInit, int xFrameCount, int yFrameCount, int frameCount,
                       double xDimension, double yDimension, double spriteScale,
-                      double left, double top, double right, double bottom, String method, SpriteController controller, String ID) {
+                      double left, double top, double right, double bottom, String method, SpriteController controller, String ID, String transition) {
 
         if(controller == null) {
             this.controller = new SpriteController();
@@ -85,9 +85,9 @@ public class SpriteProp extends SpriteEntity {
                 render.setSpriteSheet(decodeSampledBitmapFromResource(res, propID, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
                 render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                 render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                render.setSpriteWidth((int) (render.getFrameWidth() * render.getFrameScale()));
-                render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
+                render.setYFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
+                render.setSpriteWidth((int) (render.getFrameWidth() * render.getYFrameScale()));
+                render.setSpriteHeight((int) (render.getFrameHeight() * render.getYFrameScale()));
                 render.setXCurrentFrame(0);
                 render.setYCurrentFrame(0);
                 render.setCurrentFrame(0);
@@ -97,31 +97,6 @@ public class SpriteProp extends SpriteEntity {
         controller.setEntity(this);
         controller.setTransition(ID);
         updateBoundingBox();
-    }
-
-    @Override
-    public LinkedHashMap<String, SpriteController> onCollisionEvent(LinkedHashMap.Entry<String, SpriteController> entry, LinkedHashMap<String, SpriteController> controllerMap) {
-
-        LinkedHashMap<String, SpriteController> map = new LinkedHashMap<>();
-
-        if (!entry.getValue().getReacting() && (entry.getValue().getEntity().getSprite().getBoundingBox() != null)) {
-            RectF entryBox = entry.getValue().getEntity().getSprite().getBoundingBox();
-            for (LinkedHashMap.Entry<String, SpriteController> test : controllerMap.entrySet()) {
-                if (test.getKey().contains("Arrow") && !test.getValue().getReacting()) {
-                    if (test.getValue().getEntity().getSprite().getBoundingBox() != null) {
-                        RectF compareBox = test.getValue().getEntity().getSprite().getBoundingBox();
-                        /* if the objects intersect, find where they intersect for the entry bounding box */
-                        if (entryBox.intersect(compareBox)) {
-                            /* call the comparison's collision handler */
-                            test.getValue().getEntity().onCollisionEvent(test, controllerMap);
-                        }
-                    }
-                }
-            }
-        }
-
-        return map;
-
     }
 
 }

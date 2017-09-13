@@ -26,17 +26,12 @@ abstract class SpriteEntity {
     protected double right;
     protected double bottom;
     protected String method;
-
-    protected String message;
     protected SpriteController controller;
     protected Sprite render;
     protected SpriteView spriteView;
 
     public Sprite getSprite() { return this.render; }
     public void setSprite(Sprite sprite) { this.render = sprite; }
-
-    public String getMessage() { return this.message; }
-    public void setMessage(String message) { this.message = message; }
 
     public SpriteController getController() { return this.controller; }
     public void setController(SpriteController controller) { this.controller = controller; }

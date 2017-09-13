@@ -13,7 +13,8 @@ public class Sprite {
     private int frameCount;
     private int frameWidth;
     private int frameHeight;
-    private double frameScale;
+    private double xFrameScale;
+    private double yFrameScale;
     private double xDimension;
     private double yDimension;
     private int spriteWidth;
@@ -79,11 +80,18 @@ public class Sprite {
         this.frameHeight = frameHeight;
     }
 
-    public double getFrameScale() {
-        return this.frameScale;
+    public double getXFrameScale() {
+        return this.xFrameScale;
     }
-    public void setFrameScale(double frameScale) {
-        this.frameScale = frameScale;
+    public void setXFrameScale(double xFrameScale) {
+        this.xFrameScale = xFrameScale;
+    }
+
+    public double getYFrameScale() {
+        return this.yFrameScale;
+    }
+    public void setYFrameScale(double yFrameScale) {
+        this.yFrameScale = yFrameScale;
     }
 
     public double getXDimension() {
@@ -201,7 +209,8 @@ public class Sprite {
         System.out.println(" - frame count: " + frameCount);
         System.out.println(" - frame width: " + frameWidth);
         System.out.println(" - frame height: " + frameHeight);
-        System.out.println(" - frame scale: " + frameScale);
+        System.out.println(" - x frame scale: " + xFrameScale);
+        System.out.println(" - y frame scale: " + yFrameScale);
         System.out.println(" - bounding box: " + boundingBox);
         System.out.println(" - sprite width: " + spriteWidth);
         System.out.println(" - sprite height: " + spriteHeight);

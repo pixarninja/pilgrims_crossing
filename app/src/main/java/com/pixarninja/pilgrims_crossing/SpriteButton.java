@@ -81,9 +81,9 @@ public class SpriteButton extends SpriteEntity {
                 render.setSpriteSheet(decodeSampledBitmapFromResource(res, offID, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
                 render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                 render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                render.setSpriteWidth((int) (render.getFrameWidth() * render.getFrameScale()));
-                render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
+                render.setYFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
+                render.setSpriteWidth((int) (render.getFrameWidth() * render.getYFrameScale()));
+                render.setSpriteHeight((int) (render.getFrameHeight() * render.getYFrameScale()));
                 render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                 break;
             case "poked":
@@ -103,9 +103,9 @@ public class SpriteButton extends SpriteEntity {
                 render.setSpriteSheet(decodeSampledBitmapFromResource(res, pokedID, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
                 render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                 render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                render.setSpriteWidth((int) (render.getFrameWidth() * render.getFrameScale()));
-                render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
+                render.setYFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
+                render.setSpriteWidth((int) (render.getFrameWidth() * render.getYFrameScale()));
+                render.setSpriteHeight((int) (render.getFrameHeight() * render.getYFrameScale()));
                 render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                 break;
             case "on":
@@ -125,9 +125,9 @@ public class SpriteButton extends SpriteEntity {
                 render.setSpriteSheet(decodeSampledBitmapFromResource(res, onID, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
                 render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                 render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                render.setSpriteWidth((int) (render.getFrameWidth() * render.getFrameScale()));
-                render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
+                render.setYFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
+                render.setSpriteWidth((int) (render.getFrameWidth() * render.getYFrameScale()));
+                render.setSpriteHeight((int) (render.getFrameHeight() * render.getYFrameScale()));
                 render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                 break;
             case "skip":
