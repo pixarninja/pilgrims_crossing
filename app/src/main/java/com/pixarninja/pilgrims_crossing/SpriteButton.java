@@ -81,9 +81,9 @@ public class SpriteButton extends SpriteEntity {
                 render.setSpriteSheet(decodeSampledBitmapFromResource(res, offID, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
                 render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                 render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                render.setYFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                render.setSpriteWidth((int) (render.getFrameWidth() * render.getYFrameScale()));
-                render.setSpriteHeight((int) (render.getFrameHeight() * render.getYFrameScale()));
+                render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
+                render.setSpriteWidth((int) (render.getFrameWidth() * render.getFrameScale()));
+                render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
                 render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                 break;
             case "poked":
@@ -103,9 +103,9 @@ public class SpriteButton extends SpriteEntity {
                 render.setSpriteSheet(decodeSampledBitmapFromResource(res, pokedID, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
                 render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                 render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                render.setYFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                render.setSpriteWidth((int) (render.getFrameWidth() * render.getYFrameScale()));
-                render.setSpriteHeight((int) (render.getFrameHeight() * render.getYFrameScale()));
+                render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
+                render.setSpriteWidth((int) (render.getFrameWidth() * render.getFrameScale()));
+                render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
                 render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                 break;
             case "on":
@@ -125,9 +125,9 @@ public class SpriteButton extends SpriteEntity {
                 render.setSpriteSheet(decodeSampledBitmapFromResource(res, onID, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
                 render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                 render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                render.setYFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                render.setSpriteWidth((int) (render.getFrameWidth() * render.getYFrameScale()));
-                render.setSpriteHeight((int) (render.getFrameHeight() * render.getYFrameScale()));
+                render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
+                render.setSpriteWidth((int) (render.getFrameWidth() * render.getFrameScale()));
+                render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
                 render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                 break;
             case "skip":
@@ -188,100 +188,6 @@ public class SpriteButton extends SpriteEntity {
 
                         /* move character */
                         samuraiController.setXDelta(-25);
-
-                        controllerMap.put("SamuraiController", samuraiController);
-
-                    }
-                    else if(entry.getKey().equals("RunLeftButtonController")) {
-
-                        /* set samurai */
-                        if(!samuraiController.getReacting()) {
-                            SpriteCharacter oldSamurai = (SpriteCharacter) samuraiController.getEntity();
-                            transition = samuraiController.getTransition();
-
-                            if (transition.equals("idle")) {
-                                if(samuraiController.getID().equals("run left")) {
-                                    transition = "inherit idle";
-                                }
-                                else {
-                                    transition = "reset idle";
-                                }
-                            } else {
-                                transition = "idle";
-                            }
-
-                            SpriteCharacter newSamurai = new SamuraiRun(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, samuraiController, "run left", transition);
-                            newSamurai.setCount(0);
-                            samuraiController.setEntity(newSamurai);
-                        }
-
-                        /* move character */
-                        samuraiController.setXDelta(-10);
-
-                        controllerMap.put("SamuraiController", samuraiController);
-
-                    }
-                    else if(entry.getKey().equals("StopButtonController")) {
-
-                        /* set samurai */
-                        if(!samuraiController.getReacting()) {
-                            SpriteCharacter oldSamurai = (SpriteCharacter) samuraiController.getEntity();
-                            if(oldSamurai.getController().getID().equals("run right") || oldSamurai.getController().getID().equals("sprint right")  || oldSamurai.getController().getID().equals("idle right")) {
-                                ID = "idle right";
-                            }
-                            else {
-                                ID = "idle left";
-                            }
-
-                            transition = samuraiController.getTransition();
-
-                            if (transition.equals("idle")) {
-                                if(samuraiController.getID().equals("idle right") || samuraiController.getID().equals("idle left")) {
-                                    transition = "inherit idle";
-                                }
-                                else {
-                                    transition = "reset idle";
-                                }
-                            } else {
-                                transition = "idle";
-                            }
-
-                            SpriteCharacter newSamurai = new SamuraiIdle(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, samuraiController, ID, transition);
-                            newSamurai.setCount(0);
-                            samuraiController.setEntity(newSamurai);
-                        }
-
-                        /* move character */
-                        samuraiController.setXDelta(0);
-
-                        controllerMap.put("SamuraiController", samuraiController);
-
-                    }
-                    else if(entry.getKey().equals("RunRightButtonController")) {
-
-                        /* set samurai */
-                        if(!samuraiController.getReacting()) {
-                            SpriteCharacter oldSamurai = (SpriteCharacter) samuraiController.getEntity();
-                            transition = samuraiController.getTransition();
-
-                            if (transition.equals("idle")) {
-                                if(samuraiController.getID().equals("run right")) {
-                                    transition = "inherit idle";
-                                }
-                                else {
-                                    transition = "reset idle";
-                                }
-                            } else {
-                                transition = "idle";
-                            }
-
-                            SpriteCharacter newSamurai = new SamuraiRun(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, samuraiController, "run right", transition);
-                            newSamurai.setCount(0);
-                            samuraiController.setEntity(newSamurai);
-                        }
-
-                        /* move character */
-                        samuraiController.setXDelta(10);
 
                         controllerMap.put("SamuraiController", samuraiController);
 

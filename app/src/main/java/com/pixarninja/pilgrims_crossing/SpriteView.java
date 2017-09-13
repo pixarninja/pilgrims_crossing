@@ -158,7 +158,7 @@ public class SpriteView extends SurfaceView {
                             Sprite sprite = entity.getSprite();
                             if (sprite.getSpriteSheet() != null && sprite.getFrameToDraw() != null && sprite.getWhereToDraw() != null) {
 
-                                /* for debugging bounding boxes */
+                                /* for debugging bounding boxes
                                 Paint paint;
                                 paint = new Paint();
                                 paint.setStyle(Paint.Style.STROKE);
@@ -186,7 +186,7 @@ public class SpriteView extends SurfaceView {
                                     canvas.drawRect(entryBottomRight, paint);
                                     RectF entryBottom = new RectF(left + width / 3f, top + 2 * height / 3f, left + 2 * width / 3f, bottom);
                                     canvas.drawRect(entryBottom, paint);
-                                }
+                                }*/
 
                                 /* for debugging flipped spritesheets
                                 Paint paint;
