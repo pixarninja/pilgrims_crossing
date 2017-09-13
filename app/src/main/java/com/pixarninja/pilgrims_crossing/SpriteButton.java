@@ -171,14 +171,18 @@ public class SpriteButton extends SpriteEntity {
                             transition = samuraiController.getTransition();
 
                             if (transition.equals("idle")) {
-                                transition = "inherit idle";
+                                if(samuraiController.getID().equals("sprint left")) {
+                                    transition = "inherit idle";
+                                }
+                                else {
+                                    transition = "reset idle";
+                                }
                             } else {
                                 transition = "idle";
                             }
 
                             SpriteCharacter newSamurai = new SamuraiSprint(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, samuraiController, "sprint left", transition);
-                            newSamurai.setCount(oldSamurai.getCount());
-                            newSamurai.setDelta(oldSamurai.getDelta());
+                            newSamurai.setCount(0);
                             samuraiController.setEntity(newSamurai);
                         }
 
@@ -196,14 +200,18 @@ public class SpriteButton extends SpriteEntity {
                             transition = samuraiController.getTransition();
 
                             if (transition.equals("idle")) {
-                                transition = "inherit idle";
+                                if(samuraiController.getID().equals("run left")) {
+                                    transition = "inherit idle";
+                                }
+                                else {
+                                    transition = "reset idle";
+                                }
                             } else {
                                 transition = "idle";
                             }
 
                             SpriteCharacter newSamurai = new SamuraiRun(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, samuraiController, "run left", transition);
-                            newSamurai.setCount(oldSamurai.getCount());
-                            newSamurai.setDelta(oldSamurai.getDelta());
+                            newSamurai.setCount(0);
                             samuraiController.setEntity(newSamurai);
                         }
 
@@ -218,7 +226,7 @@ public class SpriteButton extends SpriteEntity {
                         /* set samurai */
                         if(!samuraiController.getReacting()) {
                             SpriteCharacter oldSamurai = (SpriteCharacter) samuraiController.getEntity();
-                            if(oldSamurai.getController().getID().equals("run right") || oldSamurai.getController().getID().equals("sprint right")) {
+                            if(oldSamurai.getController().getID().equals("run right") || oldSamurai.getController().getID().equals("sprint right")  || oldSamurai.getController().getID().equals("idle right")) {
                                 ID = "idle right";
                             }
                             else {
@@ -226,15 +234,20 @@ public class SpriteButton extends SpriteEntity {
                             }
 
                             transition = samuraiController.getTransition();
+
                             if (transition.equals("idle")) {
-                                transition = "inherit idle";
+                                if(samuraiController.getID().equals("idle right") || samuraiController.getID().equals("idle left")) {
+                                    transition = "inherit idle";
+                                }
+                                else {
+                                    transition = "reset idle";
+                                }
                             } else {
                                 transition = "idle";
                             }
 
                             SpriteCharacter newSamurai = new SamuraiIdle(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, samuraiController, ID, transition);
-                            newSamurai.setCount(oldSamurai.getCount());
-                            newSamurai.setDelta(oldSamurai.getDelta());
+                            newSamurai.setCount(0);
                             samuraiController.setEntity(newSamurai);
                         }
 
@@ -252,14 +265,18 @@ public class SpriteButton extends SpriteEntity {
                             transition = samuraiController.getTransition();
 
                             if (transition.equals("idle")) {
-                                transition = "inherit idle";
+                                if(samuraiController.getID().equals("run right")) {
+                                    transition = "inherit idle";
+                                }
+                                else {
+                                    transition = "reset idle";
+                                }
                             } else {
                                 transition = "idle";
                             }
 
                             SpriteCharacter newSamurai = new SamuraiRun(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, samuraiController, "run right", transition);
-                            newSamurai.setCount(oldSamurai.getCount());
-                            newSamurai.setDelta(oldSamurai.getDelta());
+                            newSamurai.setCount(0);
                             samuraiController.setEntity(newSamurai);
                         }
 
@@ -277,14 +294,18 @@ public class SpriteButton extends SpriteEntity {
                             transition = samuraiController.getTransition();
 
                             if (transition.equals("idle")) {
-                                transition = "inherit idle";
+                                if(samuraiController.getID().equals("sprint right")) {
+                                    transition = "inherit idle";
+                                }
+                                else {
+                                    transition = "reset idle";
+                                }
                             } else {
                                 transition = "idle";
                             }
 
                             SpriteCharacter newSamurai = new SamuraiSprint(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, samuraiController, "sprint right", transition);
-                            newSamurai.setCount(oldSamurai.getCount());
-                            newSamurai.setDelta(oldSamurai.getDelta());
+                            newSamurai.setCount(0);
                             samuraiController.setEntity(newSamurai);
                         }
 

@@ -162,6 +162,24 @@ abstract class SpriteEntity {
                 render = controller.getEntity().getSprite();
                 return(expression[1]);
             }
+            else if(expression[0].equals("reset")) {
+                render = controller.getEntity().getSprite();
+                /* frames are reversed in this case */
+                switch(controller.getID()) {
+                    case "idle right":
+                    case "run right":
+                    case "sprint right":
+                        render.setXCurrentFrame(render.getXFrameCount() - 1);
+                        render.setYCurrentFrame(0);
+                        render.setCurrentFrame(0);
+                        break;
+                    default:
+                        render.setXCurrentFrame(0);
+                        render.setYCurrentFrame(0);
+                        render.setCurrentFrame(0);
+                }
+                return(expression[1]);
+            }
             else {
                 return("init");
             }

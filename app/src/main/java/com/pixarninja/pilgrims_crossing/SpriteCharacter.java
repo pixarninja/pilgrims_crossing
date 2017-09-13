@@ -81,6 +81,62 @@ public class SpriteCharacter extends SpriteEntity {
                 }
             }
 
+            else if(render.getDirection().equals("flipped")) {
+                if(count == 0) {
+                    delta = -1;
+                }
+                else {
+                    delta = 1;
+                }
+
+                if(delta < 0) {
+                    render.setCurrentFrame(render.getCurrentFrame() - delta);
+                    render.setXCurrentFrame(render.getXCurrentFrame() + delta);
+                    if ((render.getXCurrentFrame() < 0) || (render.getCurrentFrame() >= render.getFrameCount())) {
+                        render.setYCurrentFrame(render.getYCurrentFrame() - delta);
+                        if ((render.getYCurrentFrame() >= render.getYFrameCount()) || (render.getCurrentFrame() >= render.getFrameCount())) {
+                            if(render.getMethod().equals("once")) {
+                                refreshEntity("idle");
+                                count = 0;
+                            }
+                            else if(render.getMethod().equals("mirror") || render.getMethod().equals("mirror loop") || render.getMethod().equals("poked")) {
+                                render.setCurrentFrame(0);
+                                render.setXCurrentFrame(0);
+                                render.setYCurrentFrame(render.getYFrameCount() - 1);
+                                count++;
+                            }
+                            /* loop or idle */
+                            else {
+                                render.setYCurrentFrame(0);
+                                render.setCurrentFrame(0);
+                                count = 0;
+                            }
+                        }
+                        if (count <= 0) {
+                            render.setXCurrentFrame(render.getXFrameCount() - 1);
+                        }
+                    }
+                }
+                else if (delta == 0) {
+                    render.setCurrentFrame(0);
+                    render.setXCurrentFrame(render.getXFrameCount() - 1);
+                    render.setYCurrentFrame(render.getYFrameCount() - 1);
+                    count++;
+                }
+                else {
+                    render.setCurrentFrame(render.getCurrentFrame() + delta);
+                    render.setXCurrentFrame(render.getXCurrentFrame() + delta);
+                    if ((render.getXCurrentFrame() >= render.getXFrameCount()) || (render.getCurrentFrame() >= render.getFrameCount())) {
+                        render.setYCurrentFrame(render.getYCurrentFrame() - delta);
+                        if ((render.getYCurrentFrame() >= render.getYFrameCount()) || (render.getCurrentFrame() >= render.getFrameCount())) {
+                            refreshEntity("idle");
+                            count = 0;
+                            render.setXCurrentFrame(render.getXFrameCount() - 1);
+                        }
+                    }
+                }
+            }
+
             else {
                 if(count == 0) {
                     delta = 1;
@@ -100,7 +156,7 @@ public class SpriteCharacter extends SpriteEntity {
                                 count = 0;
                             }
                             else if(render.getMethod().equals("mirror") || render.getMethod().equals("mirror loop") || render.getMethod().equals("poked")) {
-                                render.setCurrentFrame(render.getFrameCount());
+                                render.setCurrentFrame(render.getFrameCount() - 1);
                                 render.setXCurrentFrame(render.getXFrameCount() - 1);
                                 render.setYCurrentFrame(render.getYFrameCount() - 1);
                                 count++;
@@ -153,52 +209,45 @@ public class SpriteCharacter extends SpriteEntity {
 
     @Override
     public void onTouchEvent(SpriteView spriteView, LinkedHashMap.Entry<String, SpriteController> entry, LinkedHashMap<String, SpriteController> controllerMap, boolean move, boolean jump, float xTouchedPos, float yTouchedPos) {
-        if(move) {
-            RectF boundingBox = render.getBoundingBox();
-            if (xTouchedPos >= boundingBox.left && xTouchedPos <= boundingBox.right) {
-                /* center of the sprite */
-                if (yTouchedPos >= boundingBox.top && yTouchedPos <= boundingBox.bottom) {
-                    refreshEntity("center");
-                }
-                /* top of the sprite */
-                else if (yTouchedPos < boundingBox.top) {
-                    refreshEntity("top");
-                }
-                /* bottom of the sprite */
-                else if (yTouchedPos > boundingBox.bottom) {
-                    refreshEntity("bottom");
-                }
+
+        if(!move) {
+
+            String transition;
+            String ID;
+            SpriteController samuraiController = controllerMap.get("SamuraiController");
+
+            /* set samurai */
+            SpriteCharacter oldSamurai = (SpriteCharacter) samuraiController.getEntity();
+            if(oldSamurai.getController().getID().equals("run right") || oldSamurai.getController().getID().equals("sprint right")  || oldSamurai.getController().getID().equals("idle right")) {
+                ID = "idle right";
             }
-            else if (xTouchedPos < boundingBox.left) {
-                /* left side of the sprite */
-                if (yTouchedPos >= boundingBox.top && yTouchedPos <= boundingBox.bottom) {
-                    refreshEntity("left");
-                }
-                    /* top left side of the sprite */
-                else if (yTouchedPos < boundingBox.top) {
-                    refreshEntity("topLeft");
-                }
-                    /* bottom right side of the sprite */
-                else if (yTouchedPos > boundingBox.bottom) {
-                    refreshEntity("bottomLeft");
-                }
+            else {
+                ID = "idle left";
             }
-            /* right side of the sprite */
-            else if (xTouchedPos > boundingBox.right) {
-                /* right side of the screen */
-                if (yTouchedPos >= boundingBox.top && yTouchedPos <= boundingBox.bottom) {
-                    refreshEntity("right");
+            transition = samuraiController.getTransition();
+
+            if (transition.equals("idle")) {
+                if(samuraiController.getID().equals("idle right") || samuraiController.getID().equals("idle left")) {
+                    transition = "inherit idle";
                 }
-                    /* top right side of the sprite */
-                else if (yTouchedPos < boundingBox.top) {
-                    refreshEntity("topRight");
+                else {
+                    transition = "reset idle";
                 }
-                    /* bottom right side of the sprite */
-                else if (yTouchedPos > boundingBox.bottom) {
-                    refreshEntity("bottomRight");
-                }
+            } else {
+                transition = "idle";
             }
+            SpriteCharacter newSamurai = new SamuraiIdle(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, samuraiController, ID, transition);
+            newSamurai.setCount(oldSamurai.getCount());
+            newSamurai.setDelta(oldSamurai.getDelta());
+            samuraiController.setEntity(newSamurai);
+
+                /* move character */
+            samuraiController.setXDelta(0);
+
+            controllerMap.put("SamuraiController", samuraiController);
+
         }
+
     }
 
     @Override
@@ -226,7 +275,7 @@ public class SpriteCharacter extends SpriteEntity {
 
             for (LinkedHashMap.Entry<String, SpriteController> test : controllerMap.entrySet()) {
 
-                if(!test.getKey().equals(entry.getKey()) && !test.getValue().getReacting()) {
+                if(!test.getKey().equals(entry.getKey()) && !test.getKey().equals("BridgeController") && !test.getValue().getReacting()) {
 
                     if (test.getValue().getEntity().getSprite().getBoundingBox() != null) {
 

@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -155,10 +156,8 @@ public class SpriteView extends SurfaceView {
                             entity.updateView();
 
                             Sprite sprite = entity.getSprite();
-                            if (sprite.getSpriteSheet() == null || sprite.getFrameToDraw() == null || sprite.getWhereToDraw() == null) {
-                                //sprite.printSprite();
-                                //System.exit(1);
-                            } else {
+                            if (sprite.getSpriteSheet() != null && sprite.getFrameToDraw() != null && sprite.getWhereToDraw() != null) {
+
                                 /* for debugging bounding boxes
                                 Paint paint;
                                 paint = new Paint();
@@ -188,26 +187,24 @@ public class SpriteView extends SurfaceView {
                                     RectF entryBottom = new RectF(left + width / 3f, top + 2 * height / 3f, left + 2 * width / 3f, bottom);
                                     canvas.drawRect(entryBottom, paint);
                                 }*/
-                                Bitmap bitmap = sprite.getSpriteSheet();
-                                /*try {
-                                    switch (controller.getID()) {
-                                        case "run left":
-                                        case "sprint left":
-                                        case "idle left":
-                                            Matrix matrix = new Matrix();
-                                            matrix.postScale(-1, 1);
-                                            bitmap.createBitmap(sprite.getSpriteSheet(), 0, 0, sprite.getSpriteWidth(), sprite.getSpriteHeight(), matrix, true);
-                                            break;
-                                        case "run right":
-                                        case "sprint right":
-                                        case "idle right":
-                                        default:
-                                    }
-                                }
-                                catch (NullPointerException e) {
-                                    ;
+
+                                /* for debugging flipped spritesheets
+                                Paint paint;
+                                paint = new Paint();
+                                paint.setStyle(Paint.Style.STROKE);
+                                paint.setColor(Color.rgb(255, 255, 255));
+                                paint.setStrokeWidth(3);
+                                if(entry.getKey().equals("SamuraiController")) {
+                                    Matrix matrix = new Matrix();
+                                    matrix.postScale(-1, 1);
+                                    matrix.postTranslate(entity.getSprite().getSpriteSheet().getWidth(), 0);
+                                    canvas.drawBitmap(entity.getSprite().getSpriteSheet(), matrix, null);
+
+                                    canvas.drawRect(entity.getSprite().getFrameToDraw(), paint);
                                 }*/
-                                canvas.drawBitmap(bitmap, sprite.getFrameToDraw(), sprite.getWhereToDraw(), null);
+
+                                canvas.drawBitmap(sprite.getSpriteSheet(), sprite.getFrameToDraw(), sprite.getWhereToDraw(), null);
+
                             }
 
                         }
