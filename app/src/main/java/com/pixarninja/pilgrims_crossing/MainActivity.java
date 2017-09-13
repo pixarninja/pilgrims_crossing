@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         /* set score view */
         TextView score = (TextView) findViewById(R.id.score);
-        String newText = "Arrows Remaining: " + 200;
+        String newText = "Arrows Remaining: " + 200 + "\nHit Bridge: " + 0;
         score.setText(newText);
 
         int height = (int)(displayMetrics.heightPixels);
@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
         for(int i = 0; i < 200; i++) {
             Random random = new Random();
             entity = new Arrow(spriteView, getResources(), 0.10, width, height, (int) (maxRes * 0.4), (int) (maxRes * 0.4),
-                    0, 0, random.nextDouble() * width, random.nextDouble() * -height - (height * 0.1), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, null, "init");
+                    0, 0, random.nextDouble() * width, random.nextDouble() * -20 * height - (height * 0.1), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, null, "init");
             controllerMap.put("Arrow" + i + "Controller", entity.getController());
         }
 
@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
         for(int i = 0; i < 200; i++) {
             Random random = new Random();
             entity = new Arrow(spriteView, getResources(), 0.10, width, height, (int) (maxRes * 0.4), (int) (maxRes * 0.4),
-                    0, 0, random.nextDouble() * width, random.nextDouble() * -height - (height * 0.1), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, null, "init");
+                    0, 0, random.nextDouble() * width, random.nextDouble() * -20 * height - (height * 0.1), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, null, "init");
             controllerMap.put("Arrow" + i + "Controller", entity.getController());
         }
 

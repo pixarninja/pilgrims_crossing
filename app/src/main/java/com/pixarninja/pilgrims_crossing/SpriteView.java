@@ -212,30 +212,53 @@ public class SpriteView extends SurfaceView {
                         /* remove any dead controllers */
                         for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
                             if (!entry.getValue().getAlive()) {
-                                /* TODO: fix updating score */
                                 if(entry.getKey().contains("Arrow")) {
                                     Activity activity = (Activity) context;
-                                    activity.runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            TextView score = (TextView) ((Activity)context).findViewById(R.id.score);
-                                            String text = score.getText().toString();
-                                            text = text.replaceAll("\\D+", "");
-                                            int remaining = Integer.parseInt(text);
-                                            String newText = "Arrows Remaining: " + (remaining - 1);
-                                            score.setText(newText);
-                                        }
-                                    });
+                                    if(entry.getValue().getID().equals("hit samurai")) {
+                                        activity.runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                TextView score = (TextView) ((Activity) context).findViewById(R.id.score);
+                                                String text = score.getText().toString();
+                                                String[] expression = text.split("\n");
+                                                expression[0] = expression[0].replaceAll("\\D+", "");
+                                                expression[1] = expression[1].replaceAll("\\D+", "");
+                                                int remaining = Integer.parseInt(expression[0]);
+                                                int hit = Integer.parseInt(expression[1]);
+                                                String newText = "Arrows Remaining: " + (remaining - 1) + "\nHit Bridge: " + hit;
+                                                score.setText(newText);
+                                            }
+                                        });
+                                    }
+                                    else {
+                                        activity.runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                TextView score = (TextView) ((Activity) context).findViewById(R.id.score);
+                                                String text = score.getText().toString();
+                                                String[] expression = text.split("\n");
+                                                expression[0] = expression[0].replaceAll("\\D+", "");
+                                                expression[1] = expression[1].replaceAll("\\D+", "");
+                                                int remaining = Integer.parseInt(expression[0]);
+                                                int hit = Integer.parseInt(expression[1]);
+                                                String newText = "Arrows Remaining: " + (remaining - 1) + "\nHit Bridge: " + (hit + 1);
+                                                score.setText(newText);
+                                            }
+                                        });
+                                    }
                                 }
                                 controllerMap.remove(entry.getKey());
                             }
                         }
                         /* check for collisions and refresh the entity if necessary */
+                        LinkedHashMap<String, SpriteController> map = new LinkedHashMap<>();
                         LinkedHashMap<String, SpriteController> additionMap = new LinkedHashMap<>();
-                        for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
-                            if (entry.getValue().getEntity() != null && entry.getKey().equals("SamuraiController")) {
-                                additionMap = entry.getValue().getEntity().onCollisionEvent(entry, controllerMap);
-                                break;
+                        for(LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
+                            if (entry.getValue().getEntity() != null && (entry.getKey().equals("SamuraiController") || entry.getKey().equals("BridgeController"))) {
+                                map = entry.getValue().getEntity().onCollisionEvent(entry, controllerMap);
+                            }
+                            for(LinkedHashMap.Entry<String, SpriteController> add : map.entrySet()) {
+                                additionMap.put(add.getKey(), add.getValue());
                             }
                         }
                         /* add any entities to the scene that need to be added */

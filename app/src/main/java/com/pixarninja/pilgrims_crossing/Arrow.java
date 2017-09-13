@@ -18,6 +18,7 @@ public class Arrow extends SpriteProp{
 
         if(controller == null) {
             this.controller = new SpriteController();
+            this.controller.setID("untouched");
         }
         else {
             this.controller = controller;
@@ -64,6 +65,9 @@ public class Arrow extends SpriteProp{
             switch (ID) {
                 case "destroyed":
                     controller.setReacting(true);
+                    controller.setYDelta(0);
+                    controller.setXDelta(0);
+                    controller.setXPos(controller.getXPos() + render.getSpriteWidth() / 2);
                     render.setID(ID);
                     render.setXDimension(xDimension);
                     render.setYDimension(yDimension);
@@ -83,6 +87,7 @@ public class Arrow extends SpriteProp{
                     render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
                     render.setSpriteWidth((int) (render.getFrameWidth() * render.getFrameScale()));
                     render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
+                    controller.setXPos(controller.getXPos() - render.getSpriteWidth() / 2);
                     render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                     break;
                 case "falling":
@@ -204,10 +209,16 @@ public class Arrow extends SpriteProp{
             RectF entryBox = entry.getValue().getEntity().getSprite().getBoundingBox();
             for (LinkedHashMap.Entry<String, SpriteController> test : controllerMap.entrySet()) {
                 if (!test.getKey().equals(entry.getKey()) && !test.getValue().getReacting()) {
-                    if ((test.getValue().getEntity().getSprite().getBoundingBox() != null) && test.getKey().equals("SamuraiController")) {
+                    if ((test.getValue().getEntity().getSprite().getBoundingBox() != null) && (test.getKey().equals("SamuraiController") || test.getKey().equals("BridgeController"))) {
                         RectF compareBox = test.getValue().getEntity().getSprite().getBoundingBox();
                         /* if the objects intersect, find where they intersect for the entry bounding boxe*/
                         if (entryBox.intersect(compareBox)) {
+                            if(test.getKey().equals("SamuraiController")) {
+                                entry.getValue().setID("hit samurai");
+                            }
+                            else {
+                                entry.getValue().setID("hit bridge");
+                            }
                             entry.getValue().getEntity().refreshEntity("inherit destroyed");
                         }
                     }
