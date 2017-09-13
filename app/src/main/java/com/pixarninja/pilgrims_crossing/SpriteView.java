@@ -160,13 +160,13 @@ public class SpriteView extends SurfaceView {
                                 //System.exit(1);
                             } else {
                                 /* for debugging bounding boxes
+                                Paint paint;
+                                paint = new Paint();
+                                paint.setStyle(Paint.Style.STROKE);
+                                paint.setColor(Color.rgb(255, 255, 255));
+                                paint.setStrokeWidth(3);
+                                canvas.drawRect(sprite.getBoundingBox(), paint);
                                 if(entry.getKey().equals("SamuraiController")) {
-                                    Paint paint;
-                                    paint = new Paint();
-                                    paint.setStyle(Paint.Style.STROKE);
-                                    paint.setColor(Color.rgb(255, 255, 255));
-                                    paint.setStrokeWidth(3);
-                                    canvas.drawRect(sprite.getBoundingBox(), paint);
                                     float left = sprite.getWhereToDraw().left;
                                     float top = sprite.getWhereToDraw().top;
                                     float right = sprite.getWhereToDraw().right;

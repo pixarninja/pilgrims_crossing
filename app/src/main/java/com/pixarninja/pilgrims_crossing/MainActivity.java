@@ -38,7 +38,8 @@ public class MainActivity extends AppCompatActivity {
 
         /* set score view */
         TextView score = (TextView) findViewById(R.id.score);
-        score.setText("Arrows Remaining: " + 200);
+        String newText = "Arrows Remaining: " + 200;
+        score.setText(newText);
 
         int height = (int)(displayMetrics.heightPixels);
         int maxRes = height * 2;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         for(int i = 0; i < 200; i++) {
             Random random = new Random();
             entity = new Arrow(spriteView, getResources(), 0.10, width, height, (int) (maxRes * 0.4), (int) (maxRes * 0.4),
-                    0, 0, random.nextDouble() * width, random.nextDouble() * -height, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, null, "init");
+                    0, 0, random.nextDouble() * width, random.nextDouble() * -height - (height * 0.1), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, null, "init");
             controllerMap.put("Arrow" + i + "Controller", entity.getController());
         }
 
@@ -66,22 +67,22 @@ public class MainActivity extends AppCompatActivity {
 
         /* run left button */
         entity = new SpriteButton(spriteView, getResources(), 0.1, width, height, (int)(maxRes * 0.025), (int)(maxRes * 0.025), R.mipmap.button_run_left, R.mipmap.button_run_left, R.mipmap.button_run_left,
-                0, 0, (1.2 * width / 6), (8 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
+                0, 0, (1.15 * width / 6), (8 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
         controllerMap.put("RunLeftButtonController", entity.getController());
 
         /* stop button */
         entity = new SpriteButton(spriteView, getResources(), 0.1, width, height, (int)(maxRes * 0.025), (int)(maxRes * 0.025), R.mipmap.button_stop, R.mipmap.button_stop, R.mipmap.button_stop,
-                0, 0, (1.9 * width / 6), (8 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
+                0, 0, (1.8 * width / 6), (8 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
         controllerMap.put("StopButtonController", entity.getController());
 
         /* run right button */
         entity = new SpriteButton(spriteView, getResources(), 0.1, width, height, (int)(maxRes * 0.025), (int)(maxRes * 0.025), R.mipmap.button_run_right, R.mipmap.button_run_right, R.mipmap.button_run_right,
-                0, 0, (2.6 * width / 6), (8 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
+                0, 0, (2.45 * width / 6), (8 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
         controllerMap.put("RunRightButtonController", entity.getController());
 
         /* sprint right button */
         entity = new SpriteButton(spriteView, getResources(), 0.1, width, height, (int)(maxRes * 0.025), (int)(maxRes * 0.025), R.mipmap.button_sprint_right, R.mipmap.button_sprint_right, R.mipmap.button_sprint_right,
-                0, 0, (3.3 * width / 6), (8 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
+                0, 0, (3.1 * width / 6), (8 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
         controllerMap.put("SprintRightButtonController", entity.getController());
 
         /* jump button */
@@ -121,7 +122,80 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void restart(View view) {
-        ;
+
+        controllerMap.keySet().removeAll(controllerMap.keySet());
+        spriteView.getSpriteThread().setRunning(false);
+
+        /* set center view */
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+        /* set score view */
+        TextView score = (TextView) findViewById(R.id.score);
+        String newText = "Arrows Remaining: " + 200;
+        score.setText(newText);
+
+        int height = (int)(displayMetrics.heightPixels);
+        int maxRes = height * 2;
+        int width = (int)(displayMetrics.widthPixels);
+
+        /* background */
+        spriteView.setBackgroundResource(R.drawable.background);
+
+        /* initialize samurai controller */
+        entity = new SamuraiIdle(spriteView, getResources(), 0.65, maxRes / 2, maxRes / 2, width, height, null, "idle right", "init");
+        controllerMap.put("SamuraiController", entity.getController());
+
+        /* initialize arrow controllers */
+        for(int i = 0; i < 200; i++) {
+            Random random = new Random();
+            entity = new Arrow(spriteView, getResources(), 0.10, width, height, (int) (maxRes * 0.4), (int) (maxRes * 0.4),
+                    0, 0, random.nextDouble() * width, random.nextDouble() * -height - (height * 0.1), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, null, "init");
+            controllerMap.put("Arrow" + i + "Controller", entity.getController());
+        }
+
+        /* sprint left button */
+        entity = new SpriteButton(spriteView, getResources(), 0.1, width, height, (int)(maxRes * 0.025), (int)(maxRes * 0.025), R.mipmap.button_sprint_left, R.mipmap.button_sprint_left, R.mipmap.button_sprint_left,
+                0, 0, (0.5 * width / 6), (8 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
+        controllerMap.put("SprintLeftButtonController", entity.getController());
+
+        /* run left button */
+        entity = new SpriteButton(spriteView, getResources(), 0.1, width, height, (int)(maxRes * 0.025), (int)(maxRes * 0.025), R.mipmap.button_run_left, R.mipmap.button_run_left, R.mipmap.button_run_left,
+                0, 0, (1 * width / 6), (8 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
+        controllerMap.put("RunLeftButtonController", entity.getController());
+
+        /* stop button */
+        entity = new SpriteButton(spriteView, getResources(), 0.1, width, height, (int)(maxRes * 0.025), (int)(maxRes * 0.025), R.mipmap.button_stop, R.mipmap.button_stop, R.mipmap.button_stop,
+                0, 0, (1.5 * width / 6), (8 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
+        controllerMap.put("StopButtonController", entity.getController());
+
+        /* run right button */
+        entity = new SpriteButton(spriteView, getResources(), 0.1, width, height, (int)(maxRes * 0.025), (int)(maxRes * 0.025), R.mipmap.button_run_right, R.mipmap.button_run_right, R.mipmap.button_run_right,
+                0, 0, (2.0 * width / 6), (8 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
+        controllerMap.put("RunRightButtonController", entity.getController());
+
+        /* sprint right button */
+        entity = new SpriteButton(spriteView, getResources(), 0.1, width, height, (int)(maxRes * 0.025), (int)(maxRes * 0.025), R.mipmap.button_sprint_right, R.mipmap.button_sprint_right, R.mipmap.button_sprint_right,
+                0, 0, (2.5 * width / 6), (8 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
+        controllerMap.put("SprintRightButtonController", entity.getController());
+
+        /* jump button */
+        entity = new SpriteButton(spriteView, getResources(), 0.1, width, height, (int)(maxRes * 0.025), (int)(maxRes * 0.025), R.mipmap.button_jump, R.mipmap.button_jump, R.mipmap.button_jump,
+                0, 0, (5.5 * width / 6), (8 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
+        controllerMap.put("JumpButtonController", entity.getController());
+
+        /* set frame rate for all controllers */
+        for(LinkedHashMap.Entry<String,SpriteController> controller : controllerMap.entrySet()) {
+            controller.getValue().setFrameRate(35);
+        }
+
+        SpriteThread spriteThread = new SpriteThread(spriteView);
+        spriteThread.setRunning(true);
+        spriteThread.start();
+        spriteView.setSpriteThread(spriteThread);
+        /* initialize the entity for the sprite view */
+        spriteView.setControllerMap(controllerMap);
+
     }
 
 }

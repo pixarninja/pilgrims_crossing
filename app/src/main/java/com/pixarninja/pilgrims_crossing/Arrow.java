@@ -93,9 +93,9 @@ public class Arrow extends SpriteProp{
                     render.setTop(top);
                     render.setRight(right);
                     render.setBottom(bottom);
-                    render.setXFrameCount(6);
+                    render.setXFrameCount(1);
                     render.setYFrameCount(1);
-                    render.setFrameCount(6);
+                    render.setFrameCount(1);
                     render.setMethod("loop");
                     xSpriteRes = 2 * xRes / render.getXFrameCount();
                     ySpriteRes = 2 * yRes / render.getYFrameCount();
