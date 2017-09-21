@@ -11,15 +11,12 @@ public class SpriteProp extends SpriteEntity {
     int propID;
 
     /* for extending the class */
-    public SpriteProp(SpriteView spriteView, Resources res, double percentOfScreen, int width, int height, int xRes, int yRes,
-                      double xDelta, double yDelta, double xInit, double yInit, int xFrameCount, int yFrameCount, int frameCount,
-                      double xDimension, double yDimension, double spriteScale,
-                      double left, double top, double right, double bottom, SpriteController controller, String ID, String transition) {}
+    public SpriteProp() {}
 
     public SpriteProp(SpriteView spriteView, Resources res, double percentOfScreen, int width, int height, int xRes, int yRes, int propID,
                       double xDelta, double yDelta, double xInit, double yInit, int xFrameCount, int yFrameCount, int frameCount,
                       double xDimension, double yDimension, double spriteScale,
-                      double left, double top, double right, double bottom, String method, SpriteController controller, String ID, String transition) {
+                      double left, double top, double right, double bottom, String method, String direction, SpriteController controller, String ID, String transition) {
 
         if(controller == null) {
             this.controller = new SpriteController();
@@ -52,6 +49,7 @@ public class SpriteProp extends SpriteEntity {
         this.right = right;
         this.bottom = bottom;
         this.method = method;
+        this.direction = direction;
 
         refreshEntity(ID);
 
@@ -80,6 +78,7 @@ public class SpriteProp extends SpriteEntity {
                 render.setYFrameCount(yFrameCount);
                 render.setFrameCount(frameCount);
                 render.setMethod(method);
+                render.setDirection(direction);
                 xSpriteRes = 2 * xRes / render.getXFrameCount();
                 ySpriteRes = 2 * yRes / render.getYFrameCount();
                 render.setSpriteSheet(decodeSampledBitmapFromResource(res, propID, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));

@@ -3,7 +3,10 @@ package com.pixarninja.pilgrims_crossing;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.graphics.PixelFormat;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -172,7 +175,7 @@ public class SpriteView extends SurfaceView {
                                     paint.setColor(Color.rgb(255, 255, 255));
                                     paint.setStrokeWidth(3);
                                     canvas.drawRect(sprite.getBoundingBox(), paint);
-                                    if(entry.getKey().equals("SamuraiController")) {
+                                    if(entry.getKey().equals("PlayerController")) {
                                         float left = sprite.getWhereToDraw().left;
                                         float top = sprite.getWhereToDraw().top;
                                         float right = sprite.getWhereToDraw().right;
@@ -201,7 +204,7 @@ public class SpriteView extends SurfaceView {
                                     paint.setStyle(Paint.Style.STROKE);
                                     paint.setColor(Color.rgb(255, 255, 255));
                                     paint.setStrokeWidth(3);
-                                    if(entry.getKey().equals("SamuraiController")) {
+                                    if(entry.getKey().equals("PlayerController")) {
                                         Matrix matrix = new Matrix();
                                         matrix.postScale(-1, 1);
                                         matrix.postTranslate(entity.getSprite().getSpriteSheet().getWidth(), 0);
@@ -220,7 +223,7 @@ public class SpriteView extends SurfaceView {
                             if (!entry.getValue().getAlive()) {
                                 if(entry.getKey().contains("Arrow")) {
                                     Activity activity = (Activity) context;
-                                    if(entry.getValue().getID().equals("hit samurai")) {
+                                    if(entry.getValue().getID().equals("hit player")) {
                                         activity.runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
@@ -260,7 +263,7 @@ public class SpriteView extends SurfaceView {
                         LinkedHashMap<String, SpriteController> map = new LinkedHashMap<>();
                         LinkedHashMap<String, SpriteController> additionMap = new LinkedHashMap<>();
                         for(LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
-                            if (entry.getValue().getEntity() != null && (entry.getKey().equals("SamuraiController") || entry.getKey().contains("Bridge"))) {
+                            if (entry.getValue().getEntity() != null && (entry.getKey().equals("PlayerController") || entry.getKey().contains("Bridge"))) {
                                 map = entry.getValue().getEntity().onCollisionEvent(entry, controllerMap);
                             }
                             for(LinkedHashMap.Entry<String, SpriteController> add : map.entrySet()) {

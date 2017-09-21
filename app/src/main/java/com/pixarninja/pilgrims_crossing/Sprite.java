@@ -192,6 +192,7 @@ public class Sprite {
         System.out.println(" - top: " + top);
         System.out.println(" - right: " + right);
         System.out.println(" - bottom: " + bottom);
+        System.out.println(" - direction: " + direction);
         System.out.println(" - method: " + method);
         System.out.println(" - current frame: " + currentFrame);
         System.out.println(" - x current frame: " + xCurrentFrame);

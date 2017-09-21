@@ -1,58 +1,46 @@
 package com.pixarninja.pilgrims_crossing;
 
 import android.content.res.Resources;
-import android.graphics.Matrix;
 import android.graphics.Rect;
 import android.graphics.RectF;
-
 import java.util.LinkedHashMap;
 import java.util.Random;
 
-public class Bridge extends SpriteProp{
+public class Bridge extends SpriteProp {
 
     private int hit;
 
-    public Bridge(SpriteView spriteView, Resources res, double percentOfScreen, int width, int height, int xRes, int yRes,
-                  double xDelta, double yDelta, double xInit, double yInit, int xFrameCount, int yFrameCount, int frameCount,
-                  double xDimension, double yDimension, double spriteScale,
-                  double left, double top, double right, double bottom, SpriteController controller, String ID, String transition) {
+    public Bridge(SpriteView spriteView, Resources res, int width, int height, int xRes, int yRes, double xInit, double yInit, String ID) {
 
-        super(spriteView, res, percentOfScreen, width, height, xRes, yRes, xDelta, yDelta, xInit, yInit, xFrameCount, yFrameCount, frameCount, xDimension, yDimension, spriteScale, left, top, right, bottom, controller, ID, transition);
+        super();
 
         hit = 0;
-        if(controller == null) {
-            this.controller = new SpriteController();
-        }
-        else {
-            this.controller = controller;
-        }
+        this.controller = new SpriteController();
+
         this.controller.setID(ID);
         this.spriteView = spriteView;
         this.res = res;
-        this.percentOfScreen = percentOfScreen;
+        this.percentOfScreen = 1;
         this.width = width;
         this.height = height;
         this.xRes = xRes;
         this.yRes = yRes;
-        this.controller.setXDelta(xDelta);
-        this.controller.setYDelta(yDelta);
+        this.controller.setXDelta(0);
+        this.controller.setYDelta(0);
         this.controller.setXInit(xInit);
         this.controller.setYInit(yInit);
         this.controller.setXPos(xInit);
         this.controller.setYPos(yInit);
         this.controller.setReacting(false);
-        this.xFrameCount = xFrameCount;
-        this.yFrameCount = yFrameCount;
-        this.frameCount = frameCount;
-        this.xDimension = xDimension;
-        this.yDimension = yDimension;
-        this.spriteScale = spriteScale;
-        this.left = left;
-        this.top = top;
-        this.right = right;
-        this.bottom = bottom;
+        this.xDimension = 1;
+        this.yDimension = 1;
+        this.spriteScale = 1;
+        this.left = 0;
+        this.top = 0;
+        this.right = 1;
+        this.bottom = 1;
 
-        refreshEntity(transition);
+        refreshEntity("init");
 
     }
 
@@ -79,6 +67,7 @@ public class Bridge extends SpriteProp{
                     render.setYFrameCount(1);
                     render.setFrameCount(1);
                     render.setMethod("loop");
+                    render.setDirection("forwards");
                     xSpriteRes = 2 * xRes / render.getXFrameCount();
                     ySpriteRes = 2 * yRes / render.getYFrameCount();
                     render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.prop_bridge_segment_destroyed, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
@@ -101,6 +90,7 @@ public class Bridge extends SpriteProp{
                     render.setYFrameCount(1);
                     render.setFrameCount(1);
                     render.setMethod("loop");
+                    render.setDirection("forwards");
                     xSpriteRes = 2 * xRes / render.getXFrameCount();
                     ySpriteRes = 2 * yRes / render.getYFrameCount();
                     render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.prop_bridge_segment_stage3, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
@@ -123,6 +113,7 @@ public class Bridge extends SpriteProp{
                     render.setYFrameCount(1);
                     render.setFrameCount(1);
                     render.setMethod("loop");
+                    render.setDirection("forwards");
                     xSpriteRes = 2 * xRes / render.getXFrameCount();
                     ySpriteRes = 2 * yRes / render.getYFrameCount();
                     render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.prop_bridge_segment_stage2, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
@@ -145,6 +136,7 @@ public class Bridge extends SpriteProp{
                     render.setYFrameCount(1);
                     render.setFrameCount(1);
                     render.setMethod("loop");
+                    render.setDirection("forwards");
                     xSpriteRes = 2 * xRes / render.getXFrameCount();
                     ySpriteRes = 2 * yRes / render.getYFrameCount();
                     render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.prop_bridge_segment_stage1, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
@@ -167,6 +159,7 @@ public class Bridge extends SpriteProp{
                     render.setYFrameCount(1);
                     render.setFrameCount(1);
                     render.setMethod("loop");
+                    render.setDirection("forwards");
                     xSpriteRes = 2 * xRes / render.getXFrameCount();
                     ySpriteRes = 2 * yRes / render.getYFrameCount();
                     render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.prop_bridge_segment_complete, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));

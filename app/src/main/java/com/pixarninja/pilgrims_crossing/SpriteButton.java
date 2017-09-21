@@ -14,10 +14,13 @@ public class SpriteButton extends SpriteEntity {
     private LinkedHashMap<String, Double> yDeltaMap;
     private LinkedHashMap<String, Integer> frameRateMap;
 
+    /* for extending the class */
+    public SpriteButton() {}
+
     public SpriteButton(SpriteView spriteView, Resources res, double percentOfScreen, int width, int height, int xRes, int yRes, int onID, int pokedID, int offID,
                         double xDelta, double yDelta, double xInit, double yInit, int xFrameCount, int yFrameCount, int frameCount,
                         double xDimension, double yDimension, double spriteScale,
-                        double left, double top, double right, double bottom, String method, SpriteController controller, String ID, String transition) {
+                        double left, double top, double right, double bottom, SpriteController controller, String ID, String transition) {
 
         if(controller == null) {
             this.controller = new SpriteController();
@@ -52,7 +55,6 @@ public class SpriteButton extends SpriteEntity {
         this.top = top;
         this.right = right;
         this.bottom = bottom;
-        this.method = method;
 
         refreshEntity(transition);
 
@@ -80,6 +82,7 @@ public class SpriteButton extends SpriteEntity {
                 render.setYFrameCount(yFrameCount);
                 render.setFrameCount(frameCount);
                 render.setMethod("loop");
+                render.setDirection("forwards");
                 xSpriteRes = 2 * xRes / render.getXFrameCount();
                 ySpriteRes = 2 * yRes / render.getYFrameCount();
                 render.setSpriteSheet(decodeSampledBitmapFromResource(res, offID, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
@@ -102,6 +105,7 @@ public class SpriteButton extends SpriteEntity {
                 render.setYFrameCount(yFrameCount);
                 render.setFrameCount(frameCount);
                 render.setMethod("once");
+                render.setDirection("forwards");
                 xSpriteRes = 2 * xRes / render.getXFrameCount();
                 ySpriteRes = 2 * yRes / render.getYFrameCount();
                 render.setSpriteSheet(decodeSampledBitmapFromResource(res, pokedID, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
@@ -124,6 +128,7 @@ public class SpriteButton extends SpriteEntity {
                 render.setYFrameCount(yFrameCount);
                 render.setFrameCount(frameCount);
                 render.setMethod("loop");
+                render.setDirection("forwards");
                 xSpriteRes = 2 * xRes / render.getXFrameCount();
                 ySpriteRes = 2 * yRes / render.getYFrameCount();
                 render.setSpriteSheet(decodeSampledBitmapFromResource(res, onID, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
@@ -156,7 +161,7 @@ public class SpriteButton extends SpriteEntity {
     public void onTouchEvent(SpriteView spriteView, LinkedHashMap.Entry<String, SpriteController> entry, LinkedHashMap<String, SpriteController> controllerMap, boolean poke, boolean move, boolean jump, float xTouchedPos, float yTouchedPos) {
 
         String transition;
-        SpriteController samuraiController = controllerMap.get("SamuraiController");
+        SpriteController playerController = controllerMap.get("PlayerController");
 
         if(poke || move || jump) {
 
@@ -202,13 +207,13 @@ public class SpriteButton extends SpriteEntity {
                             /* direction control button */
                             if(entry.getKey().equals("SprintLeftButtonController")) {
 
-                                /* set samurai */
-                                if(!samuraiController.getReacting()) {
-                                    SpriteCharacter oldSamurai = (SpriteCharacter) samuraiController.getEntity();
-                                    transition = samuraiController.getTransition();
+                                /* set player */
+                                if(!playerController.getReacting()) {
+                                    Player oldPlayer = (Player) playerController.getEntity();
+                                    transition = playerController.getTransition();
 
                                     if (transition.equals("idle")) {
-                                        if(samuraiController.getID().equals("sprint left")) {
+                                        if(playerController.getID().equals("sprint left")) {
                                             transition = "inherit idle";
                                         }
                                         else {
@@ -218,26 +223,26 @@ public class SpriteButton extends SpriteEntity {
                                         transition = "idle";
                                     }
 
-                                    SpriteCharacter newSamurai = new SamuraiSprint(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, samuraiController, "sprint left", transition);
-                                    newSamurai.setCount(0);
-                                    samuraiController.setEntity(newSamurai);
+                                    Player newPlayer = new PlayerSprint(spriteView, oldPlayer.res, oldPlayer.percentOfScreen, oldPlayer.xRes, oldPlayer.yRes, width, height, playerController, "sprint left", transition);
+                                    newPlayer.setCount(0);
+                                    playerController.setEntity(newPlayer);
                                 }
 
                                 /* move character */
-                                samuraiController.setXDelta(-25);
+                                playerController.setXDelta(-25);
 
-                                controllerMap.put("SamuraiController", samuraiController);
+                                controllerMap.put("PlayerController", playerController);
 
                             }
                             else if(entry.getKey().equals("SprintRightButtonController")) {
 
-                                /* set samurai */
-                                if(!samuraiController.getReacting()) {
-                                    SpriteCharacter oldSamurai = (SpriteCharacter) samuraiController.getEntity();
-                                    transition = samuraiController.getTransition();
+                                /* set player */
+                                if(!playerController.getReacting()) {
+                                    Player oldPlayer = (Player) playerController.getEntity();
+                                    transition = playerController.getTransition();
 
                                     if (transition.equals("idle")) {
-                                        if(samuraiController.getID().equals("sprint right")) {
+                                        if(playerController.getID().equals("sprint right")) {
                                             transition = "inherit idle";
                                         }
                                         else {
@@ -247,15 +252,15 @@ public class SpriteButton extends SpriteEntity {
                                         transition = "idle";
                                     }
 
-                                    SpriteCharacter newSamurai = new SamuraiSprint(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, samuraiController, "sprint right", transition);
-                                    newSamurai.setCount(0);
-                                    samuraiController.setEntity(newSamurai);
+                                    Player newPlayer = new PlayerSprint(spriteView, oldPlayer.res, oldPlayer.percentOfScreen, oldPlayer.xRes, oldPlayer.yRes, width, height, playerController, "sprint right", transition);
+                                    newPlayer.setCount(0);
+                                    playerController.setEntity(newPlayer);
                                 }
 
                                 /* move character */
-                                samuraiController.setXDelta(25);
+                                playerController.setXDelta(25);
 
-                                controllerMap.put("SamuraiController", samuraiController);
+                                controllerMap.put("PlayerController", playerController);
 
                             }
                         }
