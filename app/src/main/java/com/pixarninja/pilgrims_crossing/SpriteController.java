@@ -3,8 +3,8 @@ package com.pixarninja.pilgrims_crossing;
 public class SpriteController {
 
     private String ID;
-    private SpriteEntity entity;
     private String transition;
+    private SpriteEntity entity;
     private double xInit;
     private double yInit;
     private double xPos;
@@ -63,10 +63,6 @@ public class SpriteController {
 
     public boolean getAlive() { return this.alive; }
     public void setAlive(boolean alive) { this.alive = alive; }
-
-    public void makeTransition(String ID) {
-        this.entity.refreshEntity(ID);
-    }
 
     public void printController() {
 

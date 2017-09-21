@@ -10,6 +10,8 @@ import java.util.Random;
 
 public class Bridge extends SpriteProp{
 
+    private int hit;
+
     public Bridge(SpriteView spriteView, Resources res, double percentOfScreen, int width, int height, int xRes, int yRes,
                   double xDelta, double yDelta, double xInit, double yInit, int xFrameCount, int yFrameCount, int frameCount,
                   double xDimension, double yDimension, double spriteScale,
@@ -17,12 +19,14 @@ public class Bridge extends SpriteProp{
 
         super(spriteView, res, percentOfScreen, width, height, xRes, yRes, xDelta, yDelta, xInit, yInit, xFrameCount, yFrameCount, frameCount, xDimension, yDimension, spriteScale, left, top, right, bottom, controller, ID, transition);
 
+        hit = 0;
         if(controller == null) {
             this.controller = new SpriteController();
         }
         else {
             this.controller = controller;
-        }this.controller.setID(ID);
+        }
+        this.controller.setID(ID);
         this.spriteView = spriteView;
         this.res = res;
         this.percentOfScreen = percentOfScreen;
@@ -64,6 +68,93 @@ public class Bridge extends SpriteProp{
         try {
             switch (ID) {
                 case "destroyed":
+                    render.setID(ID);
+                    render.setXDimension(xDimension);
+                    render.setYDimension(yDimension);
+                    render.setLeft(left);
+                    render.setTop(top);
+                    render.setRight(right);
+                    render.setBottom(bottom);
+                    render.setXFrameCount(1);
+                    render.setYFrameCount(1);
+                    render.setFrameCount(1);
+                    render.setMethod("loop");
+                    xSpriteRes = 2 * xRes / render.getXFrameCount();
+                    ySpriteRes = 2 * yRes / render.getYFrameCount();
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.prop_bridge_segment_destroyed, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
+                    render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
+                    render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
+                    render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
+                    render.setSpriteWidth(width);
+                    render.setSpriteHeight(render.getSpriteSheet().getHeight() * width / render.getSpriteSheet().getWidth());
+                    render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
+                    break;
+                case "stage3":
+                    render.setID(ID);
+                    render.setXDimension(xDimension);
+                    render.setYDimension(yDimension);
+                    render.setLeft(left);
+                    render.setTop(top);
+                    render.setRight(right);
+                    render.setBottom(bottom);
+                    render.setXFrameCount(1);
+                    render.setYFrameCount(1);
+                    render.setFrameCount(1);
+                    render.setMethod("loop");
+                    xSpriteRes = 2 * xRes / render.getXFrameCount();
+                    ySpriteRes = 2 * yRes / render.getYFrameCount();
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.prop_bridge_segment_stage3, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
+                    render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
+                    render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
+                    render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
+                    render.setSpriteWidth(width);
+                    render.setSpriteHeight(render.getSpriteSheet().getHeight() * width / render.getSpriteSheet().getWidth());
+                    render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
+                    break;
+                case "stage2":
+                    render.setID(ID);
+                    render.setXDimension(xDimension);
+                    render.setYDimension(yDimension);
+                    render.setLeft(left);
+                    render.setTop(top);
+                    render.setRight(right);
+                    render.setBottom(bottom);
+                    render.setXFrameCount(1);
+                    render.setYFrameCount(1);
+                    render.setFrameCount(1);
+                    render.setMethod("loop");
+                    xSpriteRes = 2 * xRes / render.getXFrameCount();
+                    ySpriteRes = 2 * yRes / render.getYFrameCount();
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.prop_bridge_segment_stage2, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
+                    render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
+                    render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
+                    render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
+                    render.setSpriteWidth(width);
+                    render.setSpriteHeight(render.getSpriteSheet().getHeight() * width / render.getSpriteSheet().getWidth());
+                    render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
+                    break;
+                case "stage1":
+                    render.setID(ID);
+                    render.setXDimension(xDimension);
+                    render.setYDimension(yDimension);
+                    render.setLeft(left);
+                    render.setTop(top);
+                    render.setRight(right);
+                    render.setBottom(bottom);
+                    render.setXFrameCount(1);
+                    render.setYFrameCount(1);
+                    render.setFrameCount(1);
+                    render.setMethod("loop");
+                    xSpriteRes = 2 * xRes / render.getXFrameCount();
+                    ySpriteRes = 2 * yRes / render.getYFrameCount();
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.prop_bridge_segment_stage1, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
+                    render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
+                    render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
+                    render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
+                    render.setSpriteWidth(width);
+                    render.setSpriteHeight(render.getSpriteSheet().getHeight() * width / render.getSpriteSheet().getWidth());
+                    render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
+                    break;
                 case "complete":
                     render.setID(ID);
                     render.setXDimension(xDimension);
@@ -78,12 +169,12 @@ public class Bridge extends SpriteProp{
                     render.setMethod("loop");
                     xSpriteRes = 2 * xRes / render.getXFrameCount();
                     ySpriteRes = 2 * yRes / render.getYFrameCount();
-                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.prop_bridge, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.prop_bridge_segment_complete, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
                     render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
                     render.setSpriteWidth(width);
-                    render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
+                    render.setSpriteHeight(render.getSpriteSheet().getHeight() * width / render.getSpriteSheet().getWidth());
                     render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                     break;
                 case "init":
@@ -183,6 +274,20 @@ public class Bridge extends SpriteProp{
                         if (entryBox.intersect(compareBox)) {
                             /* call the comparison's collision handler */
                             test.getValue().getEntity().onCollisionEvent(test, controllerMap);
+                            /* increment hit value */
+                            hit = hit + 1;
+                            if(hit > 15) {
+                                refreshEntity("destroyed");
+                            }
+                            else if(hit > 10) {
+                                refreshEntity("stage3");
+                            }
+                            else if(hit > 5) {
+                                refreshEntity("stage2");
+                            }
+                            else if(hit > 0) {
+                                refreshEntity("stage1");
+                            }
                         }
                     }
                 }

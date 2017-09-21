@@ -10,11 +10,14 @@ public class SpriteButton extends SpriteEntity {
     private int onID;
     private int pokedID;
     private int offID;
+    private LinkedHashMap<String, Double> xDeltaMap;
+    private LinkedHashMap<String, Double> yDeltaMap;
+    private LinkedHashMap<String, Integer> frameRateMap;
 
     public SpriteButton(SpriteView spriteView, Resources res, double percentOfScreen, int width, int height, int xRes, int yRes, int onID, int pokedID, int offID,
                         double xDelta, double yDelta, double xInit, double yInit, int xFrameCount, int yFrameCount, int frameCount,
                         double xDimension, double yDimension, double spriteScale,
-                        double left, double top, double right, double bottom, String method, SpriteController controller, String transition) {
+                        double left, double top, double right, double bottom, String method, SpriteController controller, String ID, String transition) {
 
         if(controller == null) {
             this.controller = new SpriteController();
@@ -22,6 +25,7 @@ public class SpriteButton extends SpriteEntity {
         else {
             this.controller = controller;
         }
+        this.controller.setID(ID);
         this.spriteView = spriteView;
         this.res = res;
         this.percentOfScreen = percentOfScreen;
@@ -142,84 +146,119 @@ public class SpriteButton extends SpriteEntity {
                 render.setFrameToDraw(new Rect(0, 0, render.getFrameWidth(), render.getFrameHeight()));
                 render.setWhereToDraw(new RectF((float)controller.getXPos(), (float)controller.getYPos(), (float)controller.getXPos() + render.getSpriteWidth(), (float)controller.getYPos() + render.getSpriteHeight()));
         }
+        controller.setTransition(transition);
         controller.setEntity(this);
         controller.setTransition(transition);
         updateBoundingBox();
     }
 
     @Override
-    public void onTouchEvent(SpriteView spriteView, LinkedHashMap.Entry<String, SpriteController> entry, LinkedHashMap<String, SpriteController> controllerMap, boolean move, boolean jump, float xTouchedPos, float yTouchedPos) {
+    public void onTouchEvent(SpriteView spriteView, LinkedHashMap.Entry<String, SpriteController> entry, LinkedHashMap<String, SpriteController> controllerMap, boolean poke, boolean move, boolean jump, float xTouchedPos, float yTouchedPos) {
 
         String transition;
-        String ID;
         SpriteController samuraiController = controllerMap.get("SamuraiController");
 
-        if(move || jump) {
+        if(poke || move || jump) {
 
-            RectF boundingSamurai = this.render.getBoundingBox();
+            RectF boundingBox = this.render.getBoundingBox();
 
-            if (xTouchedPos >= boundingSamurai.left && xTouchedPos <= boundingSamurai.right) {
+            if (xTouchedPos >= boundingBox.left && xTouchedPos <= boundingBox.right) {
                 /* center of the sprite */
-                if (yTouchedPos >= boundingSamurai.top && yTouchedPos <= boundingSamurai.bottom) {
+                if (yTouchedPos >= boundingBox.top && yTouchedPos <= boundingBox.bottom) {
 
-                    /* change the sprite if needed */
-                    if(entry.getKey().equals("SprintLeftButtonController")) {
-
-                        /* set samurai */
-                        if(!samuraiController.getReacting()) {
-                            SpriteCharacter oldSamurai = (SpriteCharacter) samuraiController.getEntity();
-                            transition = samuraiController.getTransition();
-
-                            if (transition.equals("idle")) {
-                                if(samuraiController.getID().equals("sprint left")) {
-                                    transition = "inherit idle";
+                    /* direction control buttons */
+                    if(poke) {
+                        /* flow control button */
+                        if(entry.getKey().equals("FlowButtonController")) {
+                            /* if the game is currently playing set the frame rate to infinity and store deltas */
+                            if(entry.getValue().getTransition().equals("off")) {
+                                refreshEntity("on");
+                                xDeltaMap = new LinkedHashMap<>();
+                                yDeltaMap = new LinkedHashMap<>();
+                                frameRateMap = new LinkedHashMap<>();
+                                for (LinkedHashMap.Entry<String, SpriteController> controller : controllerMap.entrySet()) {
+                                    frameRateMap.put(controller.getKey(), controller.getValue().getFrameRate());
+                                    xDeltaMap.put(controller.getKey(), controller.getValue().getXDelta());
+                                    yDeltaMap.put(controller.getKey(), controller.getValue().getYDelta());
+                                    controller.getValue().setFrameRate(Integer.MAX_VALUE);
+                                    controller.getValue().setXDelta(0);
+                                    controller.getValue().setYDelta(0);
                                 }
-                                else {
-                                    transition = "reset idle";
+                            }
+                            /* else set the frame rate to 35 and return deltas */
+                            else {
+                                refreshEntity("off");
+                                for (LinkedHashMap.Entry<String, SpriteController> controller : controllerMap.entrySet()) {
+                                    controller.getValue().setFrameRate(frameRateMap.get(controller.getKey()));
+                                    controller.getValue().setXDelta(xDeltaMap.get(controller.getKey()));
+                                    controller.getValue().setYDelta(yDeltaMap.get(controller.getKey()));
                                 }
-                            } else {
-                                transition = "idle";
                             }
 
-                            SpriteCharacter newSamurai = new SamuraiSprint(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, samuraiController, "sprint left", transition);
-                            newSamurai.setCount(0);
-                            samuraiController.setEntity(newSamurai);
                         }
-
-                        /* move character */
-                        samuraiController.setXDelta(-25);
-
-                        controllerMap.put("SamuraiController", samuraiController);
-
                     }
-                    else if(entry.getKey().equals("SprintRightButtonController")) {
+                    else {
+                        if(controllerMap.get("FlowButtonController").getTransition().equals("off")) {
+                            /* direction control button */
+                            if(entry.getKey().equals("SprintLeftButtonController")) {
 
-                        /* set samurai */
-                        if(!samuraiController.getReacting()) {
-                            SpriteCharacter oldSamurai = (SpriteCharacter) samuraiController.getEntity();
-                            transition = samuraiController.getTransition();
+                                /* set samurai */
+                                if(!samuraiController.getReacting()) {
+                                    SpriteCharacter oldSamurai = (SpriteCharacter) samuraiController.getEntity();
+                                    transition = samuraiController.getTransition();
 
-                            if (transition.equals("idle")) {
-                                if(samuraiController.getID().equals("sprint right")) {
-                                    transition = "inherit idle";
+                                    if (transition.equals("idle")) {
+                                        if(samuraiController.getID().equals("sprint left")) {
+                                            transition = "inherit idle";
+                                        }
+                                        else {
+                                            transition = "reset idle";
+                                        }
+                                    } else {
+                                        transition = "idle";
+                                    }
+
+                                    SpriteCharacter newSamurai = new SamuraiSprint(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, samuraiController, "sprint left", transition);
+                                    newSamurai.setCount(0);
+                                    samuraiController.setEntity(newSamurai);
                                 }
-                                else {
-                                    transition = "reset idle";
-                                }
-                            } else {
-                                transition = "idle";
+
+                                /* move character */
+                                samuraiController.setXDelta(-25);
+
+                                controllerMap.put("SamuraiController", samuraiController);
+
                             }
+                            else if(entry.getKey().equals("SprintRightButtonController")) {
 
-                            SpriteCharacter newSamurai = new SamuraiSprint(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, samuraiController, "sprint right", transition);
-                            newSamurai.setCount(0);
-                            samuraiController.setEntity(newSamurai);
+                                /* set samurai */
+                                if(!samuraiController.getReacting()) {
+                                    SpriteCharacter oldSamurai = (SpriteCharacter) samuraiController.getEntity();
+                                    transition = samuraiController.getTransition();
+
+                                    if (transition.equals("idle")) {
+                                        if(samuraiController.getID().equals("sprint right")) {
+                                            transition = "inherit idle";
+                                        }
+                                        else {
+                                            transition = "reset idle";
+                                        }
+                                    } else {
+                                        transition = "idle";
+                                    }
+
+                                    SpriteCharacter newSamurai = new SamuraiSprint(spriteView, oldSamurai.res, oldSamurai.percentOfScreen, oldSamurai.xRes, oldSamurai.yRes, width, height, samuraiController, "sprint right", transition);
+                                    newSamurai.setCount(0);
+                                    samuraiController.setEntity(newSamurai);
+                                }
+
+                                /* move character */
+                                samuraiController.setXDelta(25);
+
+                                controllerMap.put("SamuraiController", samuraiController);
+
+                            }
                         }
-
-                        /* move character */
-                        samuraiController.setXDelta(25);
-
-                        controllerMap.put("SamuraiController", samuraiController);
-
                     }
 
                 }

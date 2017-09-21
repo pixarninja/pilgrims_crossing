@@ -209,7 +209,7 @@ public class Arrow extends SpriteProp{
             RectF entryBox = entry.getValue().getEntity().getSprite().getBoundingBox();
             for (LinkedHashMap.Entry<String, SpriteController> test : controllerMap.entrySet()) {
                 if (!test.getKey().equals(entry.getKey()) && !test.getValue().getReacting()) {
-                    if ((test.getValue().getEntity().getSprite().getBoundingBox() != null) && (test.getKey().equals("SamuraiController") || test.getKey().equals("BridgeController"))) {
+                    if ((test.getValue().getEntity().getSprite().getBoundingBox() != null) && (test.getKey().equals("SamuraiController") || test.getKey().contains("Bridge"))) {
                         RectF compareBox = test.getValue().getEntity().getSprite().getBoundingBox();
                         /* if the objects intersect, find where they intersect for the entry bounding boxe*/
                         if (entryBox.intersect(compareBox)) {

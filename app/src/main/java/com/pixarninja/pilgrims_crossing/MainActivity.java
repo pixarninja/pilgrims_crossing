@@ -13,7 +13,7 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Handler handler;
+    private int num;
     SpriteView spriteView;
     LinkedHashMap<String, SpriteController> controllerMap;
     SpriteEntity entity;
@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        num = 100;
 
         /* initialize the render and controller maps */
         controllerMap = new LinkedHashMap<>();
@@ -38,12 +39,13 @@ public class MainActivity extends AppCompatActivity {
 
         /* set score view */
         TextView score = (TextView) findViewById(R.id.score);
-        String newText = "Arrows Remaining: " + 200 + "\nHit Bridge: " + 0;
+        String newText = "Arrows Remaining: " + num + "\nHit Bridge: " + 0;
         score.setText(newText);
 
         int height = (int)(displayMetrics.heightPixels);
         int maxRes = height * 2;
         int width = (int)(displayMetrics.widthPixels);
+        Random random = new Random();
 
         /* background */
         spriteView.setBackgroundResource(R.drawable.background);
@@ -52,14 +54,31 @@ public class MainActivity extends AppCompatActivity {
         entity = new SamuraiIdle(spriteView, getResources(), 0.65, maxRes / 2, maxRes / 2, width, height, null, "idle right", "init");
         controllerMap.put("SamuraiController", entity.getController());
 
-        /* initialize bridge controller */
-        entity = new Bridge(spriteView, getResources(), 1, width, height, (int) (maxRes * 0.4), (int) (maxRes * 0.4),
-                0, 0, 0, controllerMap.get("SamuraiController").getEntity().getSprite().getBoundingBox().bottom - 15, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, null, "bridge", "init");
-        controllerMap.put("BridgeController", entity.getController());
+        /* initialize bridge controllers */
+        for(int i = 0; i < 5; i++) {
+            if(i == 0) {
+                entity = new Bridge(spriteView, getResources(), 1, width / 5, height, (int) (maxRes * 0.4), (int) (maxRes * 0.4),
+                        0, 0, 0, controllerMap.get("SamuraiController").getEntity().getSprite().getBoundingBox().bottom - 20, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, null, "bridge", "init");
+            }
+            else {
+                entity = new Bridge(spriteView, getResources(), 1, width / 5, height, (int) (maxRes * 0.4), (int) (maxRes * 0.4),
+                        0, 0, controllerMap.get("Bridge" + (i - 1) + "Controller").getEntity().getSprite().getBoundingBox().right, controllerMap.get("SamuraiController").getEntity().getSprite().getBoundingBox().bottom - 20, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, null, "bridge", "init");
+            }
+            controllerMap.put("Bridge" + i + "Controller", entity.getController());
+        }
+
+        /* place spider monster */
+        entity = new SpriteProp(spriteView, getResources(), 0.1, width, height, maxRes / 2, maxRes / 2, R.mipmap.spritesheet_spider_idle_loop,
+                0, 0, random.nextDouble() * width, controllerMap.get("SamuraiController").getEntity().getSprite().getBoundingBox().bottom - 220, 1, 1, 1,
+                1, 1, 1, 0, 0, 1, 1, "loop", null, "spider", "init");
+        controllerMap.put("SpiderController", entity.getController());
+
+        SpriteController tmpController = controllerMap.get("SamuraiController");
+        controllerMap.remove("SamuraiController");
+        controllerMap.put("SamuraiController", tmpController);
 
         /* initialize arrow controllers */
-        for(int i = 0; i < 200; i++) {
-            Random random = new Random();
+        for(int i = 0; i < num; i++) {
             entity = new Arrow(spriteView, getResources(), 0.10, width, height, (int) (maxRes * 0.4), (int) (maxRes * 0.4),
                     0, 0, random.nextDouble() * width, random.nextDouble() * -20 * height - (height * 0.1), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, null, "arrow" + i, "init");
             controllerMap.put("Arrow" + i + "Controller", entity.getController());
@@ -67,17 +86,22 @@ public class MainActivity extends AppCompatActivity {
 
         /* sprint left button */
         entity = new SpriteButton(spriteView, getResources(), 0.15, width, height, (int)(maxRes * 0.025), (int)(maxRes * 0.025), R.mipmap.button_sprint_left, R.mipmap.button_sprint_left, R.mipmap.button_sprint_left,
-                0, 0, (1.25 * width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
+                0, 0, (width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "sprint left", "init");
         controllerMap.put("SprintLeftButtonController", entity.getController());
 
         /* sprint right button */
         entity = new SpriteButton(spriteView, getResources(), 0.15, width, height, (int)(maxRes * 0.025), (int)(maxRes * 0.025), R.mipmap.button_sprint_right, R.mipmap.button_sprint_right, R.mipmap.button_sprint_right,
-                0, 0, (2.5 * width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
+                0, 0, (2 * width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "sprint right", "init");
         controllerMap.put("SprintRightButtonController", entity.getController());
+
+        /* flow control button */
+        entity = new SpriteButton(spriteView, getResources(), 0.15, width, height, (int)(maxRes * 0.025), (int)(maxRes * 0.025), R.mipmap.button_play, R.mipmap.button_play, R.mipmap.button_pause,
+                0, 0, (3 * width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "flow control", "init");
+        controllerMap.put("FlowButtonController", entity.getController());
 
         /* jump button */
         entity = new SpriteButton(spriteView, getResources(), 0.15, width, height, (int)(maxRes * 0.025), (int)(maxRes * 0.025), R.mipmap.button_jump, R.mipmap.button_jump, R.mipmap.button_jump,
-                0, 0, (4.75 * width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
+                0, 0, (5 * width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "jump", "init");
         controllerMap.put("JumpButtonController", entity.getController());
 
         /* set frame rate for all controllers */
@@ -122,12 +146,13 @@ public class MainActivity extends AppCompatActivity {
 
         /* set score view */
         TextView score = (TextView) findViewById(R.id.score);
-        String newText = "Arrows Remaining: " + 200 + "\nHit Bridge: " + 0;
+        String newText = "Arrows Remaining: " + num + "\nHit Bridge: " + 0;
         score.setText(newText);
 
         int height = (int)(displayMetrics.heightPixels);
         int maxRes = height * 2;
         int width = (int)(displayMetrics.widthPixels);
+        Random random = new Random();
 
         /* background */
         spriteView.setBackgroundResource(R.drawable.background);
@@ -136,14 +161,31 @@ public class MainActivity extends AppCompatActivity {
         entity = new SamuraiIdle(spriteView, getResources(), 0.65, maxRes / 2, maxRes / 2, width, height, null, "idle right", "init");
         controllerMap.put("SamuraiController", entity.getController());
 
-        /* initialize bridge controller */
-        entity = new Bridge(spriteView, getResources(), 1, width, height, (int) (maxRes * 0.4), (int) (maxRes * 0.4),
-                0, 0, 0, controllerMap.get("SamuraiController").getEntity().getSprite().getBoundingBox().bottom - 15, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, null, "bridge", "init");
-        controllerMap.put("BridgeController", entity.getController());
+        /* initialize bridge controllers */
+        for(int i = 0; i < 5; i++) {
+            if(i == 0) {
+                entity = new Bridge(spriteView, getResources(), 1, width / 5, height, (int) (maxRes * 0.4), (int) (maxRes * 0.4),
+                        0, 0, 0, controllerMap.get("SamuraiController").getEntity().getSprite().getBoundingBox().bottom - 20, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, null, "bridge", "init");
+            }
+            else {
+                entity = new Bridge(spriteView, getResources(), 1, width / 5, height, (int) (maxRes * 0.4), (int) (maxRes * 0.4),
+                        0, 0, controllerMap.get("Bridge" + (i - 1) + "Controller").getEntity().getSprite().getBoundingBox().right, controllerMap.get("SamuraiController").getEntity().getSprite().getBoundingBox().bottom - 20, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, null, "bridge", "init");
+            }
+            controllerMap.put("Bridge" + i + "Controller", entity.getController());
+        }
+
+        /* place spider monster */
+        entity = new SpriteProp(spriteView, getResources(), 0.1, width, height, maxRes / 2, maxRes / 2, R.mipmap.spritesheet_spider_idle_loop,
+                0, 0, random.nextDouble() * width, controllerMap.get("SamuraiController").getEntity().getSprite().getBoundingBox().bottom - 220, 1, 1, 1,
+                1, 1, 1, 0, 0, 1, 1, "loop", null, "spider", "init");
+        controllerMap.put("SpiderController", entity.getController());
+
+        SpriteController tmpController = controllerMap.get("SamuraiController");
+        controllerMap.remove("SamuraiController");
+        controllerMap.put("SamuraiController", tmpController);
 
         /* initialize arrow controllers */
-        for(int i = 0; i < 200; i++) {
-            Random random = new Random();
+        for(int i = 0; i < num; i++) {
             entity = new Arrow(spriteView, getResources(), 0.10, width, height, (int) (maxRes * 0.4), (int) (maxRes * 0.4),
                     0, 0, random.nextDouble() * width, random.nextDouble() * -20 * height - (height * 0.1), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, null, "arrow" + i, "init");
             controllerMap.put("Arrow" + i + "Controller", entity.getController());
@@ -151,17 +193,22 @@ public class MainActivity extends AppCompatActivity {
 
         /* sprint left button */
         entity = new SpriteButton(spriteView, getResources(), 0.15, width, height, (int)(maxRes * 0.025), (int)(maxRes * 0.025), R.mipmap.button_sprint_left, R.mipmap.button_sprint_left, R.mipmap.button_sprint_left,
-                0, 0, (1.25 * width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
+                0, 0, (width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "sprint left", "init");
         controllerMap.put("SprintLeftButtonController", entity.getController());
 
         /* sprint right button */
         entity = new SpriteButton(spriteView, getResources(), 0.15, width, height, (int)(maxRes * 0.025), (int)(maxRes * 0.025), R.mipmap.button_sprint_right, R.mipmap.button_sprint_right, R.mipmap.button_sprint_right,
-                0, 0, (2.5 * width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
+                0, 0, (2 * width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "sprint right", "init");
         controllerMap.put("SprintRightButtonController", entity.getController());
+
+        /* flow control button */
+        entity = new SpriteButton(spriteView, getResources(), 0.15, width, height, (int)(maxRes * 0.025), (int)(maxRes * 0.025), R.mipmap.button_play, R.mipmap.button_play, R.mipmap.button_pause,
+                0, 0, (3 * width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "flow control", "init");
+        controllerMap.put("FlowButtonController", entity.getController());
 
         /* jump button */
         entity = new SpriteButton(spriteView, getResources(), 0.15, width, height, (int)(maxRes * 0.025), (int)(maxRes * 0.025), R.mipmap.button_jump, R.mipmap.button_jump, R.mipmap.button_jump,
-                0, 0, (4.75 * width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "init");
+                0, 0, (5 * width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, "loop", null, "jump", "init");
         controllerMap.put("JumpButtonController", entity.getController());
 
         /* set frame rate for all controllers */
