@@ -30,9 +30,6 @@ public class Arrow extends SpriteProp {
         this.controller.setXPos(this.controller.getXInit());
         this.controller.setYPos(this.controller.getYInit());
         this.controller.setReacting(false);
-        this.xFrameCount = 1;
-        this.yFrameCount = 1;
-        this.frameCount = 1;
         this.xDimension = 1;
         this.yDimension = 1;
         this.spriteScale = 1;
@@ -92,9 +89,9 @@ public class Arrow extends SpriteProp {
                     render.setTop(top);
                     render.setRight(right);
                     render.setBottom(bottom);
-                    render.setXFrameCount(xFrameCount);
-                    render.setYFrameCount(yFrameCount);
-                    render.setFrameCount(frameCount);
+                    render.setXFrameCount(1);
+                    render.setYFrameCount(1);
+                    render.setFrameCount(1);
                     render.setMethod("loop");
                     render.setDirection("forwards");
                     xSpriteRes = 2 * xRes / render.getXFrameCount();

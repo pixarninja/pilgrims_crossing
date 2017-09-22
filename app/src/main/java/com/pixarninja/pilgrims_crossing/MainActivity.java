@@ -65,11 +65,11 @@ public class MainActivity extends AppCompatActivity {
             controllerMap.put("Bridge" + i + "Controller", entity.getController());
         }
 
-        /* place spider monster */
-        entity = new SpriteProp(spriteView, getResources(), 0.1, width, height, maxRes / 2, maxRes / 2, R.mipmap.spritesheet_spider_idle_loop,
-                0, 0, random.nextDouble() * width, controllerMap.get("PlayerController").getEntity().getSprite().getBoundingBox().bottom - 210, 1, 1, 1,
-                1, 1, 1, 0, 0, 1, 1, "loop", "forwards", null, "spider", "init");
-        controllerMap.put("SpiderController", entity.getController());
+        /* initialize spider controllers */
+        for(int i = 0; i < num / 2; i++) {
+            entity = new Spider(spriteView, getResources(), width, height, (int) (maxRes * 0.4), (int) (maxRes * 0.4), random.nextDouble() * 25 * width + width, controllerMap.get("PlayerController").getEntity().getSprite().getBoundingBox().bottom - 200, "spider" + i);
+            controllerMap.put("Spider" + i + "Controller", entity.getController());
+        }
 
         SpriteController tmpController = controllerMap.get("PlayerController");
         controllerMap.remove("PlayerController");
@@ -169,11 +169,11 @@ public class MainActivity extends AppCompatActivity {
             controllerMap.put("Bridge" + i + "Controller", entity.getController());
         }
 
-        /* place spider monster */
-        entity = new SpriteProp(spriteView, getResources(), 0.1, width, height, maxRes / 2, maxRes / 2, R.mipmap.spritesheet_spider_idle_loop,
-                0, 0, random.nextDouble() * width, controllerMap.get("PlayerController").getEntity().getSprite().getBoundingBox().bottom - 210, 1, 1, 1,
-                1, 1, 1, 0, 0, 1, 1, "loop", "forwards", null, "spider", "init");
-        controllerMap.put("SpiderController", entity.getController());
+        /* initialize spider controllers */
+        for(int i = 0; i < num / 2; i++) {
+            entity = new Spider(spriteView, getResources(), width, height, (int) (maxRes * 0.4), (int) (maxRes * 0.4), random.nextDouble() * 25 * width + width, controllerMap.get("PlayerController").getEntity().getSprite().getBoundingBox().bottom - 200, "spider" + i);
+            controllerMap.put("Spider" + i + "Controller", entity.getController());
+        }
 
         SpriteController tmpController = controllerMap.get("PlayerController");
         controllerMap.remove("PlayerController");
