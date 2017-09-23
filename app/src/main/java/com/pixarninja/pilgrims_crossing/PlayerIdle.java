@@ -62,17 +62,16 @@ public class PlayerIdle extends Player {
                             render.setMethod("mirror loop");
                             xSpriteRes = xRes * render.getFrameCount() / 2;
                             ySpriteRes = yRes * render.getFrameCount() / 2;
-                            spriteScale = 0.20;
-                            Bitmap flipped = decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_idle_mirror_norm, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale));
+                            Bitmap flipped = decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_idle_mirror_norm, xSpriteRes, ySpriteRes);
                             Matrix matrix = new Matrix();
                             matrix.postScale(-1, 1);
                             flipped = Bitmap.createBitmap(flipped, 0, 0, flipped.getWidth(), flipped.getHeight(), matrix, true);
                             render.setSpriteSheet(flipped);
                             render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                             render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                            render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                            render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale()));
-                            render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale()));
+                            render.setFrameScale((width / 8f) / (double)render.getFrameWidth()); // scale = goal width / original width
+                            render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
+                            render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
                             render.setWhereToDraw(new RectF((float)controller.getXPos(), (float)controller.getYPos(), (float)controller.getXPos() + render.getSpriteWidth(), (float)controller.getYPos() + render.getSpriteHeight()));
                             break;
                         case "skip":
@@ -111,13 +110,12 @@ public class PlayerIdle extends Player {
                             render.setMethod("mirror loop");
                             xSpriteRes = xRes * render.getFrameCount() / 2;
                             ySpriteRes = yRes * render.getFrameCount() / 2;
-                            spriteScale = 0.20;
-                            render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_idle_mirror_norm, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
+                            render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_idle_mirror_norm, xSpriteRes, ySpriteRes));
                             render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                             render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                            render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                            render.setSpriteWidth((int) (render.getFrameWidth() * render.getFrameScale()));
-                            render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
+                            render.setFrameScale((width / 8f) / (double)render.getFrameWidth()); // scale = goal width / original width
+                            render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
+                            render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
                             render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                             break;
                         case "skip":

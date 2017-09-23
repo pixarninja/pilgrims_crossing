@@ -72,9 +72,9 @@ public class Swipe extends SpriteProp{
                     render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_swipe_bottomleft, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                    render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                    render.setSpriteWidth((int) (render.getFrameWidth() * render.getFrameScale()));
-                    render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
+                    render.setFrameScale((width / 5f) / (double)render.getFrameWidth()); // scale = goal width / original width
+                    render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
+                    render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
                     render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                     break;
                 case "left":
@@ -99,9 +99,9 @@ public class Swipe extends SpriteProp{
                     render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_swipe_left, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                    render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                    render.setSpriteWidth((int) (render.getFrameWidth() * render.getFrameScale()));
-                    render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
+                    render.setFrameScale((width / 5f) / (double)render.getFrameWidth()); // scale = goal width / original width
+                    render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
+                    render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
                     render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                     break;
                 case "topLeft":
@@ -126,9 +126,9 @@ public class Swipe extends SpriteProp{
                     render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_swipe_topleft, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                    render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                    render.setSpriteWidth((int) (render.getFrameWidth() * render.getFrameScale()));
-                    render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
+                    render.setFrameScale((width / 5f) / (double)render.getFrameWidth()); // scale = goal width / original width
+                    render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
+                    render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
                     render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                     break;
                 case "top":
@@ -153,9 +153,9 @@ public class Swipe extends SpriteProp{
                     render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_swipe_top, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                    render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                    render.setSpriteWidth((int) (render.getFrameWidth() * render.getFrameScale()));
-                    render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
+                    render.setFrameScale((width / 4.5f) / (double)render.getFrameWidth()); // scale = goal width / original width
+                    render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
+                    render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
                     render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                     break;
                 case "bottomRight":
@@ -180,9 +180,9 @@ public class Swipe extends SpriteProp{
                     render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_swipe_bottomright, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                    render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                    render.setSpriteWidth((int) (render.getFrameWidth() * render.getFrameScale()));
-                    render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
+                    render.setFrameScale((width / 5f) / (double)render.getFrameWidth()); // scale = goal width / original width
+                    render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
+                    render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
                     render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                     break;
                 case "topRight":
@@ -207,9 +207,9 @@ public class Swipe extends SpriteProp{
                     render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_swipe_topright, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                    render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                    render.setSpriteWidth((int) (render.getFrameWidth() * render.getFrameScale()));
-                    render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
+                    render.setFrameScale((width / 5f) / (double)render.getFrameWidth()); // scale = goal width / original width
+                    render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
+                    render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
                     render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                     break;
                 case "bottom":
@@ -234,9 +234,9 @@ public class Swipe extends SpriteProp{
                     render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_swipe_bottom, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                    render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                    render.setSpriteWidth((int) (render.getFrameWidth() * render.getFrameScale()));
-                    render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
+                    render.setFrameScale((width / 4.5f) / (double)render.getFrameWidth()); // scale = goal width / original width
+                    render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
+                    render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
                     render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                     break;
                 case "right":
@@ -261,9 +261,9 @@ public class Swipe extends SpriteProp{
                     render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_swipe_right, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                    render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                    render.setSpriteWidth((int) (render.getFrameWidth() * render.getFrameScale()));
-                    render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
+                    render.setFrameScale((width / 5f) / (double)render.getFrameWidth()); // scale = goal width / original width
+                    render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
+                    render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
                     render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                     break;
                 case "skip":

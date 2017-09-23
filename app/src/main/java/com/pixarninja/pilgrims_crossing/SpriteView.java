@@ -345,12 +345,6 @@ public class SpriteView extends SurfaceView {
                         entry.getValue().getEntity().onTouchEvent(this, entry, controllerMap, poke, move, jump, xTouchedPos, yTouchedPos);
                     }
                 }
-                /* for debugging purposes
-                for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
-                    if(entry.getValue().getEntity() != null) {
-                        entry.getValue().printController();
-                    }
-                }*/
             } catch (ConcurrentModificationException e) {
                 ;
             }

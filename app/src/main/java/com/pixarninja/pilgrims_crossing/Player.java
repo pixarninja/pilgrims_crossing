@@ -7,6 +7,22 @@ import java.util.Random;
 public class Player extends SpriteEntity {
 
     @Override
+    public void updateView() {
+
+        controller.setXPos(controller.getXPos() + controller.getXDelta());
+        controller.setYPos(controller.getYPos() + controller.getYDelta());
+        if(controller.getXPos() < 0) {
+            controller.setXPos(0);
+        }
+        else if(controller.getXPos() > width - controller.getEntity().getSprite().getSpriteWidth()) {
+            controller.setXPos(width - controller.getEntity().getSprite().getSpriteWidth());
+        }
+        getCurrentFrame();
+        updateBoundingBox();
+
+    }
+
+    @Override
     public void onTouchEvent(SpriteView spriteView, LinkedHashMap.Entry<String, SpriteController> entry, LinkedHashMap<String, SpriteController> controllerMap, boolean poke, boolean move, boolean jump, float xTouchedPos, float yTouchedPos) {
 
         if(!move) {
@@ -96,7 +112,7 @@ public class Player extends SpriteEntity {
                                 map.put("Swipe" + i, entity.getController());
                             } else if (entryTop.intersect(compareBox)) {
                                 SpriteController playerController = controllerMap.get("PlayerController");
-                                SpriteEntity entity = new Swipe(spriteView, res, width, height, xRes, yRes, playerController.getXPos() - boxWidth / 4 + random.nextDouble() * 20 - random.nextDouble() * 20, playerController.getYPos() - boxHeight / 3 + random.nextDouble() * 20 - random.nextDouble() * 20, "swipe", "top");
+                                SpriteEntity entity = new Swipe(spriteView, res, width, height, xRes, yRes, playerController.getXPos() - boxWidth / 2 + random.nextDouble() * 20 - random.nextDouble() * 20, playerController.getYPos() - boxHeight / 3 + random.nextDouble() * 20 - random.nextDouble() * 20, "swipe", "top");
                                 while(controllerMap.get("Swipe" + i) != null) {
                                     i++;
                                 }
@@ -110,35 +126,35 @@ public class Player extends SpriteEntity {
                                 map.put("Swipe" + i, entity.getController());
                             } else if (entryBottom.intersect(compareBox)) {
                                 SpriteController playerController = controllerMap.get("PlayerController");
-                                SpriteEntity entity = new Swipe(spriteView, res, width, height, xRes, yRes, playerController.getXPos() - boxWidth / 3 + random.nextDouble() * 20 - random.nextDouble() * 20, playerController.getYPos() + random.nextDouble() * 20 - random.nextDouble() * 20, "swipe", "bottom");
+                                SpriteEntity entity = new Swipe(spriteView, res, width, height, xRes, yRes, playerController.getXPos() - boxWidth / 3 + random.nextDouble() * 20 - random.nextDouble() * 20, playerController.getYPos() - boxHeight / 6 + random.nextDouble() * 20 - random.nextDouble() * 20, "swipe", "bottom");
                                 while(controllerMap.get("Swipe" + i) != null) {
                                     i++;
                                 }
                                 map.put("Swipe" + i, entity.getController());
                             } else if (entryTopLeft.intersect(compareBox)) {
                                 SpriteController playerController = controllerMap.get("PlayerController");
-                                SpriteEntity entity = new Swipe(spriteView, res, width, height, xRes, yRes, playerController.getXPos() - boxWidth / 3 + random.nextDouble() * 20 - random.nextDouble() * 20, playerController.getYPos() - boxHeight / 4 + random.nextDouble() * 20 - random.nextDouble() * 20, "swipe", "topLeft");
+                                SpriteEntity entity = new Swipe(spriteView, res, width, height, xRes, yRes, playerController.getXPos() - 2 * boxWidth / 3 + random.nextDouble() * 20 - random.nextDouble() * 20, playerController.getYPos() - boxHeight / 4 + random.nextDouble() * 20 - random.nextDouble() * 20, "swipe", "topLeft");
                                 while(controllerMap.get("Swipe" + i) != null) {
                                     i++;
                                 }
                                 map.put("Swipe" + i, entity.getController());
                             } else if (entryTopRight.intersect(compareBox)) {
                                 SpriteController playerController = controllerMap.get("PlayerController");
-                                SpriteEntity entity = new Swipe(spriteView, res, width, height, xRes, yRes, playerController.getXPos() + boxWidth / 3 + random.nextDouble() * 20 - random.nextDouble() * 20, playerController.getYPos() - boxHeight / 4 + random.nextDouble() * 20 - random.nextDouble() * 20, "swipe", "topRight");
+                                SpriteEntity entity = new Swipe(spriteView, res, width, height, xRes, yRes, playerController.getXPos() + random.nextDouble() * 20 - random.nextDouble() * 20, playerController.getYPos() - boxHeight / 4 + random.nextDouble() * 20 - random.nextDouble() * 20, "swipe", "topRight");
                                 while(controllerMap.get("Swipe" + i) != null) {
                                     i++;
                                 }
                                 map.put("Swipe" + i, entity.getController());
                             } else if (entryBottomRight.intersect(compareBox)) {
                                 SpriteController playerController = controllerMap.get("PlayerController");
-                                SpriteEntity entity = new Swipe(spriteView, res, width, height, xRes, yRes, playerController.getXPos() + 2 * boxWidth / 3 + random.nextDouble() * 20 - random.nextDouble() * 20, playerController.getYPos() + boxHeight / 3 + random.nextDouble() * 20 - random.nextDouble() * 20, "swipe", "bottomRight");
+                                SpriteEntity entity = new Swipe(spriteView, res, width, height, xRes, yRes, playerController.getXPos() + boxWidth / 6 + random.nextDouble() * 20 - random.nextDouble() * 20, playerController.getYPos() + random.nextDouble() * 20 - random.nextDouble() * 20, "swipe", "bottomRight");
                                 while(controllerMap.get("Swipe" + i) != null) {
                                     i++;
                                 }
                                 map.put("Swipe" + i, entity.getController());
                             } else {
                                 SpriteController playerController = controllerMap.get("PlayerController");
-                                SpriteEntity entity = new Swipe(spriteView, res, width, height, xRes, yRes, playerController.getXPos() - 2 * boxWidth / 3 + random.nextDouble() * 20 - random.nextDouble() * 20, playerController.getYPos() + boxHeight / 3 + random.nextDouble() * 20 - random.nextDouble() * 20, "swipe", "bottomLeft");
+                                SpriteEntity entity = new Swipe(spriteView, res, width, height, xRes, yRes, playerController.getXPos() - boxWidth / 3 + random.nextDouble() * 20 - random.nextDouble() * 20, playerController.getYPos() + random.nextDouble() * 20 - random.nextDouble() * 20, "swipe", "bottomLeft");
                                 while(controllerMap.get("Swipe" + i) != null) {
                                     i++;
                                 }

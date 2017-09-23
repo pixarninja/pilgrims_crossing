@@ -30,9 +30,9 @@ public class Arrow extends SpriteProp {
         this.controller.setXPos(this.controller.getXInit());
         this.controller.setYPos(this.controller.getYInit());
         this.controller.setReacting(false);
+        this.spriteScale = 1;
         this.xDimension = 1;
         this.yDimension = 1;
-        this.spriteScale = 1;
         this.left = 0;
         this.top = 0;
         this.right = 1;
@@ -72,12 +72,12 @@ public class Arrow extends SpriteProp {
                     render.setDirection("forwards");
                     xSpriteRes = 2 * xRes / render.getXFrameCount();
                     ySpriteRes = 2 * yRes / render.getYFrameCount();
-                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_arrow_destroyed, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_arrow_destroyed, xSpriteRes, ySpriteRes));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                    render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                    render.setSpriteWidth((int) (render.getFrameWidth() * render.getFrameScale()));
-                    render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
+                    render.setFrameScale((width / 8.5f) / (double)render.getFrameWidth()); // scale = goal width / original width
+                    render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
+                    render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
                     controller.setXPos(controller.getXPos() - render.getSpriteWidth() / 2);
                     render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                     break;
@@ -96,12 +96,12 @@ public class Arrow extends SpriteProp {
                     render.setDirection("forwards");
                     xSpriteRes = 2 * xRes / render.getXFrameCount();
                     ySpriteRes = 2 * yRes / render.getYFrameCount();
-                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_arrow_falling_loop, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_arrow_falling_loop, xSpriteRes, ySpriteRes));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                    render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                    render.setSpriteWidth((int) (render.getFrameWidth() * render.getFrameScale()));
-                    render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
+                    render.setFrameScale((width / 45f) / (double)render.getFrameWidth()); // scale = goal width / original width
+                    render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
+                    render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
                     render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                     break;
                 case "skip":

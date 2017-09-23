@@ -73,9 +73,9 @@ public class Bridge extends SpriteProp {
                     render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.prop_bridge_segment_destroyed, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                    render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                    render.setSpriteWidth(width);
-                    render.setSpriteHeight(render.getSpriteSheet().getHeight() * width / render.getSpriteSheet().getWidth());
+                    render.setFrameScale((width / 5f) / (double)render.getFrameWidth()); // scale = goal width / original width
+                    render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
+                    render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
                     render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                     break;
                 case "stage3":
@@ -93,12 +93,12 @@ public class Bridge extends SpriteProp {
                     render.setDirection("forwards");
                     xSpriteRes = 2 * xRes / render.getXFrameCount();
                     ySpriteRes = 2 * yRes / render.getYFrameCount();
-                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.prop_bridge_segment_stage3, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.prop_bridge_segment_stage3, xSpriteRes, ySpriteRes));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                    render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                    render.setSpriteWidth(width);
-                    render.setSpriteHeight(render.getSpriteSheet().getHeight() * width / render.getSpriteSheet().getWidth());
+                    render.setFrameScale((width / 5f) / (double)render.getFrameWidth()); // scale = goal width / original width
+                    render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
+                    render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
                     render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                     break;
                 case "stage2":
@@ -116,12 +116,12 @@ public class Bridge extends SpriteProp {
                     render.setDirection("forwards");
                     xSpriteRes = 2 * xRes / render.getXFrameCount();
                     ySpriteRes = 2 * yRes / render.getYFrameCount();
-                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.prop_bridge_segment_stage2, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.prop_bridge_segment_stage2, xSpriteRes, ySpriteRes));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                    render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                    render.setSpriteWidth(width);
-                    render.setSpriteHeight(render.getSpriteSheet().getHeight() * width / render.getSpriteSheet().getWidth());
+                    render.setFrameScale((width / 5f) / (double)render.getFrameWidth()); // scale = goal width / original width
+                    render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
+                    render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
                     render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                     break;
                 case "stage1":
@@ -139,12 +139,12 @@ public class Bridge extends SpriteProp {
                     render.setDirection("forwards");
                     xSpriteRes = 2 * xRes / render.getXFrameCount();
                     ySpriteRes = 2 * yRes / render.getYFrameCount();
-                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.prop_bridge_segment_stage1, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.prop_bridge_segment_stage1, xSpriteRes, ySpriteRes));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                    render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                    render.setSpriteWidth(width);
-                    render.setSpriteHeight(render.getSpriteSheet().getHeight() * width / render.getSpriteSheet().getWidth());
+                    render.setFrameScale((width / 5f) / (double)render.getFrameWidth()); // scale = goal width / original width
+                    render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
+                    render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
                     render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                     break;
                 case "complete":
@@ -162,12 +162,12 @@ public class Bridge extends SpriteProp {
                     render.setDirection("forwards");
                     xSpriteRes = 2 * xRes / render.getXFrameCount();
                     ySpriteRes = 2 * yRes / render.getYFrameCount();
-                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.prop_bridge_segment_complete, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.prop_bridge_segment_complete, xSpriteRes, ySpriteRes));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                    render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                    render.setSpriteWidth(width);
-                    render.setSpriteHeight(render.getSpriteSheet().getHeight() * width / render.getSpriteSheet().getWidth());
+                    render.setFrameScale((width / 5f) / (double)render.getFrameWidth()); // scale = goal width / original width
+                    render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
+                    render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
                     render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                     break;
                 case "init":
@@ -187,69 +187,6 @@ public class Bridge extends SpriteProp {
         } catch(NullPointerException e) {
             refreshEntity(ID);
         }
-    }
-
-    @Override
-    public void getCurrentFrame(){
-
-        long time  = System.currentTimeMillis();
-        if ( time > controller.getLastFrameChangeTime() + controller.getFrameRate()) {
-
-            controller.setLastFrameChangeTime(time);
-            render.setCurrentFrame(render.getCurrentFrame() + 1);
-            render.setXCurrentFrame(render.getXCurrentFrame() + 1);
-            if ((render.getXCurrentFrame() >= render.getXFrameCount()) || (render.getCurrentFrame() >= render.getFrameCount())) {
-                render.setYCurrentFrame(render.getYCurrentFrame() + 1);
-                if ((render.getYCurrentFrame() >= render.getYFrameCount()) || (render.getCurrentFrame() >= render.getFrameCount())) {
-                    if(render.getMethod().equals("die")) {
-                        controller.setAlive(false);
-                    }
-                    /* loop */
-                    else {
-                        render.setYCurrentFrame(0);
-                        render.setCurrentFrame(0);
-                    }
-                }
-                render.setXCurrentFrame(0);
-            }
-        }
-
-        /* update the next frame from the spritesheet that will be drawn */
-        Rect rect = new Rect();
-        rect.left = render.getXCurrentFrame() * render.getFrameWidth();
-        rect.right = rect.left + render.getFrameWidth();
-        rect.top = render.getYCurrentFrame() * render.getFrameHeight();
-        rect.bottom = rect.top + render.getFrameHeight();
-        render.setFrameToDraw(rect);
-
-    }
-
-    @Override
-    public void updateView() {
-
-        controller.setXPos(controller.getXPos() + controller.getXDelta());
-        controller.setYPos(controller.getYPos() + controller.getYDelta());
-
-        if(controller.getYPos() > height) {
-            Random random = new Random();
-            controller.setXPos(random.nextDouble() * width);
-            controller.setYPos(-controller.getEntity().getSprite().getSpriteHeight());
-            controller.setXDelta(0);
-            controller.setYDelta(0);
-        }
-
-        if(controller.getYPos() < 0) {
-            Random random = new Random();
-            if((random.nextInt(100) % 40) == 0) {
-                controller.setXDelta(0);
-                controller.setYDelta(15);
-            }
-        }
-
-        render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
-        getCurrentFrame();
-        updateBoundingBox();
-
     }
 
     @Override
