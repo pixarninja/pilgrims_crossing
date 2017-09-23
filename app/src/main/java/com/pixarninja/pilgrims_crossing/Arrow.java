@@ -70,9 +70,9 @@ public class Arrow extends SpriteProp {
                     render.setFrameCount(6);
                     render.setMethod("die");
                     render.setDirection("forwards");
-                    xSpriteRes = 2 * xRes / render.getXFrameCount();
-                    ySpriteRes = 2 * yRes / render.getYFrameCount();
-                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_arrow_destroyed, xSpriteRes, ySpriteRes));
+                    xSpriteRes = xRes * render.getXFrameCount();
+                    ySpriteRes = yRes * render.getYFrameCount();
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_arrow_destroyed, xSpriteRes / 4, ySpriteRes / 4));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
                     render.setFrameScale((width / 8.5f) / (double)render.getFrameWidth()); // scale = goal width / original width
@@ -94,9 +94,9 @@ public class Arrow extends SpriteProp {
                     render.setFrameCount(1);
                     render.setMethod("loop");
                     render.setDirection("forwards");
-                    xSpriteRes = 2 * xRes / render.getXFrameCount();
-                    ySpriteRes = 2 * yRes / render.getYFrameCount();
-                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_arrow_falling_loop, xSpriteRes, ySpriteRes));
+                    xSpriteRes = xRes * render.getXFrameCount();
+                    ySpriteRes = yRes * render.getYFrameCount();
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_arrow_falling_loop, xSpriteRes / 20, ySpriteRes / 20));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
                     render.setFrameScale((width / 45f) / (double)render.getFrameWidth()); // scale = goal width / original width

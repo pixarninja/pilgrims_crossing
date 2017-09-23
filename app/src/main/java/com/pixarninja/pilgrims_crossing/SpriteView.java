@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.RectF;
@@ -159,7 +160,7 @@ public class SpriteView extends SurfaceView {
                             }
                             /* always update the flow control button */
                             else {
-                                if(entity.getController().getID() != null && entity.getController().getID().equals("flow control")) {
+                                if(controller.getID() != null && controller.getID().equals("flow control")) {
                                     entity.updateView();
                                 }
                             }
@@ -213,7 +214,24 @@ public class SpriteView extends SurfaceView {
                                         canvas.drawRect(entity.getSprite().getFrameToDraw(), paint);
                                     }*/
 
-                                canvas.drawBitmap(sprite.getSpriteSheet(), sprite.getFrameToDraw(), sprite.getWhereToDraw(), null);
+                                Paint paint = null;
+                                /* color code:
+                                   0x00.....00...00.....00
+                                   ..alpha..red..green..blue */
+                                if(controller.getID().equals("enemy stage1")) {
+                                    paint = new Paint();
+                                    paint.setColorFilter(new LightingColorFilter(0x00DDFFFF, 0));
+                                }
+                                else if(controller.getID().equals("enemy stage2")) {
+                                    paint = new Paint();
+                                    paint.setColorFilter(new LightingColorFilter(0x00998888, 0));
+                                }
+                                else if(controller.getID().equals("enemy stage3")) {
+                                    paint = new Paint();
+                                    paint.setColorFilter(new LightingColorFilter(0x00550000, 0));
+                                }
+
+                                canvas.drawBitmap(sprite.getSpriteSheet(), sprite.getFrameToDraw(), sprite.getWhereToDraw(), paint);
 
                             }
                         }

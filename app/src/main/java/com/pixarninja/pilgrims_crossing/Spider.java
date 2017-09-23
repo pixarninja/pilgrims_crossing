@@ -14,7 +14,6 @@ public class Spider extends Enemy {
         super();
 
         this.controller = new SpriteController();
-        Random random = new Random();
 
         this.controller.setID(ID);
         this.spriteView = spriteView;
@@ -22,9 +21,9 @@ public class Spider extends Enemy {
         this.percentOfScreen = 0.1;
         this.width = width;
         this.height = height;
-        this.xRes = xRes;
-        this.yRes = yRes;
-        this.controller.setXDelta(random.nextDouble() * -3 - 7);
+        this.xRes = xRes / 4;
+        this.yRes = yRes / 4;
+        this.controller.setXDelta(-5);
         this.controller.setYDelta(0);
         this.controller.setXInit(xInit);
         this.controller.setYInit(yInit);
@@ -71,84 +70,12 @@ public class Spider extends Enemy {
                     render.setFrameCount(16);
                     render.setMethod("die");
                     render.setDirection("forwards");
-                    xSpriteRes = 2 * xRes / render.getXFrameCount();
-                    ySpriteRes = 2 * yRes / render.getYFrameCount();
+                    xSpriteRes = xRes * render.getXFrameCount();
+                    ySpriteRes = yRes * render.getYFrameCount();
                     render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_spider_destroyed, xSpriteRes, ySpriteRes));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                    render.setFrameScale((width / 6f) / (double)render.getFrameWidth()); // scale = goal width / original width
-                    render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
-                    render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
-                    render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
-                    break;
-                case "stage3":
-                    controller.setReacting(false);
-                    render.setID(ID);
-                    render.setXDimension(xDimension);
-                    render.setYDimension(yDimension);
-                    render.setLeft(left);
-                    render.setTop(top);
-                    render.setRight(right);
-                    render.setBottom(bottom);
-                    render.setXFrameCount(1);
-                    render.setYFrameCount(1);
-                    render.setFrameCount(1);
-                    render.setMethod("loop");
-                    render.setDirection("forwards");
-                    xSpriteRes = 2 * xRes / render.getXFrameCount();
-                    ySpriteRes = 2 * yRes / render.getYFrameCount();
-                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_spider_stage3_loop, xSpriteRes, ySpriteRes));
-                    render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
-                    render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                    render.setFrameScale((width / 6f) / (double)render.getFrameWidth()); // scale = goal width / original width
-                    render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
-                    render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
-                    render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
-                    break;
-                case "stage2":
-                    controller.setReacting(false);
-                    render.setID(ID);
-                    render.setXDimension(xDimension);
-                    render.setYDimension(yDimension);
-                    render.setLeft(left);
-                    render.setTop(top);
-                    render.setRight(right);
-                    render.setBottom(bottom);
-                    render.setXFrameCount(1);
-                    render.setYFrameCount(1);
-                    render.setFrameCount(1);
-                    render.setMethod("loop");
-                    render.setDirection("forwards");
-                    xSpriteRes = 2 * xRes / render.getXFrameCount();
-                    ySpriteRes = 2 * yRes / render.getYFrameCount();
-                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_spider_stage2_loop, xSpriteRes, ySpriteRes));
-                    render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
-                    render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                    render.setFrameScale((width / 6f) / (double)render.getFrameWidth()); // scale = goal width / original width
-                    render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
-                    render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
-                    render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
-                    break;
-                case "stage1":
-                    controller.setReacting(false);
-                    render.setID(ID);
-                    render.setXDimension(xDimension);
-                    render.setYDimension(yDimension);
-                    render.setLeft(left);
-                    render.setTop(top);
-                    render.setRight(right);
-                    render.setBottom(bottom);
-                    render.setXFrameCount(1);
-                    render.setYFrameCount(1);
-                    render.setFrameCount(1);
-                    render.setMethod("loop");
-                    render.setDirection("forwards");
-                    xSpriteRes = 2 * xRes / render.getXFrameCount();
-                    ySpriteRes = 2 * yRes / render.getYFrameCount();
-                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_spider_stage1_loop, xSpriteRes, ySpriteRes));
-                    render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
-                    render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                    render.setFrameScale((width / 6f) / (double)render.getFrameWidth()); // scale = goal width / original width
+                    render.setFrameScale((width / 4f) / (double)render.getFrameWidth()); // scale = goal width / original width
                     render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
                     render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
                     render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
@@ -162,17 +89,17 @@ public class Spider extends Enemy {
                     render.setTop(top);
                     render.setRight(right);
                     render.setBottom(bottom);
-                    render.setXFrameCount(1);
-                    render.setYFrameCount(1);
-                    render.setFrameCount(1);
+                    render.setXFrameCount(4);
+                    render.setYFrameCount(4);
+                    render.setFrameCount(16);
                     render.setMethod("loop");
                     render.setDirection("forwards");
-                    xSpriteRes = 2 * xRes / render.getXFrameCount();
-                    ySpriteRes = 2 * yRes / render.getYFrameCount();
-                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_spider_idle_loop, xSpriteRes, ySpriteRes));
+                    xSpriteRes = xRes * render.getXFrameCount();
+                    ySpriteRes = yRes * render.getYFrameCount();
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_spider_walking_loop, xSpriteRes, ySpriteRes));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                    render.setFrameScale((width / 6f) / (double)render.getFrameWidth()); // scale = goal width / original width
+                    render.setFrameScale((width / 4f) / (double)render.getFrameWidth()); // scale = goal width / original width
                     render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
                     render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
                     render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
@@ -196,6 +123,43 @@ public class Spider extends Enemy {
         } catch(NullPointerException e) {
             refreshEntity(ID);
         }
+    }
+
+    @Override
+    public LinkedHashMap<String, SpriteController> onCollisionEvent(LinkedHashMap.Entry<String, SpriteController> entry, LinkedHashMap<String, SpriteController> controllerMap) {
+
+        LinkedHashMap<String, SpriteController> map = new LinkedHashMap<>();
+
+        if (!entry.getValue().getReacting() && (entry.getValue().getEntity().getSprite().getBoundingBox() != null)) {
+            RectF entryBox = entry.getValue().getEntity().getSprite().getBoundingBox();
+            for (LinkedHashMap.Entry<String, SpriteController> test : controllerMap.entrySet()) {
+                if (test.getKey().equals("PlayerController") && !test.getValue().getReacting()) {
+                    if (test.getValue().getEntity().getSprite().getBoundingBox() != null) {
+                        RectF compareBox = test.getValue().getEntity().getSprite().getBoundingBox();
+                        /* if the objects intersect, find where they intersect for the entry bounding box */
+                        if (entryBox.intersect(compareBox)) {
+                            /* increment hit value */
+                            hit = hit + 1;
+                            if(hit > 15) {
+                                refreshEntity("destroyed");
+                            }
+                            else if(hit > 10) {
+                                controller.setID("enemy stage3");
+                            }
+                            else if(hit > 5) {
+                                controller.setID("enemy stage2");
+                            }
+                            else if(hit > 0) {
+                                controller.setID("enemy stage1");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return map;
+
     }
 
 }

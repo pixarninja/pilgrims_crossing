@@ -60,9 +60,9 @@ public class PlayerIdle extends Player {
                             render.setFrameCount(4);
                             render.setDirection("flipped");
                             render.setMethod("mirror loop");
-                            xSpriteRes = xRes * render.getFrameCount() / 2;
-                            ySpriteRes = yRes * render.getFrameCount() / 2;
-                            Bitmap flipped = decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_idle_mirror_norm, xSpriteRes, ySpriteRes);
+                            xSpriteRes = xRes * render.getXFrameCount();
+                            ySpriteRes = yRes * render.getYFrameCount();
+                            Bitmap flipped = decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_idle_mirror_norm, xSpriteRes / 4, ySpriteRes / 4);
                             Matrix matrix = new Matrix();
                             matrix.postScale(-1, 1);
                             flipped = Bitmap.createBitmap(flipped, 0, 0, flipped.getWidth(), flipped.getHeight(), matrix, true);
@@ -108,9 +108,9 @@ public class PlayerIdle extends Player {
                             render.setFrameCount(4);
                             render.setDirection("forwards");
                             render.setMethod("mirror loop");
-                            xSpriteRes = xRes * render.getFrameCount() / 2;
-                            ySpriteRes = yRes * render.getFrameCount() / 2;
-                            render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_idle_mirror_norm, xSpriteRes, ySpriteRes));
+                            xSpriteRes = xRes * render.getXFrameCount();
+                            ySpriteRes = yRes * render.getYFrameCount();
+                            render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_idle_mirror_norm, xSpriteRes / 4, ySpriteRes / 4));
                             render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                             render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
                             render.setFrameScale((width / 8f) / (double)render.getFrameWidth()); // scale = goal width / original width

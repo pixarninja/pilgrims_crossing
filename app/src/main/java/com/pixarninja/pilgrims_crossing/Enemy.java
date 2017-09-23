@@ -23,17 +23,17 @@ public class Enemy extends SpriteEntity {
                         if (entryBox.intersect(compareBox)) {
                             /* increment hit value */
                             hit = hit + 1;
-                            if(hit > 8) {
+                            if(hit > 15) {
                                 refreshEntity("destroyed");
                             }
-                            else if(hit > 4) {
-                                refreshEntity("stage3");
+                            else if(hit > 10) {
+                                controller.setID("enemy stage3");
                             }
-                            else if(hit > 2) {
-                                refreshEntity("stage2");
+                            else if(hit > 5) {
+                                controller.setID("enemy stage2");
                             }
                             else if(hit > 0) {
-                                refreshEntity("stage1");
+                                controller.setID("enemy stage1");
                             }
                         }
                     }

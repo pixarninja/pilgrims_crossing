@@ -79,8 +79,8 @@ public class SpriteProp extends SpriteEntity {
                 render.setFrameCount(frameCount);
                 render.setMethod(method);
                 render.setDirection(direction);
-                xSpriteRes = 2 * xRes / render.getXFrameCount();
-                ySpriteRes = 2 * yRes / render.getYFrameCount();
+                xSpriteRes = xRes / render.getXFrameCount();
+                ySpriteRes = yRes / render.getYFrameCount();
                 render.setSpriteSheet(decodeSampledBitmapFromResource(res, propID, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
                 render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                 render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());

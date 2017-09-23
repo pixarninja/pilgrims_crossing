@@ -68,9 +68,9 @@ public class Bridge extends SpriteProp {
                     render.setFrameCount(1);
                     render.setMethod("loop");
                     render.setDirection("forwards");
-                    xSpriteRes = 2 * xRes / render.getXFrameCount();
-                    ySpriteRes = 2 * yRes / render.getYFrameCount();
-                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.prop_bridge_segment_destroyed, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
+                    xSpriteRes = xRes * render.getXFrameCount();
+                    ySpriteRes = yRes * render.getYFrameCount();
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.prop_bridge_segment_destroyed, xSpriteRes / 5, ySpriteRes / 5));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
                     render.setFrameScale((width / 5f) / (double)render.getFrameWidth()); // scale = goal width / original width
@@ -91,9 +91,9 @@ public class Bridge extends SpriteProp {
                     render.setFrameCount(1);
                     render.setMethod("loop");
                     render.setDirection("forwards");
-                    xSpriteRes = 2 * xRes / render.getXFrameCount();
-                    ySpriteRes = 2 * yRes / render.getYFrameCount();
-                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.prop_bridge_segment_stage3, xSpriteRes, ySpriteRes));
+                    xSpriteRes = xRes * render.getXFrameCount();
+                    ySpriteRes = yRes * render.getYFrameCount();
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.prop_bridge_segment_stage3, xSpriteRes / 5, ySpriteRes / 5));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
                     render.setFrameScale((width / 5f) / (double)render.getFrameWidth()); // scale = goal width / original width
@@ -114,9 +114,9 @@ public class Bridge extends SpriteProp {
                     render.setFrameCount(1);
                     render.setMethod("loop");
                     render.setDirection("forwards");
-                    xSpriteRes = 2 * xRes / render.getXFrameCount();
-                    ySpriteRes = 2 * yRes / render.getYFrameCount();
-                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.prop_bridge_segment_stage2, xSpriteRes, ySpriteRes));
+                    xSpriteRes = xRes * render.getXFrameCount();
+                    ySpriteRes = yRes * render.getYFrameCount();
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.prop_bridge_segment_stage2, xSpriteRes / 5, ySpriteRes / 5));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
                     render.setFrameScale((width / 5f) / (double)render.getFrameWidth()); // scale = goal width / original width
@@ -137,9 +137,9 @@ public class Bridge extends SpriteProp {
                     render.setFrameCount(1);
                     render.setMethod("loop");
                     render.setDirection("forwards");
-                    xSpriteRes = 2 * xRes / render.getXFrameCount();
-                    ySpriteRes = 2 * yRes / render.getYFrameCount();
-                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.prop_bridge_segment_stage1, xSpriteRes, ySpriteRes));
+                    xSpriteRes = xRes * render.getXFrameCount();
+                    ySpriteRes = yRes * render.getYFrameCount();
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.prop_bridge_segment_stage1, xSpriteRes / 5, ySpriteRes / 5));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
                     render.setFrameScale((width / 5f) / (double)render.getFrameWidth()); // scale = goal width / original width
@@ -160,9 +160,9 @@ public class Bridge extends SpriteProp {
                     render.setFrameCount(1);
                     render.setMethod("loop");
                     render.setDirection("forwards");
-                    xSpriteRes = 2 * xRes / render.getXFrameCount();
-                    ySpriteRes = 2 * yRes / render.getYFrameCount();
-                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.prop_bridge_segment_complete, xSpriteRes, ySpriteRes));
+                    xSpriteRes = xRes * render.getXFrameCount();
+                    ySpriteRes = yRes * render.getYFrameCount();
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.prop_bridge_segment_complete, xSpriteRes / 5, ySpriteRes / 5));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
                     render.setFrameScale((width / 5f) / (double)render.getFrameWidth()); // scale = goal width / original width
