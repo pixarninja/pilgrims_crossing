@@ -166,11 +166,11 @@ public class Arrow extends SpriteProp {
                         RectF compareBox = test.getValue().getEntity().getSprite().getBoundingBox();
                         /* if the objects intersect, find where they intersect for the entry bounding boxe*/
                         if (entryBox.intersect(compareBox)) {
-                            if(test.getKey().equals("PlayerController")) {
-                                entry.getValue().setID("hit player");
+                            if(test.getKey().contains("Bridge")) {
+                                entry.getValue().setID("hit bridge");
                             }
                             else {
-                                entry.getValue().setID("hit bridge");
+                                entry.getValue().setID("did not hit bridge");
                             }
                             entry.getValue().getEntity().refreshEntity("inherit destroyed");
                         }

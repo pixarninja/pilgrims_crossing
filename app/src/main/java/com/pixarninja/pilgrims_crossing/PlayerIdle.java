@@ -44,7 +44,7 @@ public class PlayerIdle extends Player {
 
         try {
             switch (controller.getID()) {
-                case "idle left":
+                case "player idle left":
                     switch (transition) {
                         case "idle":
                             controller.setReacting(false);
@@ -91,7 +91,7 @@ public class PlayerIdle extends Player {
                             render.setFrameToDraw(new Rect(0, 0, render.getFrameWidth(), render.getFrameHeight()));
                     }
                     break;
-                case "idle right":
+                case "player idle right":
                 default:
                     switch (transition) {
                         case "idle":

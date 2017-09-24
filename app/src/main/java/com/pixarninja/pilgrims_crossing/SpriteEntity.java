@@ -340,9 +340,9 @@ abstract class SpriteEntity {
                 render = controller.getEntity().getSprite();
                 /* frames are reversed in this case */
                 switch(controller.getID()) {
-                    case "idle right":
+                    case "player idle right":
                     case "run right":
-                    case "sprint right":
+                    case "player sprint right":
                         render.setXCurrentFrame(render.getXFrameCount() - 1);
                         render.setYCurrentFrame(0);
                         render.setCurrentFrame(0);

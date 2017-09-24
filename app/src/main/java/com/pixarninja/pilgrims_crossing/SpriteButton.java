@@ -213,7 +213,7 @@ public class SpriteButton extends SpriteEntity {
                                     transition = playerController.getTransition();
 
                                     if (transition.equals("idle")) {
-                                        if(playerController.getID().equals("sprint left")) {
+                                        if(playerController.getID().equals("player sprint left")) {
                                             transition = "inherit idle";
                                         }
                                         else {
@@ -223,7 +223,7 @@ public class SpriteButton extends SpriteEntity {
                                         transition = "idle";
                                     }
 
-                                    Player newPlayer = new PlayerSprint(spriteView, oldPlayer.res, oldPlayer.percentOfScreen, oldPlayer.xRes, oldPlayer.yRes, width, height, playerController, "sprint left", transition);
+                                    Player newPlayer = new PlayerSprint(spriteView, oldPlayer.res, oldPlayer.percentOfScreen, oldPlayer.xRes, oldPlayer.yRes, width, height, playerController, "player sprint left", transition);
                                     newPlayer.setCount(0);
                                     playerController.setEntity(newPlayer);
                                 }
@@ -242,7 +242,7 @@ public class SpriteButton extends SpriteEntity {
                                     transition = playerController.getTransition();
 
                                     if (transition.equals("idle")) {
-                                        if(playerController.getID().equals("sprint right")) {
+                                        if(playerController.getID().equals("player sprint right")) {
                                             transition = "inherit idle";
                                         }
                                         else {
@@ -252,7 +252,7 @@ public class SpriteButton extends SpriteEntity {
                                         transition = "idle";
                                     }
 
-                                    Player newPlayer = new PlayerSprint(spriteView, oldPlayer.res, oldPlayer.percentOfScreen, oldPlayer.xRes, oldPlayer.yRes, width, height, playerController, "sprint right", transition);
+                                    Player newPlayer = new PlayerSprint(spriteView, oldPlayer.res, oldPlayer.percentOfScreen, oldPlayer.xRes, oldPlayer.yRes, width, height, playerController, "player sprint right", transition);
                                     newPlayer.setCount(0);
                                     playerController.setEntity(newPlayer);
                                 }

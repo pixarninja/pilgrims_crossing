@@ -44,7 +44,7 @@ public class PlayerSprint extends Player {
 
         try {
             switch (controller.getID()) {
-                case "sprint left":
+                case "player sprint left":
                     switch (transition) {
                         case "idle":
                             controller.setReacting(false);
@@ -91,7 +91,7 @@ public class PlayerSprint extends Player {
                             render.setFrameToDraw(new Rect(0, 0, render.getFrameWidth(), render.getFrameHeight()));
                     }
                     break;
-                case "sprint right":
+                case "player sprint right":
                 default:
                     switch (transition) {
                         case "idle":

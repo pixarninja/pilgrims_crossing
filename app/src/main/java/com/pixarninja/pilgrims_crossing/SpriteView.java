@@ -216,11 +216,11 @@ public class SpriteView extends SurfaceView {
 
                                 Paint paint = null;
                                 /* color code:
-                                   0x00.....00...00.....00
+                                   0x00.....00...00.....00 (black)
                                    ..alpha..red..green..blue */
                                 if(controller.getID().equals("enemy stage1")) {
                                     paint = new Paint();
-                                    paint.setColorFilter(new LightingColorFilter(0x00DDFFFF, 0));
+                                    paint.setColorFilter(new LightingColorFilter(0x00EEFFFF, 0));
                                 }
                                 else if(controller.getID().equals("enemy stage2")) {
                                     paint = new Paint();
@@ -228,8 +228,21 @@ public class SpriteView extends SurfaceView {
                                 }
                                 else if(controller.getID().equals("enemy stage3")) {
                                     paint = new Paint();
-                                    paint.setColorFilter(new LightingColorFilter(0x00550000, 0));
+                                    paint.setColorFilter(new LightingColorFilter(0x00663333, 0));
                                 }
+                                else if(controller.getID().contains("item drop")) {
+                                    paint = new Paint();
+                                    paint.setColorFilter(new LightingColorFilter(0, 0));
+                                }
+                                /* character coloring
+                                else if(controller.getID().equals("swipe")) {
+                                    paint = new Paint();
+                                    paint.setColorFilter(new LightingColorFilter(0x00ccccff, 0));
+                                }
+                                else if(controller.getID().contains("player")) {
+                                    paint = new Paint();
+                                    paint.setColorFilter(new LightingColorFilter(0x00ccccff, 0));
+                                }*/
 
                                 canvas.drawBitmap(sprite.getSpriteSheet(), sprite.getFrameToDraw(), sprite.getWhereToDraw(), paint);
 
@@ -241,19 +254,19 @@ public class SpriteView extends SurfaceView {
                             if (!entry.getValue().getAlive()) {
                                 if(entry.getKey().contains("Arrow")) {
                                     Activity activity = (Activity) context;
-                                    if(entry.getValue().getID().equals("hit player")) {
+                                    if(entry.getValue().getID().equals("hit bridge")) {
                                         activity.runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
-                                            TextView score = (TextView) ((Activity) context).findViewById(R.id.score);
-                                            String text = score.getText().toString();
-                                            String[] expression = text.split("\n");
-                                            expression[0] = expression[0].replaceAll("\\D+", "");
-                                            expression[1] = expression[1].replaceAll("\\D+", "");
-                                            int remaining = Integer.parseInt(expression[0]);
-                                            int hit = Integer.parseInt(expression[1]);
-                                            String newText = "Arrows Remaining: " + (remaining - 1) + "\nHit Bridge: " + hit;
-                                            score.setText(newText);
+                                                TextView score = (TextView) ((Activity) context).findViewById(R.id.score);
+                                                String text = score.getText().toString();
+                                                String[] expression = text.split("\n");
+                                                expression[0] = expression[0].replaceAll("\\D+", "");
+                                                expression[1] = expression[1].replaceAll("\\D+", "");
+                                                int remaining = Integer.parseInt(expression[0]);
+                                                int hit = Integer.parseInt(expression[1]);
+                                                String newText = "Arrows Remaining: " + (remaining - 1) + "\nHit Bridge: " + (hit + 1);
+                                                score.setText(newText);
                                             }
                                         });
                                     }
@@ -261,15 +274,15 @@ public class SpriteView extends SurfaceView {
                                         activity.runOnUiThread(new Runnable() {
                                             @Override
                                             public void run() {
-                                            TextView score = (TextView) ((Activity) context).findViewById(R.id.score);
-                                            String text = score.getText().toString();
-                                            String[] expression = text.split("\n");
-                                            expression[0] = expression[0].replaceAll("\\D+", "");
-                                            expression[1] = expression[1].replaceAll("\\D+", "");
-                                            int remaining = Integer.parseInt(expression[0]);
-                                            int hit = Integer.parseInt(expression[1]);
-                                            String newText = "Arrows Remaining: " + (remaining - 1) + "\nHit Bridge: " + (hit + 1);
-                                            score.setText(newText);
+                                                TextView score = (TextView) ((Activity) context).findViewById(R.id.score);
+                                                String text = score.getText().toString();
+                                                String[] expression = text.split("\n");
+                                                expression[0] = expression[0].replaceAll("\\D+", "");
+                                                expression[1] = expression[1].replaceAll("\\D+", "");
+                                                int remaining = Integer.parseInt(expression[0]);
+                                                int hit = Integer.parseInt(expression[1]);
+                                                String newText = "Arrows Remaining: " + (remaining - 1) + "\nHit Bridge: " + hit;
+                                                score.setText(newText);
                                             }
                                         });
                                     }

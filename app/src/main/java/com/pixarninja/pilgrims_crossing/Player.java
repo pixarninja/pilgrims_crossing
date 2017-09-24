@@ -33,16 +33,16 @@ public class Player extends SpriteEntity {
 
             /* set player */
             Player oldPlayer = (Player) playerController.getEntity();
-            if(oldPlayer.getController().getID().equals("run right") || oldPlayer.getController().getID().equals("sprint right")  || oldPlayer.getController().getID().equals("idle right")) {
-                ID = "idle right";
+            if(oldPlayer.getController().getID().equals("run right") || oldPlayer.getController().getID().equals("player sprint right")  || oldPlayer.getController().getID().equals("player idle right")) {
+                ID = "player idle right";
             }
             else {
-                ID = "idle left";
+                ID = "player idle left";
             }
             transition = playerController.getTransition();
 
             if (transition.equals("idle")) {
-                if(playerController.getID().equals("idle right") || playerController.getID().equals("idle left")) {
+                if(playerController.getID().equals("player idle right") || playerController.getID().equals("player idle left")) {
                     transition = "inherit idle";
                 }
                 else {
@@ -69,6 +69,7 @@ public class Player extends SpriteEntity {
     public LinkedHashMap<String, SpriteController> onCollisionEvent(LinkedHashMap.Entry<String, SpriteController> entry, LinkedHashMap<String, SpriteController> controllerMap) {
 
         LinkedHashMap<String, SpriteController> map = new LinkedHashMap<>();
+        LinkedHashMap<String, SpriteController> colliderMap = new LinkedHashMap<>();
 
         if(!entry.getValue().getReacting() && (entry.getValue().getEntity().getSprite().getBoundingBox() != null)) {
             RectF entryBox = entry.getValue().getEntity().getSprite().getBoundingBox();
@@ -101,7 +102,10 @@ public class Player extends SpriteEntity {
                         if (entryBox.intersect(compareBox)) {
 
                             /* first call the comparison's collision handler */
-                            test.getValue().getEntity().onCollisionEvent(test, controllerMap);
+                            colliderMap = test.getValue().getEntity().onCollisionEvent(test, controllerMap);
+                            for(LinkedHashMap.Entry<String, SpriteController> add : colliderMap.entrySet()) {
+                                map.put(add.getKey(), add.getValue());
+                            }
 
                             if (entryLeft.intersect(compareBox)) {
                                 SpriteController playerController = controllerMap.get("PlayerController");

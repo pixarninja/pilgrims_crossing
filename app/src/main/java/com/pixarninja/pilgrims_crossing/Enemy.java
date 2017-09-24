@@ -21,6 +21,7 @@ public class Enemy extends SpriteEntity {
                         RectF compareBox = test.getValue().getEntity().getSprite().getBoundingBox();
                         /* if the objects intersect, find where they intersect for the entry bounding box */
                         if (entryBox.intersect(compareBox)) {
+
                             /* increment hit value */
                             hit = hit + 1;
                             if(hit > 15) {
@@ -35,6 +36,7 @@ public class Enemy extends SpriteEntity {
                             else if(hit > 0) {
                                 controller.setID("enemy stage1");
                             }
+
                         }
                     }
                 }

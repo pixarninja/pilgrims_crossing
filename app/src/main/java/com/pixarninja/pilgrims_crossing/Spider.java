@@ -21,8 +21,8 @@ public class Spider extends Enemy {
         this.percentOfScreen = 0.1;
         this.width = width;
         this.height = height;
-        this.xRes = xRes / 4;
-        this.yRes = yRes / 4;
+        this.xRes = xRes;
+        this.yRes = yRes;
         this.controller.setXDelta(-5);
         this.controller.setYDelta(0);
         this.controller.setXInit(xInit);
@@ -70,12 +70,13 @@ public class Spider extends Enemy {
                     render.setFrameCount(16);
                     render.setMethod("die");
                     render.setDirection("forwards");
+                    spriteScale = 0.25;
                     xSpriteRes = xRes * render.getXFrameCount();
                     ySpriteRes = yRes * render.getYFrameCount();
-                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_spider_destroyed, xSpriteRes, ySpriteRes));
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_spider_destroyed, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                    render.setFrameScale((width / 4f) / (double)render.getFrameWidth()); // scale = goal width / original width
+                    render.setFrameScale((width * spriteScale) / (double)render.getFrameWidth()); // scale = goal width / original width
                     render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
                     render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
                     render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
@@ -94,12 +95,13 @@ public class Spider extends Enemy {
                     render.setFrameCount(16);
                     render.setMethod("loop");
                     render.setDirection("forwards");
+                    spriteScale = 0.25;
                     xSpriteRes = xRes * render.getXFrameCount();
                     ySpriteRes = yRes * render.getYFrameCount();
-                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_spider_walking_loop, xSpriteRes, ySpriteRes));
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_spider_walking_loop, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                    render.setFrameScale((width / 4f) / (double)render.getFrameWidth()); // scale = goal width / original width
+                    render.setFrameScale((width * spriteScale) / (double)render.getFrameWidth()); // scale = goal width / original width
                     render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
                     render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
                     render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
@@ -141,6 +143,12 @@ public class Spider extends Enemy {
                             /* increment hit value */
                             hit = hit + 1;
                             if(hit > 15) {
+                                int i = 1;
+                                SpriteEntity entity = new ItemDrop(spriteView, res, width, height, xRes, yRes, controller.getXPos(), controller.getYPos() - controller.getEntity().getSprite().getSpriteHeight() / 3, "item drop red", "init");
+                                while(controllerMap.get("ItemDrop" + i) != null) {
+                                    i++;
+                                }
+                                map.put("ItemDrop" + i, entity.getController());
                                 refreshEntity("destroyed");
                             }
                             else if(hit > 10) {

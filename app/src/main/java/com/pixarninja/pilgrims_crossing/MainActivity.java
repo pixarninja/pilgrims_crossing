@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         spriteView.setBackgroundResource(R.drawable.background);
 
         /* initialize player controller */
-        entity = new PlayerIdle(spriteView, getResources(), 0.65, maxRes, maxRes, width, height, null, "idle right", "init");
+        entity = new PlayerIdle(spriteView, getResources(), 0.65, maxRes, maxRes, width, height, null, "player idle right", "init");
         controllerMap.put("PlayerController", entity.getController());
 
         /* initialize bridge controllers */
@@ -82,23 +82,23 @@ public class MainActivity extends AppCompatActivity {
             controllerMap.put("Arrow" + i + "Controller", entity.getController());
         }
 
-        /* sprint left button */
-        entity = new SpriteButton(spriteView, getResources(), 0.15, width, height, maxRes, maxRes, R.mipmap.button_sprint_left, R.mipmap.button_sprint_left, R.mipmap.button_sprint_left,
-                0, 0, (width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 0.5, 0, 0, 1, 1, null, "sprint left", "init");
+        /* player sprint left button */
+        entity = new SpriteButton(spriteView, getResources(), 0.2, width, height, maxRes, maxRes, R.mipmap.button_sprint_left, R.mipmap.button_sprint_left, R.mipmap.button_sprint_left,
+                0, 0, (width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 0.5, 0, 0, 1, 1, null, "button sprint left", "init");
         controllerMap.put("SprintLeftButtonController", entity.getController());
 
-        /* sprint right button */
-        entity = new SpriteButton(spriteView, getResources(), 0.15, width, height, maxRes, maxRes, R.mipmap.button_sprint_right, R.mipmap.button_sprint_right, R.mipmap.button_sprint_right,
-                0, 0, (2 * width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 0.5, 0, 0, 1, 1, null, "sprint right", "init");
+        /* player sprint right button */
+        entity = new SpriteButton(spriteView, getResources(), 0.2, width, height, maxRes, maxRes, R.mipmap.button_sprint_right, R.mipmap.button_sprint_right, R.mipmap.button_sprint_right,
+                0, 0, (2 * width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 0.5, 0, 0, 1, 1, null, "button sprint right", "init");
         controllerMap.put("SprintRightButtonController", entity.getController());
 
         /* flow control button */
-        entity = new SpriteButton(spriteView, getResources(), 0.15, width, height, maxRes, maxRes, R.mipmap.button_play, R.mipmap.button_play, R.mipmap.button_pause,
+        entity = new SpriteButton(spriteView, getResources(), 0.2, width, height, maxRes, maxRes, R.mipmap.button_play, R.mipmap.button_play, R.mipmap.button_pause,
                 0, 0, (3 * width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 0.5, 0, 0, 1, 1, null, "flow control", "init");
         controllerMap.put("FlowButtonController", entity.getController());
 
         /* jump button */
-        entity = new SpriteButton(spriteView, getResources(), 0.15, width, height, maxRes, maxRes, R.mipmap.button_jump, R.mipmap.button_jump, R.mipmap.button_jump,
+        entity = new SpriteButton(spriteView, getResources(), 0.2, width, height, maxRes, maxRes, R.mipmap.button_jump, R.mipmap.button_jump, R.mipmap.button_jump,
                 0, 0, (5 * width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 0.5, 0, 0, 1, 1, null, "jump", "init");
         controllerMap.put("JumpButtonController", entity.getController());
 
@@ -156,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
         spriteView.setBackgroundResource(R.drawable.background);
 
         /* initialize player controller */
-        entity = new PlayerIdle(spriteView, getResources(), 0.65, maxRes, maxRes, width, height, null, "idle right", "init");
+        entity = new PlayerIdle(spriteView, getResources(), 0.65, maxRes, maxRes, width, height, null, "player idle right", "init");
         controllerMap.put("PlayerController", entity.getController());
 
         /* initialize bridge controllers */
@@ -189,14 +189,14 @@ public class MainActivity extends AppCompatActivity {
             controllerMap.put("Arrow" + i + "Controller", entity.getController());
         }
 
-        /* sprint left button */
+        /* player sprint left button */
         entity = new SpriteButton(spriteView, getResources(), 0.15, width, height, maxRes, maxRes, R.mipmap.button_sprint_left, R.mipmap.button_sprint_left, R.mipmap.button_sprint_left,
-                0, 0, (width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 0.5, 0, 0, 1, 1, null, "sprint left", "init");
+                0, 0, (width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 0.5, 0, 0, 1, 1, null, "player sprint left", "init");
         controllerMap.put("SprintLeftButtonController", entity.getController());
 
-        /* sprint right button */
+        /* player sprint right button */
         entity = new SpriteButton(spriteView, getResources(), 0.15, width, height, maxRes, maxRes, R.mipmap.button_sprint_right, R.mipmap.button_sprint_right, R.mipmap.button_sprint_right,
-                0, 0, (2 * width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 0.5, 0, 0, 1, 1, null, "sprint right", "init");
+                0, 0, (2 * width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 0.5, 0, 0, 1, 1, null, "player sprint right", "init");
         controllerMap.put("SprintRightButtonController", entity.getController());
 
         /* flow control button */
