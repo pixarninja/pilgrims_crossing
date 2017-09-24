@@ -83,22 +83,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
         /* player sprint left button */
-        entity = new SpriteButton(spriteView, getResources(), 0.2, width, height, maxRes, maxRes, R.mipmap.button_sprint_left, R.mipmap.button_sprint_left, R.mipmap.button_sprint_left,
+        entity = new SpriteButton(spriteView, getResources(), 0.22, width, height, maxRes, maxRes, R.mipmap.button_sprint_left, R.mipmap.button_sprint_left, R.mipmap.button_sprint_left,
                 0, 0, (width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 0.5, 0, 0, 1, 1, null, "button sprint left", "init");
         controllerMap.put("SprintLeftButtonController", entity.getController());
 
         /* player sprint right button */
-        entity = new SpriteButton(spriteView, getResources(), 0.2, width, height, maxRes, maxRes, R.mipmap.button_sprint_right, R.mipmap.button_sprint_right, R.mipmap.button_sprint_right,
+        entity = new SpriteButton(spriteView, getResources(), 0.22, width, height, maxRes, maxRes, R.mipmap.button_sprint_right, R.mipmap.button_sprint_right, R.mipmap.button_sprint_right,
                 0, 0, (2 * width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 0.5, 0, 0, 1, 1, null, "button sprint right", "init");
         controllerMap.put("SprintRightButtonController", entity.getController());
 
         /* flow control button */
-        entity = new SpriteButton(spriteView, getResources(), 0.2, width, height, maxRes, maxRes, R.mipmap.button_play, R.mipmap.button_play, R.mipmap.button_pause,
+        entity = new SpriteButton(spriteView, getResources(), 0.22, width, height, maxRes, maxRes, R.mipmap.button_play, R.mipmap.button_play, R.mipmap.button_pause,
                 0, 0, (3 * width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 0.5, 0, 0, 1, 1, null, "flow control", "init");
         controllerMap.put("FlowButtonController", entity.getController());
 
         /* jump button */
-        entity = new SpriteButton(spriteView, getResources(), 0.2, width, height, maxRes, maxRes, R.mipmap.button_jump, R.mipmap.button_jump, R.mipmap.button_jump,
+        entity = new SpriteButton(spriteView, getResources(), 0.22, width, height, maxRes, maxRes, R.mipmap.button_jump, R.mipmap.button_jump, R.mipmap.button_jump,
                 0, 0, (5 * width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 0.5, 0, 0, 1, 1, null, "jump", "init");
         controllerMap.put("JumpButtonController", entity.getController());
 
@@ -190,22 +190,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
         /* player sprint left button */
-        entity = new SpriteButton(spriteView, getResources(), 0.15, width, height, maxRes, maxRes, R.mipmap.button_sprint_left, R.mipmap.button_sprint_left, R.mipmap.button_sprint_left,
-                0, 0, (width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 0.5, 0, 0, 1, 1, null, "player sprint left", "init");
+        entity = new SpriteButton(spriteView, getResources(), 0.22, width, height, maxRes, maxRes, R.mipmap.button_sprint_left, R.mipmap.button_sprint_left, R.mipmap.button_sprint_left,
+                0, 0, (width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 0.5, 0, 0, 1, 1, null, "button sprint left", "init");
         controllerMap.put("SprintLeftButtonController", entity.getController());
 
         /* player sprint right button */
-        entity = new SpriteButton(spriteView, getResources(), 0.15, width, height, maxRes, maxRes, R.mipmap.button_sprint_right, R.mipmap.button_sprint_right, R.mipmap.button_sprint_right,
-                0, 0, (2 * width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 0.5, 0, 0, 1, 1, null, "player sprint right", "init");
+        entity = new SpriteButton(spriteView, getResources(), 0.22, width, height, maxRes, maxRes, R.mipmap.button_sprint_right, R.mipmap.button_sprint_right, R.mipmap.button_sprint_right,
+                0, 0, (2 * width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 0.5, 0, 0, 1, 1, null, "button sprint right", "init");
         controllerMap.put("SprintRightButtonController", entity.getController());
 
         /* flow control button */
-        entity = new SpriteButton(spriteView, getResources(), 0.15, width, height, maxRes, maxRes, R.mipmap.button_play, R.mipmap.button_play, R.mipmap.button_pause,
+        entity = new SpriteButton(spriteView, getResources(), 0.22, width, height, maxRes, maxRes, R.mipmap.button_play, R.mipmap.button_play, R.mipmap.button_pause,
                 0, 0, (3 * width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 0.5, 0, 0, 1, 1, null, "flow control", "init");
         controllerMap.put("FlowButtonController", entity.getController());
 
         /* jump button */
-        entity = new SpriteButton(spriteView, getResources(), 0.15, width, height, maxRes, maxRes, R.mipmap.button_jump, R.mipmap.button_jump, R.mipmap.button_jump,
+        entity = new SpriteButton(spriteView, getResources(), 0.22, width, height, maxRes, maxRes, R.mipmap.button_jump, R.mipmap.button_jump, R.mipmap.button_jump,
                 0, 0, (5 * width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 0.5, 0, 0, 1, 1, null, "jump", "init");
         controllerMap.put("JumpButtonController", entity.getController());
 
