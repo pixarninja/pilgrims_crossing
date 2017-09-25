@@ -107,6 +107,11 @@ public class Player extends SpriteEntity {
                                 map.put(add.getKey(), add.getValue());
                             }
 
+                            /* don't add a swipe for an item drop */
+                            if(test.getValue().getID().contains("item drop")) {
+                                continue;
+                            }
+
                             if (entryLeft.intersect(compareBox)) {
                                 SpriteController playerController = controllerMap.get("PlayerController");
                                 SpriteEntity entity = new Swipe(spriteView, res, width, height, xRes, yRes, playerController.getXPos() - 2 * boxWidth / 3 + random.nextDouble() * 20 - random.nextDouble() * 20, playerController.getYPos() + random.nextDouble() * 20 - random.nextDouble() * 20, "swipe", "left");

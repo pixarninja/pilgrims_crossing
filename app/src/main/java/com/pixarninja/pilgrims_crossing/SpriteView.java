@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import java.util.ConcurrentModificationException;
 import java.util.LinkedHashMap;
+import java.util.Random;
 
 public class SpriteView extends SurfaceView {
 
@@ -230,15 +231,37 @@ public class SpriteView extends SurfaceView {
                                     paint = new Paint();
                                     paint.setColorFilter(new LightingColorFilter(0x00663333, 0));
                                 }
-                                else if(controller.getID().contains("item drop")) {
+                                /* red item drop */
+                                else if(controller.getID().equals("item drop red")) {
                                     paint = new Paint();
-                                    paint.setColorFilter(new LightingColorFilter(0, 0));
+                                    paint.setColorFilter(new LightingColorFilter(0x00ff3333, 0));
                                 }
-                                /* character coloring
+                                /* yellow item drop */
+                                else if(controller.getID().equals("item drop yellow")) {
+                                    paint = new Paint();
+                                    paint.setColorFilter(new LightingColorFilter(0x00ffee33, 0));
+                                }
+                                /* green item drop */
+                                else if(controller.getID().equals("item drop green")) {
+                                        paint = new Paint();
+                                    paint.setColorFilter(new LightingColorFilter(0x0011e663, 0));
+                                }
+                                /* blue item drop */
+                                else if(controller.getID().equals("item drop blue")) {
+                                    paint = new Paint();
+                                    paint.setColorFilter(new LightingColorFilter(0x0066ccff, 0));
+                                }
+                                /* purple item drop */
+                                else if(controller.getID().equals("item drop purple")) {
+                                    paint = new Paint();
+                                    paint.setColorFilter(new LightingColorFilter(0x00e611ff, 0));
+                                }
+                                /* swipe
                                 else if(controller.getID().equals("swipe")) {
                                     paint = new Paint();
                                     paint.setColorFilter(new LightingColorFilter(0x00ccccff, 0));
                                 }
+                                /* player
                                 else if(controller.getID().contains("player")) {
                                     paint = new Paint();
                                     paint.setColorFilter(new LightingColorFilter(0x00ccccff, 0));

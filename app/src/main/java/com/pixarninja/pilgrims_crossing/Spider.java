@@ -144,7 +144,10 @@ public class Spider extends Enemy {
                             hit = hit + 1;
                             if(hit > 15) {
                                 int i = 1;
-                                SpriteEntity entity = new ItemDrop(spriteView, res, width, height, xRes, yRes, controller.getXPos(), controller.getYPos() - controller.getEntity().getSprite().getSpriteHeight() / 3, "item drop red", "init");
+                                Random random = new Random();
+                                int r = random.nextInt(100) % 5;
+                                String[] s = {"red", "yellow", "green", "blue", "purple"};
+                                SpriteEntity entity = new ItemDrop(spriteView, res, width, height, xRes, yRes, controller.getXPos(), controller.getYPos() - controller.getEntity().getSprite().getSpriteHeight() / 3, "item drop " + s[r], "init");
                                 while(controllerMap.get("ItemDrop" + i) != null) {
                                     i++;
                                 }
