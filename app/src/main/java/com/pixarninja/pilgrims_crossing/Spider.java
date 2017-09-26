@@ -146,7 +146,7 @@ public class Spider extends Enemy {
                                 int i = 1;
                                 Random random = new Random();
                                 int r = random.nextInt(100) % 5;
-                                String[] s = {"red", "yellow", "green", "blue", "purple"};
+                                String[] s = {"fire", "light", "earth", "water", "time"};
                                 SpriteEntity entity = new ItemDrop(spriteView, res, width, height, xRes, yRes, controller.getXPos(), controller.getYPos() - controller.getEntity().getSprite().getSpriteHeight() / 3, "item drop " + s[r], "init");
                                 while(controllerMap.get("ItemDrop" + i) != null) {
                                     i++;

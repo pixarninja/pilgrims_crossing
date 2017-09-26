@@ -92,7 +92,7 @@ public class Player extends SpriteEntity {
 
             for (LinkedHashMap.Entry<String, SpriteController> test : controllerMap.entrySet()) {
 
-                if(!test.getKey().equals(entry.getKey()) && !test.getKey().contains("Bridge") && !test.getKey().contains("Swipe") && !test.getValue().getReacting()) {
+                if(!test.getKey().equals(entry.getKey()) && !test.getKey().contains("Bridge") && !test.getKey().contains("Orb") && !test.getKey().contains("Swipe") && !test.getValue().getReacting()) {
 
                     if (test.getValue().getEntity().getSprite().getBoundingBox() != null) {
 

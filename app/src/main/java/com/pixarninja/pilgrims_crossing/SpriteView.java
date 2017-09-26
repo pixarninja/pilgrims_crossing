@@ -232,29 +232,29 @@ public class SpriteView extends SurfaceView {
                                     paint.setColorFilter(new LightingColorFilter(0x00663333, 0));
                                 }
                                 /* red item drop */
-                                else if(controller.getID().equals("item drop red")) {
+                                else if(controller.getID().equals("item drop fire")) {
                                     paint = new Paint();
-                                    paint.setColorFilter(new LightingColorFilter(0x00ff3333, 0));
+                                    paint.setColorFilter(new LightingColorFilter(0x00ff4216, 0));
                                 }
                                 /* yellow item drop */
-                                else if(controller.getID().equals("item drop yellow")) {
+                                else if(controller.getID().equals("item drop light")) {
                                     paint = new Paint();
-                                    paint.setColorFilter(new LightingColorFilter(0x00ffee33, 0));
+                                    paint.setColorFilter(new LightingColorFilter(0x00fff84e, 0));
                                 }
                                 /* green item drop */
-                                else if(controller.getID().equals("item drop green")) {
+                                else if(controller.getID().equals("item drop earth")) {
                                         paint = new Paint();
-                                    paint.setColorFilter(new LightingColorFilter(0x0011e663, 0));
+                                    paint.setColorFilter(new LightingColorFilter(0x00a5fd4d, 0));
                                 }
                                 /* blue item drop */
-                                else if(controller.getID().equals("item drop blue")) {
+                                else if(controller.getID().equals("item drop water")) {
                                     paint = new Paint();
-                                    paint.setColorFilter(new LightingColorFilter(0x0066ccff, 0));
+                                    paint.setColorFilter(new LightingColorFilter(0x0070fff3, 0));
                                 }
                                 /* purple item drop */
-                                else if(controller.getID().equals("item drop purple")) {
+                                else if(controller.getID().equals("item drop time")) {
                                     paint = new Paint();
-                                    paint.setColorFilter(new LightingColorFilter(0x00e611ff, 0));
+                                    paint.setColorFilter(new LightingColorFilter(0x00ec52ff, 0));
                                 }
                                 /* swipe
                                 else if(controller.getID().equals("swipe")) {

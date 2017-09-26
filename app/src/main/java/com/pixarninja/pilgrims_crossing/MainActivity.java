@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
 
         int height = displayMetrics.heightPixels;
         int width = displayMetrics.widthPixels;
-        int maxRes = width / 2;
+        int maxRes = width;
         Random random = new Random();
 
         /* background */
@@ -63,8 +63,28 @@ public class MainActivity extends AppCompatActivity {
             controllerMap.put("Bridge" + i + "Controller", entity.getController());
         }
 
+        /* initialize fire orb controller */
+        entity = new FireOrb(spriteView, getResources(), width, height, maxRes, maxRes, 0, controllerMap.get("PlayerController").getEntity().getSprite().getBoundingBox().bottom - controllerMap.get("PlayerController").getEntity().getSprite().getSpriteHeight() / 12f, "fire orb");
+        controllerMap.put("FireOrbController", entity.getController());
+
+        /* initialize light orb controller */
+        entity = new LightOrb(spriteView, getResources(), width, height, maxRes, maxRes, controllerMap.get("FireOrbController").getEntity().getSprite().getBoundingBox().right, controllerMap.get("PlayerController").getEntity().getSprite().getBoundingBox().bottom - controllerMap.get("PlayerController").getEntity().getSprite().getSpriteHeight() / 12f, "light orb");
+        controllerMap.put("LightOrbController", entity.getController());
+
+        /* initialize earth orb controller */
+        entity = new EarthOrb(spriteView, getResources(), width, height, maxRes, maxRes, controllerMap.get("LightOrbController").getEntity().getSprite().getBoundingBox().right, controllerMap.get("PlayerController").getEntity().getSprite().getBoundingBox().bottom - controllerMap.get("PlayerController").getEntity().getSprite().getSpriteHeight() / 12f, "earth orb");
+        controllerMap.put("EarthOrbController", entity.getController());
+
+        /* initialize water orb controller */
+        entity = new WaterOrb(spriteView, getResources(), width, height, maxRes, maxRes, controllerMap.get("EarthOrbController").getEntity().getSprite().getBoundingBox().right, controllerMap.get("PlayerController").getEntity().getSprite().getBoundingBox().bottom - controllerMap.get("PlayerController").getEntity().getSprite().getSpriteHeight() / 12f, "water orb");
+        controllerMap.put("WaterOrbController", entity.getController());
+
+        /* initialize time orb controller */
+        entity = new TimeOrb(spriteView, getResources(), width, height, maxRes, maxRes, controllerMap.get("WaterOrbController").getEntity().getSprite().getBoundingBox().right, controllerMap.get("PlayerController").getEntity().getSprite().getBoundingBox().bottom - controllerMap.get("PlayerController").getEntity().getSprite().getSpriteHeight() / 12f, "time orb");
+        controllerMap.put("TimeOrbController", entity.getController());
+
         /* initialize spider controllers */
-        for(int i = 0; i < num / 2; i++) {
+        for(int i = 0; i < 10; i++) {
             entity = new Spider(spriteView, getResources(), width, height, maxRes, maxRes, random.nextDouble() * 25 * width + width, controllerMap.get("PlayerController").getEntity().getSprite().getBoundingBox().bottom, "spider idle");
             entity.getController().setYPos(entity.getController().getYPos() - entity.getSprite().getSpriteHeight());
             controllerMap.put("Spider" + i + "Controller", entity.getController());
@@ -149,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
 
         int height = displayMetrics.heightPixels;
         int width = displayMetrics.widthPixels;
-        int maxRes = width / 2;
+        int maxRes = width;
         Random random = new Random();
 
         /* background */
@@ -170,8 +190,28 @@ public class MainActivity extends AppCompatActivity {
             controllerMap.put("Bridge" + i + "Controller", entity.getController());
         }
 
+        /* initialize fire orb controller */
+        entity = new FireOrb(spriteView, getResources(), width, height, maxRes, maxRes, 0, controllerMap.get("PlayerController").getEntity().getSprite().getBoundingBox().bottom - controllerMap.get("PlayerController").getEntity().getSprite().getSpriteHeight() / 12f, "fire orb");
+        controllerMap.put("FireOrbController", entity.getController());
+
+        /* initialize light orb controller */
+        entity = new LightOrb(spriteView, getResources(), width, height, maxRes, maxRes, controllerMap.get("FireOrbController").getEntity().getSprite().getBoundingBox().right, controllerMap.get("PlayerController").getEntity().getSprite().getBoundingBox().bottom - controllerMap.get("PlayerController").getEntity().getSprite().getSpriteHeight() / 12f, "light orb");
+        controllerMap.put("LightOrbController", entity.getController());
+
+        /* initialize earth orb controller */
+        entity = new EarthOrb(spriteView, getResources(), width, height, maxRes, maxRes, controllerMap.get("LightOrbController").getEntity().getSprite().getBoundingBox().right, controllerMap.get("PlayerController").getEntity().getSprite().getBoundingBox().bottom - controllerMap.get("PlayerController").getEntity().getSprite().getSpriteHeight() / 12f, "earth orb");
+        controllerMap.put("EarthOrbController", entity.getController());
+
+        /* initialize water orb controller */
+        entity = new WaterOrb(spriteView, getResources(), width, height, maxRes, maxRes, controllerMap.get("EarthOrbController").getEntity().getSprite().getBoundingBox().right, controllerMap.get("PlayerController").getEntity().getSprite().getBoundingBox().bottom - controllerMap.get("PlayerController").getEntity().getSprite().getSpriteHeight() / 12f, "water orb");
+        controllerMap.put("WaterOrbController", entity.getController());
+
+        /* initialize time orb controller */
+        entity = new TimeOrb(spriteView, getResources(), width, height, maxRes, maxRes, controllerMap.get("WaterOrbController").getEntity().getSprite().getBoundingBox().right, controllerMap.get("PlayerController").getEntity().getSprite().getBoundingBox().bottom - controllerMap.get("PlayerController").getEntity().getSprite().getSpriteHeight() / 12f, "time orb");
+        controllerMap.put("TimeOrbController", entity.getController());
+
         /* initialize spider controllers */
-        for(int i = 0; i < num / 2; i++) {
+        for(int i = 0; i < 10; i++) {
             entity = new Spider(spriteView, getResources(), width, height, maxRes, maxRes, random.nextDouble() * 25 * width + width, controllerMap.get("PlayerController").getEntity().getSprite().getBoundingBox().bottom, "spider idle");
             entity.getController().setYPos(entity.getController().getYPos() - entity.getSprite().getSpriteHeight());
             controllerMap.put("Spider" + i + "Controller", entity.getController());
