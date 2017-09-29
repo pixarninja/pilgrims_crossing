@@ -16,7 +16,6 @@ public class SpriteController {
     private boolean reacting = false;
     private boolean alive = true;
 
-
     public String getID() { return this.ID; }
     public void setID(String ID) { this.ID = ID; }
 

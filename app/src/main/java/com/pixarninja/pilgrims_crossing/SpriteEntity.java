@@ -31,7 +31,6 @@ abstract class SpriteEntity {
     protected String direction;
     protected SpriteController controller;
     protected Sprite render;
-    protected SpriteView spriteView;
 
     public Sprite getSprite() { return this.render; }
     public void setSprite(Sprite sprite) { this.render = sprite; }
@@ -94,9 +93,12 @@ abstract class SpriteEntity {
         controller.setXPos(controller.getXPos() + controller.getXDelta());
         controller.setYPos(controller.getYPos() + controller.getYDelta());
 
-        render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
-        getCurrentFrame();
-        updateBoundingBox();
+        /* don't update the sprite if it is not on the screen */
+        if(((controller.getXPos() >= -render.getSpriteWidth()) || (controller.getXPos() <= width)) && ((controller.getYPos() >= -render.getSpriteHeight()) || (controller.getYPos() <= height))) {
+            render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
+            getCurrentFrame();
+            updateBoundingBox();
+        }
 
     }
 

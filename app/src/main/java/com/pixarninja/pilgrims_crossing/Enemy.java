@@ -6,7 +6,10 @@ import java.util.LinkedHashMap;
 
 public class Enemy extends SpriteEntity {
 
-    int hit = 0;
+    protected int hit = 0;
+
+    public int getHit() { return hit; }
+    public void setHit(int hit) { this.hit = hit; }
 
     @Override
     public LinkedHashMap<String, SpriteController> onCollisionEvent(LinkedHashMap.Entry<String, SpriteController> entry, LinkedHashMap<String, SpriteController> controllerMap) {

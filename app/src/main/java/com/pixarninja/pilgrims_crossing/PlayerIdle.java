@@ -8,7 +8,7 @@ import android.graphics.RectF;
 
 public class PlayerIdle extends Player {
 
-    public PlayerIdle(SpriteView spriteView, Resources res, double percentOfScreen, int xRes, int yRes, int width, int height, SpriteController controller, String ID, String transition) {
+    public PlayerIdle(Resources res, int xRes, int yRes, int width, int height, SpriteController controller, String ID, String transition) {
 
         if(controller == null) {
             this.controller = new SpriteController();
@@ -19,10 +19,7 @@ public class PlayerIdle extends Player {
             this.controller = controller;
         }
         this.controller.setID(ID);
-        this.controller.setReacting(false);
-        this.spriteView = spriteView;
         this.res = res;
-        this.percentOfScreen = percentOfScreen;
         this.xRes = xRes;
         this.yRes = yRes;
         this.width = width;
@@ -47,7 +44,6 @@ public class PlayerIdle extends Player {
                 case "player idle left":
                     switch (transition) {
                         case "idle":
-                            controller.setReacting(false);
                             render.setID(transition);
                             render.setXDimension(3.028);
                             render.setYDimension(5);
@@ -60,16 +56,17 @@ public class PlayerIdle extends Player {
                             render.setFrameCount(4);
                             render.setDirection("flipped");
                             render.setMethod("mirror loop");
+                            spriteScale = 0.11;
                             xSpriteRes = xRes * render.getXFrameCount();
-                            ySpriteRes = yRes * render.getYFrameCount();
-                            Bitmap flipped = decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_idle_mirror_norm, xSpriteRes / 4, ySpriteRes / 4);
+                            ySpriteRes = yRes * render.getYFrameCount() * 4;
+                            Bitmap flipped = decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_idle_mirror_norm, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale));
                             Matrix matrix = new Matrix();
                             matrix.postScale(-1, 1);
                             flipped = Bitmap.createBitmap(flipped, 0, 0, flipped.getWidth(), flipped.getHeight(), matrix, true);
                             render.setSpriteSheet(flipped);
                             render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                             render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                            render.setFrameScale((width / 8f) / (double)render.getFrameWidth()); // scale = goal width / original width
+                            render.setFrameScale((width * spriteScale) / (double)render.getFrameWidth()); // scale = goal width / original width
                             render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
                             render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
                             render.setWhereToDraw(new RectF((float)controller.getXPos(), (float)controller.getYPos(), (float)controller.getXPos() + render.getSpriteWidth(), (float)controller.getYPos() + render.getSpriteHeight()));
@@ -95,7 +92,6 @@ public class PlayerIdle extends Player {
                 default:
                     switch (transition) {
                         case "idle":
-                            controller.setReacting(false);
                             render.setID(transition);
                             render.setXDimension(3.028);
                             render.setYDimension(5);
@@ -108,12 +104,13 @@ public class PlayerIdle extends Player {
                             render.setFrameCount(4);
                             render.setDirection("forwards");
                             render.setMethod("mirror loop");
+                            spriteScale = 0.11;
                             xSpriteRes = xRes * render.getXFrameCount();
-                            ySpriteRes = yRes * render.getYFrameCount();
-                            render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_idle_mirror_norm, xSpriteRes / 4, ySpriteRes / 4));
+                            ySpriteRes = yRes * render.getYFrameCount() * 4;
+                            render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_samurai_idle_mirror_norm, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
                             render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                             render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                            render.setFrameScale((width / 8f) / (double)render.getFrameWidth()); // scale = goal width / original width
+                            render.setFrameScale((width * spriteScale) / (double)render.getFrameWidth()); // scale = goal width / original width
                             render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
                             render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
                             render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));

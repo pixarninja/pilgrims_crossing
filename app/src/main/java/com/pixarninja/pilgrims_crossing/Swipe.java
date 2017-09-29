@@ -6,14 +6,13 @@ import android.graphics.RectF;
 
 public class Swipe extends SpriteProp{
 
-    public Swipe(SpriteView spriteView, Resources res, int width, int height, int xRes, int yRes, double xInit, double yInit, String ID, String transition) {
+    public Swipe(Resources res, int width, int height, int xRes, int yRes, double xInit, double yInit, String ID, String transition) {
 
         super();
 
         this.controller = new SpriteController();
 
         this.controller.setID(ID);
-        this.spriteView = spriteView;
         this.res = res;
         this.percentOfScreen = 0.10;
         this.width = width;

@@ -8,7 +8,7 @@ import java.util.Random;
 
 public class Arrow extends SpriteProp {
 
-    public Arrow(SpriteView spriteView, Resources res, int width, int height, int xRes, int yRes, String ID) {
+    public Arrow(Resources res, int width, int height, int xRes, int yRes, String ID) {
 
         super();
 
@@ -16,7 +16,6 @@ public class Arrow extends SpriteProp {
         Random random = new Random();
 
         this.controller.setID(ID);
-        this.spriteView = spriteView;
         this.res = res;
         this.percentOfScreen = 0.1;
         this.width = width;

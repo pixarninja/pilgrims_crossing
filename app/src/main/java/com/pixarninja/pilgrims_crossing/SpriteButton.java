@@ -17,7 +17,7 @@ public class SpriteButton extends SpriteEntity {
     /* for extending the class */
     public SpriteButton() {}
 
-    public SpriteButton(SpriteView spriteView, Resources res, double percentOfScreen, int width, int height, int xRes, int yRes, int onID, int pokedID, int offID,
+    public SpriteButton(Resources res, int width, int height, int xRes, int yRes, int onID, int pokedID, int offID,
                         double xDelta, double yDelta, double xInit, double yInit, int xFrameCount, int yFrameCount, int frameCount,
                         double xDimension, double yDimension, double spriteScale,
                         double left, double top, double right, double bottom, SpriteController controller, String ID, String transition) {
@@ -29,9 +29,7 @@ public class SpriteButton extends SpriteEntity {
             this.controller = controller;
         }
         this.controller.setID(ID);
-        this.spriteView = spriteView;
         this.res = res;
-        this.percentOfScreen = percentOfScreen;
         this.width = width;
         this.height = height;
         this.xRes = xRes;
@@ -88,9 +86,9 @@ public class SpriteButton extends SpriteEntity {
                 render.setSpriteSheet(decodeSampledBitmapFromResource(res, offID, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
                 render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                 render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                render.setSpriteWidth((int) (render.getFrameWidth() * render.getFrameScale()));
-                render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
+                render.setFrameScale((width * spriteScale) / (double)render.getFrameWidth()); // scale = goal width / original width
+                render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
+                render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
                 render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                 break;
             case "poked":
@@ -111,9 +109,9 @@ public class SpriteButton extends SpriteEntity {
                 render.setSpriteSheet(decodeSampledBitmapFromResource(res, pokedID, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
                 render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                 render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                render.setSpriteWidth((int) (render.getFrameWidth() * render.getFrameScale()));
-                render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
+                render.setFrameScale((width * spriteScale) / (double)render.getFrameWidth()); // scale = goal width / original width
+                render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
+                render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
                 render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                 break;
             case "on":
@@ -134,9 +132,9 @@ public class SpriteButton extends SpriteEntity {
                 render.setSpriteSheet(decodeSampledBitmapFromResource(res, onID, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
                 render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                 render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                render.setSpriteWidth((int) (render.getFrameWidth() * render.getFrameScale()));
-                render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
+                render.setFrameScale((width * spriteScale) / (double)render.getFrameWidth()); // scale = goal width / original width
+                render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
+                render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
                 render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                 break;
             case "skip":
@@ -208,28 +206,26 @@ public class SpriteButton extends SpriteEntity {
                             if(entry.getKey().equals("SprintLeftButtonController")) {
 
                                 /* set player */
-                                if(!playerController.getReacting()) {
-                                    Player oldPlayer = (Player) playerController.getEntity();
-                                    transition = playerController.getTransition();
+                                Player oldPlayer = (Player) playerController.getEntity();
+                                transition = playerController.getTransition();
 
-                                    if (transition.equals("idle")) {
-                                        if(playerController.getID().equals("player sprint left")) {
-                                            transition = "inherit idle";
-                                        }
-                                        else {
-                                            transition = "reset idle";
-                                        }
-                                    } else {
-                                        transition = "idle";
+                                if (transition.equals("idle")) {
+                                    if(playerController.getID().equals("player sprint left")) {
+                                        transition = "inherit idle";
                                     }
-
-                                    Player newPlayer = new PlayerSprint(spriteView, oldPlayer.res, oldPlayer.percentOfScreen, oldPlayer.xRes, oldPlayer.yRes, width, height, playerController, "player sprint left", transition);
-                                    newPlayer.setCount(0);
-                                    playerController.setEntity(newPlayer);
+                                    else {
+                                        transition = "reset idle";
+                                    }
+                                } else {
+                                    transition = "idle";
                                 }
 
+                                Player newPlayer = new PlayerSprint(oldPlayer.res, oldPlayer.xRes, oldPlayer.yRes, width, height, playerController, "player sprint left", transition);
+                                newPlayer.setCount(0);
+                                playerController.setEntity(newPlayer);
+
                                 /* move character */
-                                playerController.setXDelta(-25);
+                                playerController.setXDelta(-20);
 
                                 controllerMap.put("PlayerController", playerController);
 
@@ -237,28 +233,26 @@ public class SpriteButton extends SpriteEntity {
                             else if(entry.getKey().equals("SprintRightButtonController")) {
 
                                 /* set player */
-                                if(!playerController.getReacting()) {
-                                    Player oldPlayer = (Player) playerController.getEntity();
-                                    transition = playerController.getTransition();
+                                Player oldPlayer = (Player) playerController.getEntity();
+                                transition = playerController.getTransition();
 
-                                    if (transition.equals("idle")) {
-                                        if(playerController.getID().equals("player sprint right")) {
-                                            transition = "inherit idle";
-                                        }
-                                        else {
-                                            transition = "reset idle";
-                                        }
-                                    } else {
-                                        transition = "idle";
+                                if (transition.equals("idle")) {
+                                    if(playerController.getID().equals("player sprint right")) {
+                                        transition = "inherit idle";
                                     }
-
-                                    Player newPlayer = new PlayerSprint(spriteView, oldPlayer.res, oldPlayer.percentOfScreen, oldPlayer.xRes, oldPlayer.yRes, width, height, playerController, "player sprint right", transition);
-                                    newPlayer.setCount(0);
-                                    playerController.setEntity(newPlayer);
+                                    else {
+                                        transition = "reset idle";
+                                    }
+                                } else {
+                                    transition = "idle";
                                 }
 
+                                Player newPlayer = new PlayerSprint(oldPlayer.res, oldPlayer.xRes, oldPlayer.yRes, width, height, playerController, "player sprint right", transition);
+                                newPlayer.setCount(0);
+                                playerController.setEntity(newPlayer);
+
                                 /* move character */
-                                playerController.setXDelta(25);
+                                playerController.setXDelta(20);
 
                                 controllerMap.put("PlayerController", playerController);
 

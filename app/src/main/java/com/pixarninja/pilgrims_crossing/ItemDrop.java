@@ -8,19 +8,19 @@ import java.util.LinkedHashMap;
 
 public class ItemDrop extends SpriteProp{
 
-    public ItemDrop(SpriteView spriteView, Resources res, int width, int height, int xRes, int yRes, double xInit, double yInit, String ID, String transition) {
+    public ItemDrop(Resources res, int width, int height, int xRes, int yRes, double spriteScale, double xInit, double yInit, String ID, String transition) {
 
         super();
 
         this.controller = new SpriteController();
 
         this.controller.setID(ID);
-        this.spriteView = spriteView;
         this.res = res;
         this.width = width;
         this.height = height;
         this.xRes = xRes;
         this.yRes = yRes;
+        this.spriteScale = spriteScale;
         this.controller.setXDelta(0);
         this.controller.setYDelta(0);
         this.controller.setXInit(xInit);
@@ -29,7 +29,6 @@ public class ItemDrop extends SpriteProp{
         this.controller.setYPos(yInit);
         this.xDimension = 1;
         this.yDimension = 1;
-        this.spriteScale = 1;
         this.left = 0;
         this.top = 0;
         this.right = 1;
@@ -64,7 +63,6 @@ public class ItemDrop extends SpriteProp{
                     render.setFrameCount(1);
                     render.setMethod("die");
                     render.setDirection("forwards");
-                    spriteScale = 0.25;
                     xSpriteRes = xRes * render.getXFrameCount();
                     ySpriteRes = yRes * render.getYFrameCount();
                     render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_item_drop_crystal, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
@@ -89,7 +87,6 @@ public class ItemDrop extends SpriteProp{
                     render.setFrameCount(1);
                     render.setMethod("loop");
                     render.setDirection("forwards");
-                    spriteScale = 0.25;
                     xSpriteRes = xRes * render.getXFrameCount();
                     ySpriteRes = yRes * render.getYFrameCount();
                     render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_item_drop_crystal, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
@@ -114,7 +111,6 @@ public class ItemDrop extends SpriteProp{
                     render.setFrameCount(16);
                     render.setMethod("once");
                     render.setDirection("forwards");
-                    spriteScale = 0.25;
                     xSpriteRes = xRes * render.getXFrameCount();
                     ySpriteRes = yRes * render.getYFrameCount();
                     render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_item_drop_sparkles, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
@@ -139,7 +135,6 @@ public class ItemDrop extends SpriteProp{
                     render.setFrameCount(16);
                     render.setMethod("once");
                     render.setDirection("forwards");
-                    spriteScale = 0.25;
                     xSpriteRes = xRes * render.getXFrameCount();
                     ySpriteRes = yRes * render.getYFrameCount();
                     render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_item_drop_streaks, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));

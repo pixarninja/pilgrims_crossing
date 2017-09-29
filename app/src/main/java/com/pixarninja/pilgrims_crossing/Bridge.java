@@ -10,7 +10,7 @@ public class Bridge extends SpriteProp {
 
     private int hit;
 
-    public Bridge(SpriteView spriteView, Resources res, int width, int height, int xRes, int yRes, double xInit, double yInit, String ID) {
+    public Bridge(Resources res, int width, int height, int xRes, int yRes, double xInit, double yInit, String ID) {
 
         super();
 
@@ -18,7 +18,6 @@ public class Bridge extends SpriteProp {
         this.controller = new SpriteController();
 
         this.controller.setID(ID);
-        this.spriteView = spriteView;
         this.res = res;
         this.percentOfScreen = 1;
         this.width = width;

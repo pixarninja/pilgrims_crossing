@@ -13,7 +13,7 @@ public class SpriteProp extends SpriteEntity {
     /* for extending the class */
     public SpriteProp() {}
 
-    public SpriteProp(SpriteView spriteView, Resources res, double percentOfScreen, int width, int height, int xRes, int yRes, int propID,
+    public SpriteProp(Resources res, int width, int height, int xRes, int yRes, int propID,
                       double xDelta, double yDelta, double xInit, double yInit, int xFrameCount, int yFrameCount, int frameCount,
                       double xDimension, double yDimension, double spriteScale,
                       double left, double top, double right, double bottom, String method, String direction, SpriteController controller, String ID, String transition) {
@@ -24,9 +24,7 @@ public class SpriteProp extends SpriteEntity {
         else {
             this.controller = controller;
         }
-        this.spriteView = spriteView;
         this.res = res;
-        this.percentOfScreen = percentOfScreen;
         this.width = width;
         this.height = height;
         this.xRes = xRes;
@@ -79,14 +77,14 @@ public class SpriteProp extends SpriteEntity {
                 render.setFrameCount(frameCount);
                 render.setMethod(method);
                 render.setDirection(direction);
-                xSpriteRes = xRes / render.getXFrameCount();
-                ySpriteRes = yRes / render.getYFrameCount();
+                xSpriteRes = xRes * render.getXFrameCount();
+                ySpriteRes = yRes * render.getYFrameCount();
                 render.setSpriteSheet(decodeSampledBitmapFromResource(res, propID, (int) (xSpriteRes * spriteScale), (int) (ySpriteRes * spriteScale)));
                 render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                 render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                render.setFrameScale(spriteScale * height * percentOfScreen / render.getFrameHeight());
-                render.setSpriteWidth((int) (render.getFrameWidth() * render.getFrameScale()));
-                render.setSpriteHeight((int) (render.getFrameHeight() * render.getFrameScale()));
+                render.setFrameScale((width * spriteScale) / (double)render.getFrameWidth()); // scale = goal width / original width
+                render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
+                render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
                 render.setXCurrentFrame(0);
                 render.setYCurrentFrame(0);
                 render.setCurrentFrame(0);

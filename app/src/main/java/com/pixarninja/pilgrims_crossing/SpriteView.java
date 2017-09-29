@@ -2,6 +2,7 @@ package com.pixarninja.pilgrims_crossing;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LightingColorFilter;
@@ -13,7 +14,6 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.TextView;
-
 import java.util.ConcurrentModificationException;
 import java.util.LinkedHashMap;
 import java.util.Random;
@@ -27,8 +27,17 @@ public class SpriteView extends SurfaceView {
     public volatile float xTouchedPos;
     public volatile float yTouchedPos;
     private SpriteThread spriteThread;
+    private Resources res;
+    private int width;
+    private int height;
+    private int maxRes;
     private Context context;
 
+    private int spawnTime = 56; //check every 2 seconds
+    private int frameCounter = 0;
+    private int maxEnemyCount = 5;
+    private int enemyCount;
+    private SpriteEntity entity;
 
     public SpriteView(Context context) {
         super(context);
@@ -59,6 +68,26 @@ public class SpriteView extends SurfaceView {
 
     public SpriteThread getSpriteThread() { return this.spriteThread; }
     public void setSpriteThread(SpriteThread spriteThread) { this.spriteThread = spriteThread; }
+
+    public Resources getResources() { return res; }
+    public void setResources(Resources res) {
+        this.res = res;
+    }
+
+    public int getViewWidth() { return width; }
+    public void setViewWidth(int width) {
+        this.width = width;
+    }
+
+    public int getViewHeight() { return height;}
+    public void setViewHeight(int height) {
+        this.height = height;
+    }
+
+    public int getMaxRes() { return maxRes; }
+    public void setMaxRes(int maxRes) {
+        this.maxRes = maxRes;
+    }
 
     public int getFrameRate() {
         if(controllerMap != null) {
@@ -127,6 +156,7 @@ public class SpriteView extends SurfaceView {
 
     protected void drawSprite() {
 
+        frameCounter++;
         Canvas canvas;
 
         try {
@@ -154,6 +184,11 @@ public class SpriteView extends SurfaceView {
 
                             SpriteController controller = entry.getValue();
                             SpriteEntity entity = controller.getEntity();
+
+                            /* don't draw the sprite if it is not on the screen */
+                            if(((controller.getXPos() < -entity.getSprite().getSpriteWidth()) && (controller.getXPos() > width)) || ((controller.getYPos() < -entity.getSprite().getSpriteHeight()) && (controller.getYPos() > height))) {
+                                continue;
+                            }
 
                             /* update the entity if necessary */
                             if(controllerMap.get("FlowButtonController") == null || controllerMap.get("FlowButtonController").getTransition().equals("off")) {
@@ -219,53 +254,68 @@ public class SpriteView extends SurfaceView {
                                 /* color code:
                                    0x00.....00...00.....00 (black)
                                    ..alpha..red..green..blue */
-                                if(controller.getID().equals("enemy stage1")) {
+                                if(controller.getID().equals("spider stage1")) {
                                     paint = new Paint();
                                     paint.setColorFilter(new LightingColorFilter(0x00EEFFFF, 0));
                                 }
-                                else if(controller.getID().equals("enemy stage2")) {
+                                else if(controller.getID().equals("spider stage2")) {
                                     paint = new Paint();
                                     paint.setColorFilter(new LightingColorFilter(0x00998888, 0));
                                 }
-                                else if(controller.getID().equals("enemy stage3")) {
+                                else if(controller.getID().equals("spider stage3")) {
                                     paint = new Paint();
                                     paint.setColorFilter(new LightingColorFilter(0x00663333, 0));
                                 }
-                                /* red item drop */
+                                /* fire item drop */
                                 else if(controller.getID().equals("item drop fire")) {
                                     paint = new Paint();
                                     paint.setColorFilter(new LightingColorFilter(0x00ff4216, 0));
                                 }
-                                /* yellow item drop */
+                                /* light item drop */
                                 else if(controller.getID().equals("item drop light")) {
                                     paint = new Paint();
                                     paint.setColorFilter(new LightingColorFilter(0x00fff84e, 0));
                                 }
-                                /* green item drop */
+                                /* earth item drop */
                                 else if(controller.getID().equals("item drop earth")) {
-                                        paint = new Paint();
+                                    paint = new Paint();
                                     paint.setColorFilter(new LightingColorFilter(0x00a5fd4d, 0));
                                 }
-                                /* blue item drop */
+                                /* water item drop */
                                 else if(controller.getID().equals("item drop water")) {
                                     paint = new Paint();
                                     paint.setColorFilter(new LightingColorFilter(0x0070fff3, 0));
                                 }
-                                /* purple item drop */
+                                /* time item drop */
                                 else if(controller.getID().equals("item drop time")) {
                                     paint = new Paint();
                                     paint.setColorFilter(new LightingColorFilter(0x00ec52ff, 0));
                                 }
-                                /* swipe
-                                else if(controller.getID().equals("swipe")) {
+                                /* fire orb */
+                                else if(controller.getID().equals("fire orb") && controller.getTransition().equals("crystallize")) {
                                     paint = new Paint();
-                                    paint.setColorFilter(new LightingColorFilter(0x00ccccff, 0));
+                                    paint.setColorFilter(new LightingColorFilter(0x00ff4216, 0));
                                 }
-                                /* player
-                                else if(controller.getID().contains("player")) {
+                                /* light orb */
+                                else if(controller.getID().equals("light orb") && controller.getTransition().equals("crystallize")) {
                                     paint = new Paint();
-                                    paint.setColorFilter(new LightingColorFilter(0x00ccccff, 0));
-                                }*/
+                                    paint.setColorFilter(new LightingColorFilter(0x00fff84e, 0));
+                                }
+                                /* earth orb */
+                                else if(controller.getID().equals("earth orb") && controller.getTransition().equals("crystallize")) {
+                                    paint = new Paint();
+                                    paint.setColorFilter(new LightingColorFilter(0x00a5fd4d, 0));
+                                }
+                                /* water orb */
+                                else if(controller.getID().equals("water orb") && controller.getTransition().equals("crystallize")) {
+                                    paint = new Paint();
+                                    paint.setColorFilter(new LightingColorFilter(0x0070fff3, 0));
+                                }
+                                /* time orb */
+                                else if(controller.getID().equals("time orb") && controller.getTransition().equals("crystallize")) {
+                                    paint = new Paint();
+                                    paint.setColorFilter(new LightingColorFilter(0x00ec52ff, 0));
+                                }
 
                                 canvas.drawBitmap(sprite.getSpriteSheet(), sprite.getFrameToDraw(), sprite.getWhereToDraw(), paint);
 
@@ -275,8 +325,11 @@ public class SpriteView extends SurfaceView {
                         /* remove any dead controllers */
                         for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
                             if (!entry.getValue().getAlive()) {
+
+                                /* update score view */
                                 if(entry.getKey().contains("Arrow")) {
                                     Activity activity = (Activity) context;
+                                    /* the arrow hit the bridge */
                                     if(entry.getValue().getID().equals("hit bridge")) {
                                         activity.runOnUiThread(new Runnable() {
                                             @Override
@@ -293,6 +346,7 @@ public class SpriteView extends SurfaceView {
                                             }
                                         });
                                     }
+                                    /* the arrow hit the player */
                                     else {
                                         activity.runOnUiThread(new Runnable() {
                                             @Override
@@ -309,9 +363,73 @@ public class SpriteView extends SurfaceView {
                                             }
                                         });
                                     }
+
+                                    /* remove the arrow */
+                                    controllerMap.remove(entry.getKey());
+                                    entry.getValue().getEntity().getSprite().getSpriteSheet().recycle();
                                 }
-                                controllerMap.remove(entry.getKey());
+
+                                /* crystallize the correct orb */
+                                else if(entry.getKey().contains("ItemDrop")) {
+                                    switch(entry.getValue().getID()) {
+                                        case "item drop fire":
+                                            for(int i = 0; i < 1; i++) {
+                                                controllerMap.get("FireOrbController").getEntity().getCurrentFrame();
+                                            }
+                                            break;
+                                        case "item drop light":
+                                            for(int i = 0; i < 1; i++) {
+                                                controllerMap.get("LightOrbController").getEntity().getCurrentFrame();
+                                            }
+                                            break;
+                                        case "item drop earth":
+                                            for(int i = 0; i < 1; i++) {
+                                                controllerMap.get("EarthOrbController").getEntity().getCurrentFrame();
+                                            }
+                                            break;
+                                        case "item drop water":
+                                            for(int i = 0; i < 1; i++) {
+                                                controllerMap.get("WaterOrbController").getEntity().getCurrentFrame();
+                                            }
+                                            break;
+                                        case "item drop time":
+                                            for(int i = 0; i < 1; i++) {
+                                                controllerMap.get("TimeOrbController").getEntity().getCurrentFrame();
+                                            }
+                                            break;
+                                    }
+
+                                    /* remove the item */
+                                    controllerMap.remove(entry.getKey());
+                                    entry.getValue().getEntity().getSprite().getSpriteSheet().recycle();
+                                }
+
+                                /* regenerate spider
+                                else if(entry.getKey().contains("Spider")) {
+                                    /* initialize a new spider controller
+                                    Random random = new Random();
+                                    entry.getValue().setAlive(true);
+                                    Spider spider = (Spider) entry.getValue().getEntity();
+                                    spider.setHit(0);
+                                    entry.getValue().setXPos((width - entry.getValue().getEntity().getSprite().getSpriteWidth()) * random.nextDouble());
+                                    entry.getValue().getEntity().refreshEntity("idle");
+                                    entry.getValue().setID("spider init");
+                                }*/
+
+                                /* re-enable player after swipe */
+                                else if(entry.getKey().contains("Swipe")) {
+                                    //controllerMap.get("PlayerController").setReacting(false);
+                                    controllerMap.remove(entry.getKey());
+                                    entry.getValue().getEntity().getSprite().getSpriteSheet().recycle();
+                                }
+
+                                else {
+                                    /* remove all other dead entities */
+                                    controllerMap.remove(entry.getKey());
+                                    entry.getValue().getEntity().getSprite().getSpriteSheet().recycle();
+                                }
                             }
+
                         }
                         /* check for collisions and refresh the entity if necessary */
                         LinkedHashMap<String, SpriteController> map = new LinkedHashMap<>();
@@ -341,6 +459,37 @@ public class SpriteView extends SurfaceView {
                 }
             }
         }
+
+        /* check if another spider needs to be spawned */
+        if(frameCounter >= spawnTime) {
+
+            frameCounter = 0;
+            enemyCount = 0;
+            for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
+                if (entry.getKey().contains("Spider")) {
+                    enemyCount++;
+                }
+            }
+            if(enemyCount < maxEnemyCount) {
+                /* initialize a new spider controller */
+                Random random = new Random();
+                entity = new Spider(getResources(), width, height, maxRes, maxRes, width, controllerMap.get("PlayerController").getEntity().getSprite().getBoundingBox().bottom, "spider idle");
+                entity.getController().setXPos((width - entity.getSprite().getSpriteWidth()) * random.nextDouble());
+                entity.getController().setYPos(entity.getController().getYPos() - entity.getSprite().getSpriteHeight());
+                int i = 1;
+                while(controllerMap.get("Spider" + i + "Controller") != null) {
+                    i++;
+                }
+                controllerMap.put("Spider" + i + "Controller", entity.getController());
+            }
+
+            /* refresh player controller so that it shows up on top */
+            SpriteController playerController = controllerMap.get("PlayerController");
+            controllerMap.remove("PlayerController");
+            controllerMap.put("PlayerController", playerController);
+
+        }
+
         try {
             getHolder().unlockCanvasAndPost(canvas);
         } catch(IllegalStateException e) {
@@ -395,7 +544,7 @@ public class SpriteView extends SurfaceView {
             try {
                 /* call the on touch events for all entities */
                 for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
-                    if (entry.getValue().getEntity() != null  && !entry.getValue().getReacting()) {
+                    if (entry.getValue().getEntity() != null) {
                         entry.getValue().getEntity().onTouchEvent(this, entry, controllerMap, poke, move, jump, xTouchedPos, yTouchedPos);
                     }
                 }
