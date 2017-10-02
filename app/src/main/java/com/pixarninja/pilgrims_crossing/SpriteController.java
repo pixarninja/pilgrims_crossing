@@ -15,53 +15,57 @@ public class SpriteController {
     private long lastFrameChangeTime;
     private boolean reacting = false;
     private boolean alive = true;
+    private boolean triggered = false;
 
-    public String getID() { return this.ID; }
+    public String getID() { return ID; }
     public void setID(String ID) { this.ID = ID; }
 
-    public SpriteEntity getEntity() { return this.entity; }
+    public SpriteEntity getEntity() { return entity; }
     public void setEntity(SpriteEntity entity) { this.entity = entity; }
 
-    public String getTransition() { return this.transition; }
+    public String getTransition() { return transition; }
     public void setTransition(String transition) { this.transition = transition; }
 
-    public double getXInit() { return this.xInit; }
+    public double getXInit() { return xInit; }
     public void setXInit(double xInit) { this.xInit = xInit; }
 
-    public double getYInit() { return this.yInit; }
+    public double getYInit() { return yInit; }
     public void setYInit(double yInit) { this.yInit = yInit; }
 
-    public double getXPos() { return this.xPos; }
+    public double getXPos() { return xPos; }
     public void setXPos(double xPos) { this.xPos = xPos; }
 
-    public double getYPos() { return this.yPos; }
+    public double getYPos() { return yPos; }
     public void setYPos(double yPos) { this.yPos = yPos; }
 
     public double getXDelta() {
-        return this.xDelta;
+        return xDelta;
     }
     public void setXDelta(double xDelta) {
         this.xDelta = xDelta;
     }
 
     public double getYDelta() {
-        return this.yDelta;
+        return yDelta;
     }
     public void setYDelta(double yDelta) {
         this.yDelta = yDelta;
     }
 
-    public int getFrameRate() { return this.frameLengthInMilliseconds; }
+    public int getFrameRate() { return frameLengthInMilliseconds; }
     public void setFrameRate(int frameLengthInMilliseconds) { this.frameLengthInMilliseconds = frameLengthInMilliseconds; }
 
-    public long getLastFrameChangeTime() { return this.lastFrameChangeTime; }
+    public long getLastFrameChangeTime() { return lastFrameChangeTime; }
     public void setLastFrameChangeTime(long lastFrameChangeTime) { this.lastFrameChangeTime = lastFrameChangeTime; }
 
-    public boolean getReacting() { return this.reacting; }
+    public boolean getReacting() { return reacting; }
     public void setReacting(boolean reacting) { this.reacting = reacting; }
 
-    public boolean getAlive() { return this.alive; }
+    public boolean getAlive() { return alive; }
     public void setAlive(boolean alive) { this.alive = alive; }
+
+    public boolean getTriggered() { return triggered; }
+    public void setTriggered(boolean triggered) { this.triggered = triggered; }
 
     public void printController() {
 

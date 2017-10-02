@@ -17,18 +17,16 @@ public class Arrow extends SpriteProp {
 
         this.controller.setID(ID);
         this.res = res;
-        this.percentOfScreen = 0.1;
         this.width = width;
         this.height = height;
         this.xRes = xRes;
         this.yRes = yRes;
         this.controller.setXDelta(0);
-        this.controller.setYDelta(0);
+        this.controller.setYDelta(23);
         this.controller.setXInit(random.nextDouble() * width);
-        this.controller.setYInit(random.nextDouble() * -20 * height - (height * 0.1));
+        this.controller.setYInit(-height);
         this.controller.setXPos(this.controller.getXInit());
         this.controller.setYPos(this.controller.getYInit());
-        this.controller.setReacting(false);
         this.spriteScale = 1;
         this.xDimension = 1;
         this.yDimension = 1;
@@ -69,18 +67,20 @@ public class Arrow extends SpriteProp {
                     render.setFrameCount(6);
                     render.setMethod("die");
                     render.setDirection("forwards");
+                    spriteScale = 0.12;
                     xSpriteRes = xRes * render.getXFrameCount();
                     ySpriteRes = yRes * render.getYFrameCount();
-                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_arrow_destroyed, xSpriteRes / 4, ySpriteRes / 4));
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_arrow_destroyed, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                    render.setFrameScale((width / 8.5f) / (double)render.getFrameWidth()); // scale = goal width / original width
+                    render.setFrameScale((width * spriteScale) / (double)render.getFrameWidth()); // scale = goal width / original width
                     render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
                     render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
                     controller.setXPos(controller.getXPos() - render.getSpriteWidth() / 2);
                     render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                     break;
                 case "falling":
+                    this.controller.setReacting(false);
                     render.setID(ID);
                     render.setXDimension(xDimension);
                     render.setYDimension(yDimension);
@@ -93,12 +93,13 @@ public class Arrow extends SpriteProp {
                     render.setFrameCount(1);
                     render.setMethod("loop");
                     render.setDirection("forwards");
+                    spriteScale = 0.02;
                     xSpriteRes = xRes * render.getXFrameCount();
                     ySpriteRes = yRes * render.getYFrameCount();
-                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_arrow_falling_loop, xSpriteRes / 20, ySpriteRes / 20));
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_arrow_falling_loop, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
-                    render.setFrameScale((width / 45f) / (double)render.getFrameWidth()); // scale = goal width / original width
+                    render.setFrameScale((width * spriteScale) / (double)render.getFrameWidth()); // scale = goal width / original width
                     render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
                     render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
                     render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
@@ -130,22 +131,6 @@ public class Arrow extends SpriteProp {
         controller.setXPos(controller.getXPos() + controller.getXDelta());
         controller.setYPos(controller.getYPos() + controller.getYDelta());
 
-        if(controller.getYPos() > height) {
-            Random random = new Random();
-            controller.setXPos(random.nextDouble() * width);
-            controller.setYPos(-controller.getEntity().getSprite().getSpriteHeight());
-            controller.setXDelta(0);
-            controller.setYDelta(0);
-        }
-
-        if(controller.getYPos() < 0) {
-            Random random = new Random();
-            if((random.nextInt(100) % 40) == 0) {
-                controller.setXDelta(0);
-                controller.setYDelta(15);
-            }
-        }
-
         render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
         getCurrentFrame();
         updateBoundingBox();
@@ -156,22 +141,27 @@ public class Arrow extends SpriteProp {
     public LinkedHashMap<String, SpriteController> onCollisionEvent(LinkedHashMap.Entry<String, SpriteController> entry, LinkedHashMap<String, SpriteController> controllerMap) {
 
         LinkedHashMap<String, SpriteController> map = new LinkedHashMap<>();
+        LinkedHashMap<String, SpriteController> additionMap;
 
         if(!controller.getReacting() && entry.getValue().getEntity().getSprite().getBoundingBox() != null) {
             RectF entryBox = entry.getValue().getEntity().getSprite().getBoundingBox();
             for (LinkedHashMap.Entry<String, SpriteController> test : controllerMap.entrySet()) {
-                if (!test.getKey().equals(entry.getKey()) && !test.getValue().getReacting()) {
-                    if ((test.getValue().getEntity().getSprite().getBoundingBox() != null) && (test.getKey().equals("PlayerController") || test.getKey().contains("Bridge"))) {
+                if (test.getKey().contains("Spider") && !test.getValue().getReacting()) {
+                    if ((test.getValue().getEntity().getSprite().getBoundingBox() != null)) {
                         RectF compareBox = test.getValue().getEntity().getSprite().getBoundingBox();
-                        /* if the objects intersect, find where they intersect for the entry bounding boxe*/
+                        /* if the objects intersect, find where they intersect for the entry bounding box */
                         if (entryBox.intersect(compareBox)) {
-                            if(test.getKey().contains("Bridge")) {
-                                entry.getValue().setID("hit bridge");
+
+                            /* first call the enemy's collision handler */
+                            if(test.getKey().contains("Spider")) {
+                                additionMap = test.getValue().getEntity().onCollisionEvent(test, controllerMap);
+                                for(LinkedHashMap.Entry<String, SpriteController> add : additionMap.entrySet()) {
+                                    map.put(add.getKey(), add.getValue());
+                                }
                             }
-                            else {
-                                entry.getValue().setID("did not hit bridge");
-                            }
-                            entry.getValue().getEntity().refreshEntity("inherit destroyed");
+
+                            refreshEntity("inherit destroyed");
+
                         }
                     }
                 }

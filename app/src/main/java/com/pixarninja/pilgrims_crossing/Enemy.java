@@ -7,6 +7,9 @@ import java.util.LinkedHashMap;
 public class Enemy extends SpriteEntity {
 
     protected int hit = 0;
+    protected int attackCount = 0;
+    protected int attackFrameCount = 0;
+    protected int chargeFrameCount = 0;
 
     public int getHit() { return hit; }
     public void setHit(int hit) { this.hit = hit; }
@@ -19,7 +22,7 @@ public class Enemy extends SpriteEntity {
         if (!entry.getValue().getReacting() && (entry.getValue().getEntity().getSprite().getBoundingBox() != null)) {
             RectF entryBox = entry.getValue().getEntity().getSprite().getBoundingBox();
             for (LinkedHashMap.Entry<String, SpriteController> test : controllerMap.entrySet()) {
-                if (test.getKey().equals("PlayerController") && !test.getValue().getReacting()) {
+                if (!test.getKey().equals(entry.getKey()) && !test.getKey().contains("Bridge") && !test.getKey().contains("Orb") && !test.getKey().contains("Swipe") && !test.getValue().getReacting()) {
                     if (test.getValue().getEntity().getSprite().getBoundingBox() != null) {
                         RectF compareBox = test.getValue().getEntity().getSprite().getBoundingBox();
                         /* if the objects intersect, find where they intersect for the entry bounding box */

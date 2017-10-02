@@ -70,9 +70,6 @@ public class Spider extends Enemy {
                     render.setDirection("forwards");
                     xSpriteRes = xRes * render.getXFrameCount();
                     ySpriteRes = yRes * render.getYFrameCount();
-                    if(render.getSpriteSheet() != null) {
-                        render.getSpriteSheet().recycle();
-                    }
                     render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_spider_destroyed, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
@@ -81,7 +78,33 @@ public class Spider extends Enemy {
                     render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
                     render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
                     break;
-                case "idle":
+                case "attack":
+                    controller.setReacting(true);
+                    controller.setYDelta(0);
+                    controller.setXDelta(0);
+                    render.setID(ID);
+                    render.setXDimension(xDimension);
+                    render.setYDimension(yDimension);
+                    render.setLeft(left);
+                    render.setTop(top);
+                    render.setRight(right);
+                    render.setBottom(bottom);
+                    render.setXFrameCount(4);
+                    render.setYFrameCount(4);
+                    render.setFrameCount(16);
+                    render.setMethod("once");
+                    render.setDirection("forwards");
+                    xSpriteRes = xRes * render.getXFrameCount();
+                    ySpriteRes = yRes * render.getYFrameCount();
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_spider_destroyed, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
+                    render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
+                    render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
+                    render.setFrameScale((width * spriteScale) / (double)render.getFrameWidth()); // scale = goal width / original width
+                    render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
+                    render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
+                    render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
+                    break;
+                case "charge":
                     controller.setReacting(false);
                     render.setID(ID);
                     render.setXDimension(xDimension);
@@ -90,17 +113,39 @@ public class Spider extends Enemy {
                     render.setTop(top);
                     render.setRight(right);
                     render.setBottom(bottom);
-                    render.setXFrameCount(1);
+                    render.setXFrameCount(4);
                     render.setYFrameCount(1);
-                    render.setFrameCount(1);
-                    render.setMethod("loop");
+                    render.setFrameCount(4);
+                    render.setMethod("mirror loop");
                     render.setDirection("forwards");
                     xSpriteRes = xRes * render.getXFrameCount();
-                    ySpriteRes = yRes * render.getYFrameCount();
-                    if(render.getSpriteSheet() != null) {
-                        render.getSpriteSheet().recycle();
-                    }
-                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_spider_idle_loop, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
+                    ySpriteRes = yRes * render.getYFrameCount() * 4;
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_spider_charge_mirror_loop, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
+                    render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
+                    render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
+                    render.setFrameScale((width * spriteScale) / (double)render.getFrameWidth()); // scale = goal width / original width
+                    render.setSpriteWidth((int)(render.getFrameWidth() * render.getFrameScale())); // width = original width * scale
+                    render.setSpriteHeight((int)(render.getFrameHeight() * render.getFrameScale())); // height = original height * scale
+                    render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
+                    break;
+                case "idle":
+                    attackCount = 0;
+                    controller.setReacting(false);
+                    render.setID(ID);
+                    render.setXDimension(xDimension);
+                    render.setYDimension(yDimension);
+                    render.setLeft(left);
+                    render.setTop(top);
+                    render.setRight(right);
+                    render.setBottom(bottom);
+                    render.setXFrameCount(4);
+                    render.setYFrameCount(1);
+                    render.setFrameCount(4);
+                    render.setMethod("mirror loop");
+                    render.setDirection("forwards");
+                    xSpriteRes = xRes * render.getXFrameCount();
+                    ySpriteRes = yRes * render.getYFrameCount() * 4;
+                    render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_spider_idle_mirror_loop, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
                     render.setFrameScale((width * spriteScale) / (double)render.getFrameWidth()); // scale = goal width / original width
@@ -124,9 +169,6 @@ public class Spider extends Enemy {
                     render.setDirection("backwards");
                     xSpriteRes = xRes * render.getXFrameCount();
                     ySpriteRes = yRes * render.getYFrameCount();
-                    if(render.getSpriteSheet() != null) {
-                        render.getSpriteSheet().recycle();
-                    }
                     render.setSpriteSheet(decodeSampledBitmapFromResource(res, R.mipmap.spritesheet_spider_destroyed, (int)(xSpriteRes * spriteScale), (int)(ySpriteRes * spriteScale)));
                     render.setFrameWidth(render.getSpriteSheet().getWidth() / render.getXFrameCount());
                     render.setFrameHeight(render.getSpriteSheet().getHeight() / render.getYFrameCount());
@@ -157,41 +199,80 @@ public class Spider extends Enemy {
     }
 
     @Override
+    public void updateView() {
+
+        if(attackCount >= 1) {
+            controller.setTransition("sizzle");
+        }
+        else if(controller.getTransition().equals("attack")) {
+            attackCount++;
+        }
+
+        if(chargeFrameCount >= 200) {
+            if(attackFrameCount >= 74) {
+                chargeFrameCount = 0;
+                attackFrameCount = 0;
+                refreshEntity("attack");
+            }
+            else if(attackFrameCount == 0) {
+                attackFrameCount++;
+                refreshEntity("charge");
+            }
+            else {
+                attackFrameCount++;
+            }
+        }
+        else {
+            chargeFrameCount++;
+        }
+
+        controller.setXPos(controller.getXPos() + controller.getXDelta());
+        controller.setYPos(controller.getYPos() + controller.getYDelta());
+
+        /* don't update the sprite if it is not on the screen */
+        if(((controller.getXPos() >= -render.getSpriteWidth()) || (controller.getXPos() <= width)) && ((controller.getYPos() >= -render.getSpriteHeight()) || (controller.getYPos() <= height))) {
+            render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
+            getCurrentFrame();
+            updateBoundingBox();
+        }
+
+    }
+
+    @Override
     public LinkedHashMap<String, SpriteController> onCollisionEvent(LinkedHashMap.Entry<String, SpriteController> entry, LinkedHashMap<String, SpriteController> controllerMap) {
 
         LinkedHashMap<String, SpriteController> map = new LinkedHashMap<>();
 
-        if (!entry.getValue().getReacting() && (entry.getValue().getEntity().getSprite().getBoundingBox() != null)) {
+        if (!controller.getReacting() && (entry.getValue().getEntity().getSprite().getBoundingBox() != null)) {
             RectF entryBox = entry.getValue().getEntity().getSprite().getBoundingBox();
-            for (LinkedHashMap.Entry<String, SpriteController> test : controllerMap.entrySet()) {
-                if (test.getKey().equals("PlayerController") && !test.getValue().getReacting()) {
-                    if (test.getValue().getEntity().getSprite().getBoundingBox() != null) {
-                        RectF compareBox = test.getValue().getEntity().getSprite().getBoundingBox();
-                        /* if the objects intersect, find where they intersect for the entry bounding box */
-                        if (entryBox.intersect(compareBox)) {
-                            /* increment hit value */
-                            hit = hit + 1;
-                            if(hit >= 8) {
-                                 int i = 1;
-                                 Random random = new Random();
-                                 int r = random.nextInt(5) % 5;
-                                 //int r = 0;
-                                 String[] s = {"fire", "light", "earth", "water", "time"};
-                                 SpriteEntity entity = new ItemDrop(res, width, height, xRes, yRes, spriteScale, controller.getXPos(), controller.getYPos() - controller.getEntity().getSprite().getSpriteHeight() / 3, "item drop " + s[r], "init");
-                                 while(controllerMap.get("ItemDrop" + i) != null) {
-                                     i++;
-                                 }
-                                 map.put("ItemDrop" + i, entity.getController());
-                                 refreshEntity("destroyed");
-                                 controller.setID("spider stage3");
-                            }
-                            else if(hit >= 4) {
-                                controller.setID("spider stage2");
-                            }
-                            else if(hit >= 1) {
-                                controller.setID("spider stage1");
-                            }
-                        }
+            if (render.getBoundingBox() != null) {
+                RectF compareBox = render.getBoundingBox();
+                /* if the objects intersect, find where they intersect for the entry bounding box */
+                if (entryBox.intersect(compareBox)) {
+                    /* increment hit value */
+                    hit = hit + 1;
+                    if(hit >= 30) {
+                         int i = 1;
+                         Random random = new Random();
+                         int r = random.nextInt(5) % 5;
+                         //int r = 1;
+                         String[] s = {"fire", "light", "earth", "water", "time"};
+                         SpriteEntity entity = new ItemDrop(res, width, height, xRes, yRes, spriteScale, controller.getXPos(), controller.getYPos() - controller.getEntity().getSprite().getSpriteHeight() / 3, "item drop " + s[r], "init");
+                         while(controllerMap.get("ItemDrop" + i) != null) {
+                             i++;
+                         }
+                         map.put("ItemDrop" + i, entity.getController());
+                         refreshEntity("destroyed");
+                         //controller.setID("spider stage3");
+                    }
+                    else if(hit >= 20) {
+                        controller.setID("spider stage3");
+                    }
+                    else if(hit >= 10) {
+                        controller.setID("spider stage2");
+                    }
+                    else if(hit >= 1) {
+                        controller.setID("spider stage1");
                     }
                 }
             }

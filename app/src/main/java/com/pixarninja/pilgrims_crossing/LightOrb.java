@@ -4,7 +4,9 @@ import android.content.res.Resources;
 import android.graphics.Rect;
 import android.graphics.RectF;
 
-public class LightOrb extends SpriteProp {
+import java.util.LinkedHashMap;
+
+public class LightOrb extends SpriteButton {
 
     public LightOrb(Resources res, int width, int height, int xRes, int yRes, double xInit, double yInit, String ID) {
 
@@ -197,6 +199,34 @@ public class LightOrb extends SpriteProp {
 
         if(controller.getTransition().equals("complete")) {
             getCurrentFrame();
+        }
+
+    }
+
+    @Override
+    public void onTouchEvent(SpriteView spriteView, LinkedHashMap.Entry<String, SpriteController> entry, LinkedHashMap<String, SpriteController> controllerMap, boolean poke, boolean move, boolean jump, float xTouchedPos, float yTouchedPos) {
+
+        if (poke || move || jump) {
+
+            RectF boundingBox = this.render.getBoundingBox();
+
+            if(boundingBox == null) {
+                return;
+            }
+
+            if (xTouchedPos >= boundingBox.left && xTouchedPos <= boundingBox.right) {
+                /* center of the sprite */
+                if (yTouchedPos >= boundingBox.top && yTouchedPos <= boundingBox.bottom) {
+                    /* check if the powerup is ready */
+                    if(controller.getTransition().equals("complete")) {
+
+                        refreshEntity("init");
+                        controller.setTriggered(true);
+
+                    }
+                }
+            }
+
         }
 
     }

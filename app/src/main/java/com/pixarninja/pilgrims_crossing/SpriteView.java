@@ -21,6 +21,7 @@ import java.util.Random;
 public class SpriteView extends SurfaceView {
 
     public LinkedHashMap<String, SpriteController> controllerMap;
+    private LinkedHashMap<String, SpriteController> additionMap;
     public volatile boolean poke = false;
     public volatile boolean move = false;
     public volatile boolean jump = false;
@@ -32,12 +33,22 @@ public class SpriteView extends SurfaceView {
     private int height;
     private int maxRes;
     private Context context;
+    private SpriteEntity entity;
 
-    private int spawnTime = 56; //check every 2 seconds
-    private int frameCounter = 0;
+    /* bridge damage */
+    int[] bridgeDamage = new int[5];
+
+    /* enemy spawning */
+    private int enemySpawnTime = 56; //check every 2 seconds
+    private int enemySpawnCounter = 0;
     private int maxEnemyCount = 5;
     private int enemyCount;
-    private SpriteEntity entity;
+
+    /* light orb powerup */
+    private int arrowSpawnTime = 5;
+    private int arrowSpawnCounter = 0;
+    private int arrowCount = 0;
+    private int maxArrowCount = 50;
 
     public SpriteView(Context context) {
         super(context);
@@ -156,7 +167,13 @@ public class SpriteView extends SurfaceView {
 
     protected void drawSprite() {
 
-        frameCounter++;
+        bridgeDamage[0] = 0;
+        bridgeDamage[1] = 0;
+        bridgeDamage[2] = 0;
+        bridgeDamage[3] = 0;
+        bridgeDamage[4] = 0;
+        enemySpawnCounter++;
+        arrowSpawnCounter++;
         Canvas canvas;
 
         try {
@@ -178,6 +195,8 @@ public class SpriteView extends SurfaceView {
                     try {
 
                         spriteThread.setRunning(false);
+                        LinkedHashMap<String, SpriteController> additionMap = new LinkedHashMap<>();
+                        LinkedHashMap<String, SpriteController> deletionMap = new LinkedHashMap<>();
 
                         /* render all entities to the screen */
                         for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
@@ -201,6 +220,115 @@ public class SpriteView extends SurfaceView {
                                 }
                             }
 
+                            /* destroy arrows if they hit the bridge */
+                            if(entry.getKey().contains("Arrow")) {
+                                if(entry.getValue().getYPos() >= controllerMap.get("Bridge0Controller").getYPos() - entry.getValue().getEntity().getSprite().getSpriteHeight()) {
+                                    entry.getValue().getEntity().refreshEntity("inherit destroyed");
+                                }
+                            }
+
+                            /* remove any dead controllers */
+                            if (!entry.getValue().getAlive()) {
+
+                                /* update score view */
+                                if(entry.getKey().contains("Spider")) {
+                                    Activity activity = (Activity) context;
+                                    activity.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            TextView score = (TextView) ((Activity) context).findViewById(R.id.score);
+                                            String text = score.getText().toString();
+                                            String[] expression = text.split("\n");
+                                            expression[0] = expression[0].replaceAll("\\D+", "");
+                                            expression[1] = expression[1].replaceAll("\\D+", "");
+                                            int killed = Integer.parseInt(expression[0]);
+                                            int damage = Integer.parseInt(expression[1]);
+                                            String newText = "Spiders Killed: " + (killed + 1) + "\nHit Bridge: " + (damage + 0);
+                                            score.setText(newText);
+                                        }
+                                    });
+
+                                    /* remove the spider */
+                                    deletionMap.put(entry.getKey(), entry.getValue());
+
+                                }
+
+                                /* crystallize the correct orb */
+                                else if(entry.getKey().contains("ItemDrop")) {
+                                    switch(entry.getValue().getID()) {
+                                        case "item drop fire":
+                                            for(int i = 0; i < 1; i++) {
+                                                controllerMap.get("FireOrbController").getEntity().getCurrentFrame();
+                                            }
+                                            break;
+                                        case "item drop light":
+                                            for(int i = 0; i < 1; i++) {
+                                                controllerMap.get("LightOrbController").getEntity().getCurrentFrame();
+                                            }
+                                            break;
+                                        case "item drop earth":
+                                            for(int i = 0; i < 1; i++) {
+                                                controllerMap.get("EarthOrbController").getEntity().getCurrentFrame();
+                                            }
+                                            break;
+                                        case "item drop water":
+                                            for(int i = 0; i < 1; i++) {
+                                                controllerMap.get("WaterOrbController").getEntity().getCurrentFrame();
+                                            }
+                                            break;
+                                        case "item drop time":
+                                            for(int i = 0; i < 1; i++) {
+                                                controllerMap.get("TimeOrbController").getEntity().getCurrentFrame();
+                                            }
+                                            break;
+                                    }
+
+                                    /* remove the item */
+                                    deletionMap.put(entry.getKey(), entry.getValue());
+                                }
+
+                                /* re-enable player after swipe
+                                else if(entry.getKey().contains("Swipe")) {
+                                    controllerMap.get("PlayerController").setReacting(false);
+                                    controllerMap.remove(entry.getKey());
+                                    entry.getValue().getEntity().getSprite().getSpriteSheet().recycle();
+                                }*/
+
+                                else {
+                                    /* remove all other dead entities */
+                                    deletionMap.put(entry.getKey(), entry.getValue());
+                                }
+                            }
+
+                            /* check for collisions */
+                            LinkedHashMap<String, SpriteController> map = new LinkedHashMap<>();
+                            if (entry.getValue().getEntity() != null && (entry.getKey().equals("PlayerController") || entry.getKey().contains("Arrow"))) {
+                                map = entry.getValue().getEntity().onCollisionEvent(entry, controllerMap);
+                            }
+                            for(LinkedHashMap.Entry<String, SpriteController> add : map.entrySet()) {
+                                additionMap.put(add.getKey(), add.getValue());
+                            }
+
+                            /* update bridge damage */
+                            if(entry.getKey().contains("Spider") && entry.getValue().getTransition().equals("attack")) {
+                                if(entry.getValue().getEntity().getSprite().getBoundingBox().centerX() > (4 * width / 5f)) {
+                                    bridgeDamage[4]++;
+                                }
+                                else if((entry.getValue().getEntity().getSprite().getBoundingBox().centerX() > (3 * width / 5f)) && (entry.getValue().getEntity().getSprite().getBoundingBox().centerX() < (4 * width / 5f))) {
+                                    bridgeDamage[3]++;
+                                }
+                                else if((entry.getValue().getEntity().getSprite().getBoundingBox().centerX() > (2 * width / 5f)) && (entry.getValue().getEntity().getSprite().getBoundingBox().centerX() < (3 * width / 5f))) {
+                                    bridgeDamage[2]++;
+                                }
+                                else if((entry.getValue().getEntity().getSprite().getBoundingBox().centerX() > (width / 5f)) && (entry.getValue().getEntity().getSprite().getBoundingBox().centerX() < (2 * width / 5f))) {
+                                    bridgeDamage[1]++;
+                                }
+                                else {
+                                    bridgeDamage[0]++;
+                                }
+                            }
+
+                            /* render entity */
                             Sprite sprite = entity.getSprite();
 
                             if (sprite.getSpriteSheet() != null && sprite.getFrameToDraw() != null && sprite.getWhereToDraw() != null) {
@@ -322,126 +450,12 @@ public class SpriteView extends SurfaceView {
                             }
                         }
 
-                        /* remove any dead controllers */
-                        for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
-                            if (!entry.getValue().getAlive()) {
-
-                                /* update score view */
-                                if(entry.getKey().contains("Arrow")) {
-                                    Activity activity = (Activity) context;
-                                    /* the arrow hit the bridge */
-                                    if(entry.getValue().getID().equals("hit bridge")) {
-                                        activity.runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                TextView score = (TextView) ((Activity) context).findViewById(R.id.score);
-                                                String text = score.getText().toString();
-                                                String[] expression = text.split("\n");
-                                                expression[0] = expression[0].replaceAll("\\D+", "");
-                                                expression[1] = expression[1].replaceAll("\\D+", "");
-                                                int remaining = Integer.parseInt(expression[0]);
-                                                int hit = Integer.parseInt(expression[1]);
-                                                String newText = "Arrows Remaining: " + (remaining - 1) + "\nHit Bridge: " + (hit + 1);
-                                                score.setText(newText);
-                                            }
-                                        });
-                                    }
-                                    /* the arrow hit the player */
-                                    else {
-                                        activity.runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                TextView score = (TextView) ((Activity) context).findViewById(R.id.score);
-                                                String text = score.getText().toString();
-                                                String[] expression = text.split("\n");
-                                                expression[0] = expression[0].replaceAll("\\D+", "");
-                                                expression[1] = expression[1].replaceAll("\\D+", "");
-                                                int remaining = Integer.parseInt(expression[0]);
-                                                int hit = Integer.parseInt(expression[1]);
-                                                String newText = "Arrows Remaining: " + (remaining - 1) + "\nHit Bridge: " + hit;
-                                                score.setText(newText);
-                                            }
-                                        });
-                                    }
-
-                                    /* remove the arrow */
-                                    controllerMap.remove(entry.getKey());
-                                    entry.getValue().getEntity().getSprite().getSpriteSheet().recycle();
-                                }
-
-                                /* crystallize the correct orb */
-                                else if(entry.getKey().contains("ItemDrop")) {
-                                    switch(entry.getValue().getID()) {
-                                        case "item drop fire":
-                                            for(int i = 0; i < 1; i++) {
-                                                controllerMap.get("FireOrbController").getEntity().getCurrentFrame();
-                                            }
-                                            break;
-                                        case "item drop light":
-                                            for(int i = 0; i < 1; i++) {
-                                                controllerMap.get("LightOrbController").getEntity().getCurrentFrame();
-                                            }
-                                            break;
-                                        case "item drop earth":
-                                            for(int i = 0; i < 1; i++) {
-                                                controllerMap.get("EarthOrbController").getEntity().getCurrentFrame();
-                                            }
-                                            break;
-                                        case "item drop water":
-                                            for(int i = 0; i < 1; i++) {
-                                                controllerMap.get("WaterOrbController").getEntity().getCurrentFrame();
-                                            }
-                                            break;
-                                        case "item drop time":
-                                            for(int i = 0; i < 1; i++) {
-                                                controllerMap.get("TimeOrbController").getEntity().getCurrentFrame();
-                                            }
-                                            break;
-                                    }
-
-                                    /* remove the item */
-                                    controllerMap.remove(entry.getKey());
-                                    entry.getValue().getEntity().getSprite().getSpriteSheet().recycle();
-                                }
-
-                                /* regenerate spider
-                                else if(entry.getKey().contains("Spider")) {
-                                    /* initialize a new spider controller
-                                    Random random = new Random();
-                                    entry.getValue().setAlive(true);
-                                    Spider spider = (Spider) entry.getValue().getEntity();
-                                    spider.setHit(0);
-                                    entry.getValue().setXPos((width - entry.getValue().getEntity().getSprite().getSpriteWidth()) * random.nextDouble());
-                                    entry.getValue().getEntity().refreshEntity("idle");
-                                    entry.getValue().setID("spider init");
-                                }*/
-
-                                /* re-enable player after swipe */
-                                else if(entry.getKey().contains("Swipe")) {
-                                    //controllerMap.get("PlayerController").setReacting(false);
-                                    controllerMap.remove(entry.getKey());
-                                    entry.getValue().getEntity().getSprite().getSpriteSheet().recycle();
-                                }
-
-                                else {
-                                    /* remove all other dead entities */
-                                    controllerMap.remove(entry.getKey());
-                                    entry.getValue().getEntity().getSprite().getSpriteSheet().recycle();
-                                }
-                            }
-
+                        /* delete any entities that need to be deleted */
+                        for(LinkedHashMap.Entry<String, SpriteController> deletion : deletionMap.entrySet()) {
+                            controllerMap.remove(deletion.getKey());
+                            deletion.getValue().getEntity().getSprite().getSpriteSheet().recycle();
                         }
-                        /* check for collisions and refresh the entity if necessary */
-                        LinkedHashMap<String, SpriteController> map = new LinkedHashMap<>();
-                        LinkedHashMap<String, SpriteController> additionMap = new LinkedHashMap<>();
-                        for(LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
-                            if (entry.getValue().getEntity() != null && (entry.getKey().equals("PlayerController") || entry.getKey().contains("Bridge"))) {
-                                map = entry.getValue().getEntity().onCollisionEvent(entry, controllerMap);
-                            }
-                            for(LinkedHashMap.Entry<String, SpriteController> add : map.entrySet()) {
-                                additionMap.put(add.getKey(), add.getValue());
-                            }
-                        }
+
                         /* add any entities to the scene that need to be added */
                         for(LinkedHashMap.Entry<String, SpriteController> addition : additionMap.entrySet()) {
                             controllerMap.put(addition.getKey(), addition.getValue());
@@ -456,14 +470,71 @@ public class SpriteView extends SurfaceView {
                         spriteThread.setRunning(true);
                         spriteThread.start();
                     }
+
                 }
             }
         }
 
-        /* check if another spider needs to be spawned */
-        if(frameCounter >= spawnTime) {
+        additionMap = new LinkedHashMap<>();
 
-            frameCounter = 0;
+        /* check if a controller has been triggered */
+        for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
+            if (entry.getValue().getTriggered()) {
+                /* light orb */
+                switch(entry.getKey()) {
+                    case "LightOrbController":
+                        /* check if another arrow needs to be spawned */
+                        if(arrowSpawnCounter >= arrowSpawnTime) {
+
+                            arrowSpawnCounter = 0;
+                            arrowCount++;
+                            /* initialize another arrow controller */
+                            if(arrowCount <= maxArrowCount) {
+                                entity = new Arrow(getResources(), width, height, maxRes, maxRes, "arrow");
+                                entity.getController().setYPos(-entity.getSprite().getSpriteHeight());
+                                additionMap.put("Arrow" + arrowCount + "Controller", entity.getController());
+                            }
+                            else {
+                                arrowCount = 0;
+                                entry.getValue().setTriggered(false);
+                            }
+
+                        }
+                        break;
+                }
+            }
+        }
+        /* add the arrows to the controller map */
+        for (LinkedHashMap.Entry<String, SpriteController> add : additionMap.entrySet()) {
+            controllerMap.put(add.getKey(), add.getValue());
+        }
+
+        /* check for other events */
+        for(int i = 0; i < 5; i++) {
+            if(bridgeDamage[i] > 0) {
+                /* increment bridge hit value */
+                Bridge bridge = (Bridge) controllerMap.get("Bridge" + i + "Controller").getEntity();
+                bridge.setHit(bridge.getHit() + bridgeDamage[i]);
+
+                if(bridge.getHit() > 15) {
+                    bridge.refreshEntity("destroyed");
+                }
+                else if(bridge.getHit() > 10) {
+                    bridge.refreshEntity("stage3");
+                }
+                else if(bridge.getHit() > 5) {
+                    bridge.refreshEntity("stage2");
+                }
+                else if(bridge.getHit() > 0) {
+                    bridge.refreshEntity("stage1");
+                }
+
+                controllerMap.put("Bridge" + i + "Controller", bridge.getController());
+            }
+        }
+        if(enemySpawnCounter >= enemySpawnTime) {
+
+            enemySpawnCounter = 0;
             enemyCount = 0;
             for (LinkedHashMap.Entry<String, SpriteController> entry : controllerMap.entrySet()) {
                 if (entry.getKey().contains("Spider")) {
@@ -473,9 +544,9 @@ public class SpriteView extends SurfaceView {
             if(enemyCount < maxEnemyCount) {
                 /* initialize a new spider controller */
                 Random random = new Random();
-                entity = new Spider(getResources(), width, height, maxRes, maxRes, width, controllerMap.get("PlayerController").getEntity().getSprite().getBoundingBox().bottom, "spider idle");
+                entity = new Spider(getResources(), width, height, maxRes, maxRes, width, height, "spider idle");
                 entity.getController().setXPos((width - entity.getSprite().getSpriteWidth()) * random.nextDouble());
-                entity.getController().setYPos(entity.getController().getYPos() - entity.getSprite().getSpriteHeight());
+                entity.getController().setYPos(controllerMap.get("Bridge0Controller").getEntity().getSprite().getBoundingBox().top - entity.getSprite().getSpriteHeight() + entity.getSprite().getSpriteHeight() * 0.062);
                 int i = 1;
                 while(controllerMap.get("Spider" + i + "Controller") != null) {
                     i++;

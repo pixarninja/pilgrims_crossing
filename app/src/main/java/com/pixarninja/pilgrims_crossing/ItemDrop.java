@@ -222,15 +222,11 @@ public class ItemDrop extends SpriteProp{
 
         if(!controller.getReacting() && entry.getValue().getEntity().getSprite().getBoundingBox() != null) {
             RectF entryBox = entry.getValue().getEntity().getSprite().getBoundingBox();
-            for (LinkedHashMap.Entry<String, SpriteController> test : controllerMap.entrySet()) {
-                if (!test.getKey().equals(entry.getKey()) && !test.getValue().getReacting()) {
-                    if ((test.getValue().getEntity().getSprite().getBoundingBox() != null) && (test.getKey().equals("PlayerController"))) {
-                        RectF compareBox = test.getValue().getEntity().getSprite().getBoundingBox();
-                        /* if the objects intersect, find where they intersect for the entry bounding boxe*/
-                        if (entryBox.intersect(compareBox)) {
-                            entry.getValue().getEntity().refreshEntity("inherit collected");
-                        }
-                    }
+            if (render.getBoundingBox() != null) {
+                RectF compareBox = render.getBoundingBox();
+                /* if the objects intersect, find where they intersect for the entry bounding box */
+                if (entryBox.intersect(compareBox)) {
+                    entry.getValue().getEntity().refreshEntity("inherit collected");
                 }
             }
         }

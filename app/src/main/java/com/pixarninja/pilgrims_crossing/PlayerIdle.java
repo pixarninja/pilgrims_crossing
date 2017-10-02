@@ -132,9 +132,9 @@ public class PlayerIdle extends Player {
                             render.setFrameToDraw(new Rect(0, 0, render.getFrameWidth(), render.getFrameHeight()));
                     }
             }
-            updateBoundingBox();
             controller.setEntity(this);
             controller.setTransition(transition);
+            updateBoundingBox();
         } catch(NullPointerException e) {
             refreshEntity(transition);
         }

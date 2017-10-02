@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
         /* set score view */
         TextView score = (TextView) findViewById(R.id.score);
-        String newText = "Arrows Remaining: " + num + "\nHit Bridge: " + 0;
+        String newText = "Spiders Killed: " + 0 + "\nBridge Damage: " + 0;
         score.setText(newText);
 
         int height = displayMetrics.heightPixels;
@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
 
         /* set score view */
         TextView score = (TextView) findViewById(R.id.score);
-        String newText = "Arrows Remaining: " + num + "\nHit Bridge: " + 0;
+        String newText = "Spiders Killed: " + num + "\nBridge Damage: " + 0;
         score.setText(newText);
 
         int height = displayMetrics.heightPixels;

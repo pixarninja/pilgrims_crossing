@@ -12,7 +12,6 @@ abstract class SpriteEntity {
     protected int count = 0;
     protected int delta = 1;
     protected Resources res;
-    protected double percentOfScreen;
     protected int xRes;
     protected int yRes;
     protected int width;
@@ -308,8 +307,16 @@ abstract class SpriteEntity {
                     if ((render.getXCurrentFrame() < 0) || (render.getCurrentFrame() < 0)) {
                         render.setYCurrentFrame(render.getYCurrentFrame() + delta);
                         if ((render.getYCurrentFrame() < 0) || (render.getCurrentFrame() < 0)) {
-                            refreshEntity("idle");
-                            count = 0;
+                            if(render.getMethod().equals("mirror")) {
+                                refreshEntity("idle");
+                                count = 0;
+                            }
+                            else {
+                                count = 0;
+                                render.setXCurrentFrame(0);
+                                render.setYCurrentFrame(0);
+                                render.setCurrentFrame(0);
+                            }
                         }
                         if (count > 0) {
                             render.setXCurrentFrame(render.getXFrameCount() - 1);
