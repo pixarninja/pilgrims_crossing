@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.LightingColorFilter;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.RectF;
@@ -287,12 +288,13 @@ public class SpriteView extends SurfaceView {
                                     deletionMap.put(entry.getKey(), entry.getValue());
                                 }
 
-                                /* re-enable player after swipe
+                                /* re-enable player after swipe */
                                 else if(entry.getKey().contains("Swipe")) {
                                     controllerMap.get("PlayerController").setReacting(false);
-                                    controllerMap.remove(entry.getKey());
-                                    entry.getValue().getEntity().getSprite().getSpriteSheet().recycle();
-                                }*/
+
+                                    /* remove the item */
+                                    deletionMap.put(entry.getKey(), entry.getValue());
+                                }
 
                                 else {
                                     /* remove all other dead entities */
@@ -302,7 +304,7 @@ public class SpriteView extends SurfaceView {
 
                             /* check for collisions */
                             LinkedHashMap<String, SpriteController> map = new LinkedHashMap<>();
-                            if (entry.getValue().getEntity() != null && (entry.getKey().equals("PlayerController") || entry.getKey().contains("Arrow"))) {
+                            if (entry.getValue().getEntity() != null && (entry.getKey().equals("PlayerController") || entry.getKey().contains("Spider"))) {
                                 map = entry.getValue().getEntity().onCollisionEvent(entry, controllerMap);
                             }
                             for(LinkedHashMap.Entry<String, SpriteController> add : map.entrySet()) {
@@ -311,6 +313,11 @@ public class SpriteView extends SurfaceView {
 
                             /* update bridge damage */
                             if(entry.getKey().contains("Spider") && entry.getValue().getTransition().equals("attack")) {
+
+                                /* spawn an explosion
+                                entity = new Explosion(res, width, height, maxRes, maxRes, entry.getValue().getXPos() - entry.getValue().getEntity().getSprite().getSpriteWidth() / 4, entry.getValue().getYPos() - 2 * entry.getValue().getEntity().getSprite().getSpriteHeight() / 3, "explosion", "left");
+                                additionMap.put("Explosion" + entry.getKey(), entity.getController());*/
+
                                 if(entry.getValue().getEntity().getSprite().getBoundingBox().centerX() > (4 * width / 5f)) {
                                     bridgeDamage[4]++;
                                 }
@@ -326,6 +333,7 @@ public class SpriteView extends SurfaceView {
                                 else {
                                     bridgeDamage[0]++;
                                 }
+
                             }
 
                             /* render entity */
@@ -333,52 +341,51 @@ public class SpriteView extends SurfaceView {
 
                             if (sprite.getSpriteSheet() != null && sprite.getFrameToDraw() != null && sprite.getWhereToDraw() != null) {
 
-                                    /* for debugging bounding boxes
-                                    Paint paint;
-                                    paint = new Paint();
-                                    paint.setStyle(Paint.Style.STROKE);
-                                    paint.setColor(Color.rgb(255, 255, 255));
-                                    paint.setStrokeWidth(3);
-                                    canvas.drawRect(sprite.getBoundingBox(), paint);
-                                    if(entry.getKey().equals("PlayerController")) {
-                                        float left = sprite.getWhereToDraw().left;
-                                        float top = sprite.getWhereToDraw().top;
-                                        float right = sprite.getWhereToDraw().right;
-                                        float bottom = sprite.getWhereToDraw().bottom;
-                                        float width = right - left;
-                                        float height = bottom - top;
-                                        RectF entryLeft = new RectF(left, top + height / 3f, left + width / 3f, top + 2 * height / 3f);
-                                        canvas.drawRect(entryLeft, paint);
-                                        RectF entryTopLeft = new RectF(left, top, left + width / 3f, top + height / 3f);
-                                        canvas.drawRect(entryTopLeft, paint);
-                                        RectF entryTop = new RectF(left + width / 3f, top, left + 2 * width / 3f, top + height / 3f);
-                                        canvas.drawRect(entryTop, paint);
-                                        RectF entryTopRight = new RectF(left + 2 * width / 3f, top, right, top + height / 3f);
-                                        canvas.drawRect(entryTopRight, paint);
-                                        RectF entryRight = new RectF(left + 2 * width / 3f, top + height / 3f, right, top + 2 * height / 3f);
-                                        canvas.drawRect(entryRight, paint);
-                                        RectF entryBottomRight = new RectF(left + 2 * width / 3f, top + 2 * height / 3f, right, bottom);
-                                        canvas.drawRect(entryBottomRight, paint);
-                                        RectF entryBottom = new RectF(left + width / 3f, top + 2 * height / 3f, left + 2 * width / 3f, bottom);
-                                        canvas.drawRect(entryBottom, paint);
-                                    }*/
-
-                                    /* for debugging flipped spritesheets
-                                    Paint paint;
-                                    paint = new Paint();
-                                    paint.setStyle(Paint.Style.STROKE);
-                                    paint.setColor(Color.rgb(255, 255, 255));
-                                    paint.setStrokeWidth(3);
-                                    if(entry.getKey().equals("PlayerController")) {
-                                        Matrix matrix = new Matrix();
-                                        matrix.postScale(-1, 1);
-                                        matrix.postTranslate(entity.getSprite().getSpriteSheet().getWidth(), 0);
-                                        canvas.drawBitmap(entity.getSprite().getSpriteSheet(), matrix, null);
-
-                                        canvas.drawRect(entity.getSprite().getFrameToDraw(), paint);
-                                    }*/
-
                                 Paint paint = null;
+
+                                /* for debugging bounding boxes
+                                paint = new Paint();
+                                paint.setStyle(Paint.Style.STROKE);
+                                paint.setColor(Color.rgb(255, 255, 255));
+                                paint.setStrokeWidth(3);
+                                canvas.drawRect(sprite.getBoundingBox(), paint);
+                                if(entry.getKey().equals("PlayerController")) {
+                                    float left = sprite.getWhereToDraw().left;
+                                    float top = sprite.getWhereToDraw().top;
+                                    float right = sprite.getWhereToDraw().right;
+                                    float bottom = sprite.getWhereToDraw().bottom;
+                                    float width = right - left;
+                                    float height = bottom - top;
+                                    RectF entryLeft = new RectF(left, top + height / 3f, left + width / 3f, top + 2 * height / 3f);
+                                    canvas.drawRect(entryLeft, paint);
+                                    RectF entryTopLeft = new RectF(left, top, left + width / 3f, top + height / 3f);
+                                    canvas.drawRect(entryTopLeft, paint);
+                                    RectF entryTop = new RectF(left + width / 3f, top, left + 2 * width / 3f, top + height / 3f);
+                                    canvas.drawRect(entryTop, paint);
+                                    RectF entryTopRight = new RectF(left + 2 * width / 3f, top, right, top + height / 3f);
+                                    canvas.drawRect(entryTopRight, paint);
+                                    RectF entryRight = new RectF(left + 2 * width / 3f, top + height / 3f, right, top + 2 * height / 3f);
+                                    canvas.drawRect(entryRight, paint);
+                                    RectF entryBottomRight = new RectF(left + 2 * width / 3f, top + 2 * height / 3f, right, bottom);
+                                    canvas.drawRect(entryBottomRight, paint);
+                                    RectF entryBottom = new RectF(left + width / 3f, top + 2 * height / 3f, left + 2 * width / 3f, bottom);
+                                    canvas.drawRect(entryBottom, paint);
+                                }*/
+
+                                /* for debugging flipped spritesheets
+                                paint = new Paint();
+                                paint.setStyle(Paint.Style.STROKE);
+                                paint.setColor(Color.rgb(255, 255, 255));
+                                paint.setStrokeWidth(3);
+                                if(entry.getKey().equals("PlayerController")) {
+                                    Matrix matrix = new Matrix();
+                                    matrix.postScale(-1, 1);
+                                    matrix.postTranslate(entity.getSprite().getSpriteSheet().getWidth(), 0);
+                                    canvas.drawBitmap(entity.getSprite().getSpriteSheet(), matrix, null);
+
+                                    canvas.drawRect(entity.getSprite().getFrameToDraw(), paint);
+                                }*/
+
                                 /* color code:
                                    0x00.....00...00.....00 (black)
                                    ..alpha..red..green..blue */

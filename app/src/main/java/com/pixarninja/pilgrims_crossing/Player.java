@@ -110,7 +110,6 @@ public class Player extends SpriteEntity {
                             }
 
                             SpriteController playerController = controllerMap.get("PlayerController");
-                            //System.out.println("Reacting: "+ playerController.getReacting());
 
                             /* use a different order for left and right */
                             if(controller.getID().contains("left")) {
@@ -216,8 +215,7 @@ public class Player extends SpriteEntity {
                                 }
                             }
 
-                            //playerController.setReacting(true);
-                            //controllerMap.put("PlayerController", playerController);
+                            controllerMap.get("PlayerController").setReacting(true);
 
                             break;
 

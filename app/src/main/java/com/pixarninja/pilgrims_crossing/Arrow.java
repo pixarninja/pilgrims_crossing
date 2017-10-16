@@ -137,39 +137,4 @@ public class Arrow extends SpriteProp {
 
     }
 
-    @Override
-    public LinkedHashMap<String, SpriteController> onCollisionEvent(LinkedHashMap.Entry<String, SpriteController> entry, LinkedHashMap<String, SpriteController> controllerMap) {
-
-        LinkedHashMap<String, SpriteController> map = new LinkedHashMap<>();
-        LinkedHashMap<String, SpriteController> additionMap;
-
-        if(!controller.getReacting() && entry.getValue().getEntity().getSprite().getBoundingBox() != null) {
-            RectF entryBox = entry.getValue().getEntity().getSprite().getBoundingBox();
-            for (LinkedHashMap.Entry<String, SpriteController> test : controllerMap.entrySet()) {
-                if (test.getKey().contains("Spider") && !test.getValue().getReacting()) {
-                    if ((test.getValue().getEntity().getSprite().getBoundingBox() != null)) {
-                        RectF compareBox = test.getValue().getEntity().getSprite().getBoundingBox();
-                        /* if the objects intersect, find where they intersect for the entry bounding box */
-                        if (entryBox.intersect(compareBox)) {
-
-                            /* first call the enemy's collision handler */
-                            if(test.getKey().contains("Spider")) {
-                                additionMap = test.getValue().getEntity().onCollisionEvent(test, controllerMap);
-                                for(LinkedHashMap.Entry<String, SpriteController> add : additionMap.entrySet()) {
-                                    map.put(add.getKey(), add.getValue());
-                                }
-                            }
-
-                            refreshEntity("inherit destroyed");
-
-                        }
-                    }
-                }
-            }
-        }
-
-        return map;
-
-    }
-
 }
