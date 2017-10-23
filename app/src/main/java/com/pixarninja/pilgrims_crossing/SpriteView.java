@@ -2,6 +2,7 @@ package com.pixarninja.pilgrims_crossing;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -10,6 +11,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.RectF;
+import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -246,6 +248,12 @@ public class SpriteView extends SurfaceView {
                                             int damage = Integer.parseInt(expression[1]);
                                             String newText = "Spiders Killed: " + (killed + 1) + "\nHit Bridge: " + (damage + 0);
                                             score.setText(newText);
+
+                                            /* initialize stored information objects */
+                                            SharedPreferences appInfo = PreferenceManager.getDefaultSharedPreferences(context);
+                                            SharedPreferences.Editor infoEditor = appInfo.edit();
+                                            infoEditor.putInt("Spiders Killed", killed + 1);
+                                            infoEditor.apply();
                                         }
                                     });
 
@@ -290,7 +298,7 @@ public class SpriteView extends SurfaceView {
 
                                 /* re-enable player after swipe */
                                 else if(entry.getKey().contains("Swipe")) {
-                                    controllerMap.get("PlayerController").setReacting(false);
+                                    //controllerMap.get("PlayerController").setReacting(false);
 
                                     /* remove the item */
                                     deletionMap.put(entry.getKey(), entry.getValue());

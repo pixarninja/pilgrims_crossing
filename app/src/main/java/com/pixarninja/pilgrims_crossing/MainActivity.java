@@ -1,7 +1,9 @@
 package com.pixarninja.pilgrims_crossing;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -16,7 +18,6 @@ public class MainActivity extends AppCompatActivity {
     LinkedHashMap<String, SpriteController> controllerMap;
     SpriteEntity entity;
     Intent intent;
-    private int num;
     private Random random = new Random();
 
     @Override
@@ -24,8 +25,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /* arrow generation number */
-        num = 100;
+        /* initialize stored information object */
+        SharedPreferences appInfo = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
 
         /* initialize the render and controller maps */
         controllerMap = new LinkedHashMap<>();
@@ -37,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
         /* set score view */
         TextView score = (TextView) findViewById(R.id.score);
-        String newText = "Spiders Killed: " + 0 + "\nBridge Damage: " + 0;
+        String newText = "Spiders Killed: " + appInfo.getInt("Spiders Killed", 0) + "\nBridge Damage: " + 0;
         score.setText(newText);
 
         int height = displayMetrics.heightPixels;
@@ -82,24 +83,10 @@ public class MainActivity extends AppCompatActivity {
         entity = new TimeOrb(getResources(), width, height, maxRes, maxRes, controllerMap.get("WaterOrbController").getEntity().getSprite().getBoundingBox().right, controllerMap.get("PlayerController").getEntity().getSprite().getBoundingBox().bottom - controllerMap.get("PlayerController").getEntity().getSprite().getSpriteHeight() / 12f, "time orb");
         controllerMap.put("TimeOrbController", entity.getController());
 
-        /* initialize spider controllers
-        for(int i = 0; i < 3; i++) {
-            entity = new Spider(getResources(), width, height, maxRes, maxRes, width, controllerMap.get("PlayerController").getEntity().getSprite().getBoundingBox().bottom, "spider idle");
-            entity.getController().setXPos((width - entity.getSprite().getSpriteWidth()) * random.nextDouble());
-            entity.getController().setYPos(entity.getController().getYPos() - entity.getSprite().getSpriteHeight());
-            controllerMap.put("Spider" + i + "Controller", entity.getController());
-        }*/
-
         /* refresh player controller so that it shows up on top */
         SpriteController playerController = controllerMap.get("PlayerController");
         controllerMap.remove("PlayerController");
         controllerMap.put("PlayerController", playerController);
-
-        /* initialize arrow controllers
-        for(int i = 0; i < num; i++) {
-            entity = new Arrow(getResources(), width, height, maxRes, maxRes, "arrow" + i);
-            controllerMap.put("Arrow" + i + "Controller", entity.getController());
-        }*/
 
         /* player sprint left button */
         entity = new SpriteButton(getResources(), width, height, maxRes, maxRes, R.mipmap.button_sprint_left, R.mipmap.button_sprint_left, R.mipmap.button_sprint_left,
@@ -111,15 +98,15 @@ public class MainActivity extends AppCompatActivity {
                 0, 0, (2 * width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 0.12, 0, 0, 1, 1, null, "button sprint right", "init");
         controllerMap.put("SprintRightButtonController", entity.getController());
 
-        /* flow control button */
+        /* flow control button
         entity = new SpriteButton(getResources(), width, height, maxRes, maxRes, R.mipmap.button_play, R.mipmap.button_play, R.mipmap.button_pause,
-                0, 0, (3 * width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 0.12, 0, 0, 1, 1, null, "flow control", "init");
+                0, 0, (3 * width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 0.12, 0, 0, 1, 1, null, "button flow control", "init");
         controllerMap.put("FlowButtonController", entity.getController());
 
-        /* jump button */
-        entity = new SpriteButton(getResources(), width, height, maxRes, maxRes, R.mipmap.button_jump, R.mipmap.button_jump, R.mipmap.button_jump,
-                0, 0, (5 * width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 0.12, 0, 0, 1, 1, null, "jump", "init");
-        controllerMap.put("JumpButtonController", entity.getController());
+        /* selector button
+        entity = new SpriteButton(getResources(), width, height, maxRes, maxRes, R.mipmap.button_swipe_left, R.mipmap.button_swipe_left, R.mipmap.button_swipe_left,
+                0, 0, (5 * width / 6), (7.25 * height / 10), 1, 1, 1, 1, 1, 0.12, 0, 0, 1, 1, null, "button select", "init");
+        controllerMap.put("SelectButtonController", entity.getController());
 
         /* set frame rate for all controllers */
         for(LinkedHashMap.Entry<String,SpriteController> controller : controllerMap.entrySet()) {
@@ -165,8 +152,8 @@ public class MainActivity extends AppCompatActivity {
         controllerMap.keySet().removeAll(controllerMap.keySet());
         spriteView.getSpriteThread().setRunning(false);
 
-        /* arrow generation number */
-        num = 100;
+        /* initialize stored information object */
+        SharedPreferences appInfo = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
 
         /* set center view */
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -175,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
 
         /* set score view */
         TextView score = (TextView) findViewById(R.id.score);
-        String newText = "Spiders Killed: " + num + "\nBridge Damage: " + 0;
+        String newText = "Spiders Killed: " + appInfo.getInt("Spiders Killed", 0) + "\nBridge Damage: " + 0;
         score.setText(newText);
 
         int height = displayMetrics.heightPixels;

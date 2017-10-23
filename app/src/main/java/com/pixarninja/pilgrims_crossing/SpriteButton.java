@@ -201,7 +201,7 @@ public class SpriteButton extends SpriteEntity {
                         }
                     }
                     else {
-                        if(controllerMap.get("FlowButtonController").getTransition().equals("off")) {
+                        if(controllerMap.get("FlowButtonController") == null || controllerMap.get("FlowButtonController").getTransition().equals("off")) {
                             /* direction control button */
                             if(entry.getKey().equals("SprintLeftButtonController")) {
 

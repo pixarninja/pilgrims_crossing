@@ -215,7 +215,7 @@ public class Player extends SpriteEntity {
                                 }
                             }
 
-                            controllerMap.get("PlayerController").setReacting(true);
+                            //controllerMap.get("PlayerController").setReacting(true);
 
                             break;
 
