@@ -547,7 +547,7 @@ public class SpriteView extends SurfaceView {
                 controllerMap.put("Bridge" + i + "Controller", bridge.getController());
             }
         }
-        if(enemySpawnCounter >= enemySpawnTime) {
+        if((enemySpawnCounter >= enemySpawnTime) && (controllerMap.get("Bridge0Controller") != null)) {
 
             enemySpawnCounter = 0;
             enemyCount = 0;

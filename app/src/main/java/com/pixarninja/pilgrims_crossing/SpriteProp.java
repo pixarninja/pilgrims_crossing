@@ -36,6 +36,7 @@ public class SpriteProp extends SpriteEntity {
         this.controller.setYInit(yInit);
         this.controller.setXPos(xInit);
         this.controller.setYPos(yInit);
+        this.controller.setID(ID);
         this.xFrameCount = xFrameCount;
         this.yFrameCount = yFrameCount;
         this.frameCount = frameCount;
@@ -91,9 +92,9 @@ public class SpriteProp extends SpriteEntity {
                 render.setFrameToDraw(new Rect(0, 0, render.getFrameWidth(), render.getFrameHeight()));
                 render.setWhereToDraw(new RectF((float) controller.getXPos(), (float) controller.getYPos(), (float) controller.getXPos() + render.getSpriteWidth(), (float) controller.getYPos() + render.getSpriteHeight()));
         }
+        updateBoundingBox();
         controller.setEntity(this);
         controller.setTransition(ID);
-        updateBoundingBox();
     }
 
 }

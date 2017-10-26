@@ -1,5 +1,7 @@
 package com.pixarninja.pilgrims_crossing;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.graphics.RectF;
@@ -169,7 +171,7 @@ public class SpriteButton extends SpriteEntity {
                 /* center of the sprite */
                 if (yTouchedPos >= boundingBox.top && yTouchedPos <= boundingBox.bottom) {
 
-                    /* direction control buttons */
+                    /* poke buttons */
                     if(poke) {
                         /* flow control button */
                         if(entry.getKey().equals("FlowButtonController")) {
@@ -199,7 +201,24 @@ public class SpriteButton extends SpriteEntity {
                             }
 
                         }
+                        else if(entry.getKey().equals("StartGameButtonController")) {
+
+                            SpriteController screenController = controllerMap.get("ScreenController");
+                            if(screenController != null) {
+                                screenController.getEntity().refreshEntity("loading");
+                                try {
+                                    spriteView.getSpriteThread().sleep(500);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+
+                            Context context = MainMenuActivity.getContext();
+                            context.startActivity(new Intent(context, GameActivity.class));
+
+                        }
                     }
+                    /* swipe buttons */
                     else {
                         if(controllerMap.get("FlowButtonController") == null || controllerMap.get("FlowButtonController").getTransition().equals("off")) {
                             /* direction control button */
@@ -237,10 +256,9 @@ public class SpriteButton extends SpriteEntity {
                                 transition = playerController.getTransition();
 
                                 if (transition.equals("idle")) {
-                                    if(playerController.getID().equals("player sprint right")) {
+                                    if (playerController.getID().equals("player sprint right")) {
                                         transition = "inherit idle";
-                                    }
-                                    else {
+                                    } else {
                                         transition = "reset idle";
                                     }
                                 } else {
